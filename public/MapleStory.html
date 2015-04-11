@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>楓之谷一鍵複製</title>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	    <script src="./js/jquery-1.11.1.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				for(var i = 1; i <= 15; i++){
+					var btn_selector = '#btn' + i;
+	            	$(btn_selector).zclip({
+		                path: './js/ZeroClipboard.swf',
+		                copy: function(){
+		                	var word = $(this).text();
+		                	var prompt = '<span style="font-size: 16px">成功複製</span><br><span style="font-size: 18px; font-weight: bold; color: white">' + word + '</span>'; 
+
+		                	$("#prompt").html(prompt);
+		                	return $(this).text();
+		                }
+		            });
+				}
+				
+            });
+
+		</script>
+
+	    <style>
+			body {
+				background: url(images/maple.jpg) no-repeat center center fixed;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, sans-serif;
+			}
+
+			.interval {
+				height: 80px;
+			}
+
+			.interval-sm {
+				height: 50px;
+			}
+
+			.btn-default {
+				font-size: 15px; 
+				font-weight: bold;
+			}
+	    </style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row" style="text-align: center">
+                <div class="col-xs-12 col-sm-4 col-md-4"></div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                	<h1>楓之谷萬惡打字複製</h1>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4"></div>
+            </div>
+            <br>
+			<div class="row" style="text-align: center">
+                <div class="col-xs-12 col-sm-4 col-md-4"></div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                	<div id="prompt">
+                		<span>單擊文字按鈕</span>
+                		<br>
+                		<span>即可複製到剪貼簿</span>
+                	</div>
+                	<!--<h3>新增詞彙</h3>
+                	<input type="text" placeholder="請輸入詞彙" id="textbox" />-->
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4"></div>
+            </div>
+            <div class="interval-sm"></div>
+
+            <div class="row" style="text-align: center">
+            	<div class="col-xs-12 col-sm-4 col-md-4">
+                	<div class="btn-group" role="group" id="fourth" aria-label="...">
+					  	<button type="button" class="btn btn-default" id="btn1">明星One Card</button>
+					  	<button type="button" class="btn btn-default" id="btn2">在遊樂場是託明</button>
+					  	<button type="button" class="btn btn-default" id="btn3">化石龍長老</button>
+					</div>
+					<br><br>
+					<div class="btn-group" role="group" id="fourth" aria-label="...">
+					  	<button type="button" class="btn btn-default" id="btn4">明星翻板子</button>
+					  	<button type="button" class="btn btn-default" id="btn5">奇蹟的米臘克</button>
+					  	<button type="button" class="btn btn-default" id="btn6">法西斯主義者</button>
+					</div>
+					<br><br>
+					<div class="btn-group" role="group" id="fourth" aria-label="...">
+					  	<button type="button" class="btn btn-default" id="btn7">出晚了重新</button>
+					  	<button type="button" class="btn btn-default" id="btn8">藍色機器人</button>
+					  	<button type="button" class="btn btn-default" id="btn9">頭盔企鵝王</button>
+					</div>
+					<br><br>
+					<div class="btn-group" role="group" id="fourth" aria-label="...">
+					  	<button type="button" class="btn btn-default" id="btn10">馬其頓共和國</button>
+					  	<button type="button" class="btn btn-default" id="btn11">小礦石依多</button>
+					  	<button type="button" class="btn btn-default" id="btn12">怨靈發條熊</button>
+					</div>
+					<br><br>
+					<div class="btn-group" role="group" id="fourth" aria-label="...">
+					  	<button type="button" class="btn btn-default" id="btn13">橘子咖啡廳</button>
+					  	<button type="button" class="btn btn-default" id="btn14">混種石巨人</button>
+					  	<button type="button" class="btn btn-default" id="btn15">怨靈發條熊</button>
+					</div>
+					<div class="interval-sm"></div>
+                </div>
+                
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                	<div class="btn-group" role="group" id="first" aria-label="...">
+					  	<button type="button" class="btn btn-default">Left</button>
+					  	<button type="button" class="btn btn-default">Middle</button>
+					  	<button type="button" class="btn btn-default">Right</button>
+					</div>
+					<div class="interval-sm"></div>
+                </div>
+                
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                	<div class="btn-group" role="group" id="second"aria-label="...">
+					  	<button type="button" class="btn btn-default">Left</button>
+					  	<button type="button" class="btn btn-default">Middle</button>
+					  	<button type="button" class="btn btn-default">Right</button>
+					</div>
+	                <div class="interval-sm"></div>
+                </div>
+            </div>
+        </div>
+
+		<script src="./js/jquery.zclip.js"></script>
+        <script src="./bootstrap/js/bootstrap.js"></script>
+	</body>
+</html>

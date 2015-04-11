@@ -1,0 +1,143 @@
+body {
+	/*blue*/
+	background: url(blue_back.jpg) no-repeat center center fixed;
+	/*common*/
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+ 	background-size: cover;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, 
+				 sans-serif;
+}
+
+#push { height: 50px; }
+
+.navbar { min-height: 50px; }
+
+.navbar-nav > li > a {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.navbar-inverse {
+	/*blue*/
+	background: rgba(89, 117, 255, 0.75);
+	border-color: #5584FF;
+	box-shadow: inset 0px 8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-webkit-box-shadow: inset 0px 8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-moz-box-shadow: inset 0px 8px 25px 8px rgba(24, 63, 255, 0.9);
+	/*common*/
+}
+
+.navbar-inverse .navbar-brand {
+	font-size: 24px;
+	font-weight: bold;
+	color: #F6D5D5;
+}
+
+.nav > li > a {
+	padding-left: 18px;
+	color: #E92428;
+}
+
+.navbar-collapse .navbar-nav > li > a { color: #FFFFFF;	}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus { background-color: rgba(1, 33, 255, 0.65); }
+
+#footer {
+	/*blue*/
+	background-color: rgba(89, 117, 255, 0.75);
+	box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-webkit-box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-moz-box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9);
+	/*common*/
+}
+
+#search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }
+
+#public_note {
+	/*blue*/
+	background: rgba(255, 255, 255, 0.5);
+	/*common*/
+	padding-top: 20px;
+	padding-left: 30px; 
+	padding-right: 30px;
+}
+
+#Input_place {
+	/*blue*/
+	background-color: hsla(0, 100%, 100%, 0.65); 
+	box-shadow: inset 0px 2px 20px 10px rgba(37, 112, 247, 0.8); 
+	-webkit-box-shadow: inset 0px 2px 20px 10px rgba(37, 112, 247, 0.8); 
+	-moz-box-shadow: inset 0px 2px 20px 10px rgba(37, 112, 247, 0.8);
+	/*common*/
+	border-radius: 20px;
+	margin-bottom: 10px; 
+	text-align: center;
+}
+
+#select_mode {
+	/*blue*/
+	background-color: rgba(66, 140, 255, 0.95); 
+	color: #FFF;
+	box-shadow: inset 0px 0px 10px 2px #FFF; 
+	-webkit-box-shadow: inset 0px 0px 10px 2px #FFF; 
+	-moz-box-shadow: inset 0px 0px 10px 2px #FFF;
+	/*common*/
+	margin-top: 10px; 
+	font-weight: bold;  
+	font-size: 13px;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, 
+				 sans-serif;
+} 
+
+#prompt {
+	/*blue*/
+	background-color: rgba(140, 199, 249, 0.5);
+	border: solid #FFF;
+	border-width: 3px;
+	border-bottom: solid rgba(255, 255, 255, 0);
+	border-bottom-width: 1px;
+	color: #000;
+	/*common*/
+	font-size: 14px; 
+	font-weight: bold; 
+	text-align: center; 
+	margin-left: 3px;
+	margin-top: 10px; 
+	margin-bottom: 5px; 
+	width: 100%;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, 
+				 sans-serif;
+}
+
+#show {
+	/*blue*/
+	background-color: rgba(140, 199, 249, 0.5);
+	border: solid #FFF;
+	border-width: 3px; 
+	border-top: solid rgba(255, 255, 255, 0);
+	border-top-width: 5px;
+	color: #000;
+	/*common*/
+	height: 260px; 
+	width: 52%; 
+	max-height: 260px; 
+	max-width: 52%;
+	font-size: 15px; 
+	padding-left: 10px; 
+	overflow-y: auto; 
+	background-attachment: scroll; 
+	background-clip: border-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; 
+	border-radius: 10px; 
+	margin-top: 8px; 
+	margin-bottom: 10px;" 
+}
+
+.caption { text-align: center; }
+
+
+
+
+
+

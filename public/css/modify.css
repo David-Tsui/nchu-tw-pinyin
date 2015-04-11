@@ -1,0 +1,82 @@
+html, body{
+	min-height: 100%;
+	max-height: 100%;
+}
+
+*:before, *:after{
+	box-sizing: content-box;
+}
+
+.jqte_blue_tool, .jqte_blue_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_green_tool, .jqte_green_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_pink_tool, .jqte_pink_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_xmas_tool, .jqte_xmas_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_origin_tool, .jqte_origin_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_blue_flat_tool, .jqte_blue_flat_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_green_flat_tool, .jqte_green_flat_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_pink_flat_tool, .jqte_pink_flat_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_xmas_flat_tool, .jqte_xmas_flat_tool_label{
+	box-sizing: content-box;
+}
+
+.jqte_origin_flat_tool, .jqte_origin_flat_tool_label{
+	box-sizing: content-box;
+}
+
+.st_facebook_hcount{
+	box-sizing: content-box;
+}
+
+.stButton{
+	box-sizing: content-box;
+}
+
+.stMainServices{
+	box-sizing: content-box;
+}
+
+.stButton_gradient{
+	box-sizing: content-box;
+}
+
+.ui.action.input{
+	box-sizing: content-box;
+}
+
+.thumbnail{
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.ui.tag.label{
+	box-sizing: content-box;
+}
+
+
+
+
+
+
