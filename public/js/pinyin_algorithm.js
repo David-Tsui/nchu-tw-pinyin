@@ -6,9 +6,9 @@
   var customJqte = "";                                                                    // 記錄當前jqte的樣式
   var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
   var click_count = 0;
-1
+
   var mode = 0;                                                       // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
-									// 智能模式 0: 拼音模式; 1: 空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式
+																// 智能模式 0: 拼音模式; 1: 空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式
 
   var search_key = "";                                                // 查詢中文字的英文拼音Key(自選及智能皆使用)
   var search_key_loc = 0;                                             // 記錄輸入key值時的輸入位置
