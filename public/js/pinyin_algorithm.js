@@ -91,23 +91,24 @@
 		}).mouseup(function(){                                           //調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
 			var DOM_textbox = document.getElementById("input");
 			mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  	// 記錄滑鼠彈起來時的游標位置
-			input_loc = mouseup_loc;
+			if (sel_mode == 0 && mode == 0 && search_key == "")
+				input_loc = mouseup_loc;
 
 			show_text = $("#show").html();
 			if (tow_check == true && show_text != ""){                  // 如果不能選字或是拼音還存在，則反白會失效，游標自動跑到當前的input_loc
-				textbox.focus().setCursorPosition(input_loc);           // 一律固定到該次輸入的位置
+				textbox.setCursorPosition(input_loc);           		// 一律固定到該次輸入的位置
 			}
-			if (tow_check == false && mode == 2 && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
+			else if (tow_check == false && mode == 2 && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
 				mode = 0;                                               // 而後視為選字成功之後續歸零
 				$("#show").html("");
 				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			}
-			if (tow_check == false && show_text != ""){                 // 如果沒有拖拉反白，而是單純的點選
+			else if (tow_check == false && show_text != ""){            // 如果沒有拖拉反白，而是單純的點選
 				if ((getCaretCharacterOffsetWithin(DOM_textbox) > (input_loc + search_key.length)) || (getCaretCharacterOffsetWithin(DOM_textbox) < input_loc)){ // 點選在拼音區間外
-					textbox.focus().setCursorPosition(mousedown_loc);                   
+					textbox.setCursorPosition(mousedown_loc);                   
 				}
 				else                                                    // 點選在拼音區間裡
-					textbox.focus().setCursorPosition(getCaretCharacterOffsetWithin(DOM_textbox));  
+					textbox.setCursorPosition(getCaretCharacterOffsetWithin(DOM_textbox));	// 位置不動
 			}
 		});
 
@@ -267,30 +268,38 @@
 			if (keyin == 40 && sel_mode == 0 && search_key == ""){
 				var which_word = get_Which_Word(input_loc,"head");
 				console.log("which_word: " + which_word);
-				if (pinyin_record[which_word].modifiable){
-					var key = pinyin_record[which_word].pinyin;
-					var start_loc = pinyin_record[which_word].start_loc;
-					console.log("key: " + key);
-					var j = 0;
-					for(var i = 0; i < key.length; i++){
-						if (key[i] == " ") 
-							j++;
-						if (j == (input_loc - start_loc)){         
-							var temp_loc = i;
-							search_key = key.substring(temp_loc,key.length);
-							search_key = search_key.trim();
-							break;
+				switch (pinyin_record[which_word].modifiable){
+					case 0: 
+						var key = pinyin_record[which_word].pinyin;
+						var start_loc = pinyin_record[which_word].start_loc;
+						console.log("key: " + key);
+						var j = 0;
+						for(var i = 0; i < key.length; i++){
+							if (key[i] == " ") 
+								j++;
+							if (j == (input_loc - start_loc)){         
+								var temp_loc = i;
+								search_key = key.substring(temp_loc,key.length);
+								search_key = search_key.trim();
+								break;
+							}
 						}
-					}
-					console.log("search_key: " + search_key);
-					mode = 3;
-					search_char(0);
-					return false;
+						console.log("search_key: " + search_key);
+						mode = 3;
+						search_char(0);
+						break;
+					case 1:
+
+						break;
+					case 2:
+						var text = "此字詞無法修改!";
+						prompt_txtbox.val(text);
+						prompt_flat_txtbox.val(text);
+						caption_effect();
+						return false;
+						break;
 				}
-				else{
-					$("#show").html("此字詞無法修改！");
-					$("#show_flat").html("此字詞無法修改！");
-				}
+				
 			}
 
 			if (keyin == 40 && sel_mode == 1 && mode == 2){            // 自動選詞時按方向鍵"下"來改字
@@ -1591,7 +1600,7 @@
 				var obj = new pinyin_obj("", word, start_loc, end_loc, 2);
 				pinyin_record.splice(index, 0, obj);
 			}
-			modify_obj_loc(index, 0, del_flag, 0);
+			modify_obj_loc(index, 0, 0);
 			record_last_index = index;
 		}
 		for(var i = 0; i < pinyin_record.length; i++){      
@@ -1909,10 +1918,10 @@
 								key = split_key(key,temp_loc,input_loc);
 							}
 							console.log("word: " + word);
-							rearrange_objs(key,word,which_word,1);
+							rearrange_objs(key,word,which_word,1,0);
 						}
 						else{
-							rearrange_objs("","",which_word,0);
+							rearrange_objs("","",which_word,0,0);
 						}   
 					}                            
 				}
@@ -2261,10 +2270,12 @@
 					search_key = left + right;                       
 				}      
 			}
+		}   
+		while (search_key.indexOf("&nbsp;") >= 0){
+			search_key = search_key.replace("&nbsp;"," ");  
 		}
-		search_key = search_key.replace("&nbsp;"," ");  
 		search_key = search_key.trim();
-		console.log("search_key: " + search_key);    
+		console.log("search_key: " + search_key + "123");    
 		console.log("");          
 	}
 		
