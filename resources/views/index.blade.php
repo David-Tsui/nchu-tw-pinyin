@@ -24,48 +24,48 @@
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-pink-flat.1.4.0.css" rel="stylesheet">
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-xmas-flat.1.4.0.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
+		<style>
+			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
+				min-height: 375px;
+				max-height: 375px;
+			}
 
+			.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
+				min-height: 180px;
+				max-height: 180px;
+			}
+
+			#input {
+				border: ridge rgba(157, 157, 157, 0.5); 
+				border-width: 1px;
+				/*common*/
+				background-color: #FFF;
+				width: 100%;
+				min-height: 32px;
+				text-align: left;
+				font-size: 18px; 
+				padding-left: 5px;
+				padding-top: 4px;
+				-webkit-ime-mode: disabled;
+				font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+			}
+
+			#input[placeholder]:empty:focus:before {
+				content: "";
+			}
+
+			#input[placeholder]:empty:before {
+				content: attr(placeholder);
+				color: #555; 
+			}
+
+			.in_pinyin_window {
+				margin-right: 1.2px; 
+				text-decoration: underline;
+			}
+		</style>
 	</head>
-	<style>
-		.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
-			min-height: 375px;
-			max-height: 375px;
-		}
 
-		.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
-			min-height: 180px;
-			max-height: 180px;
-		}
-
-		#input {
-			border: ridge rgba(157, 157, 157, 0.5); 
-			border-width: 1px;
-			/*common*/
-			background-color: #FFF;
-			width: 100%;
-			min-height: 32px;
-			text-align: left;
-			font-size: 18px; 
-			padding-left: 5px;
-			padding-top: 4px;
-			-webkit-ime-mode: disabled;
-			font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-		}
-
-		#input[placeholder]:empty:focus:before {
-			content: "";
-		}
-
-		#input[placeholder]:empty:before {
-			content: attr(placeholder);
-			color: #555; 
-		}
-
-		.in_pinyin_window {
-			margin-right: 1.2px; 
-			text-decoration: underline;
-		}
-	</style>
 	<body>
 		<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
@@ -168,7 +168,6 @@
 								
 				<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
 					<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>
-
 					<div class="ui input">
 						<div class="hidden-xs">
 							<div class="ui left pointing dropdown icon button" tabindex="0" id="select_mode" data-variation="large">
@@ -183,7 +182,6 @@
 							<input type="text" id="prompt" data-variation="large" readonly>
 						</div>
 					</div>
-
 					<div class="ui input">
 						<div class="visible-xs">
 							<div class="ui left pointing dropdown icon button" id="select_mode_flat" data-offset="-8" style="margin-top: 10px; background-color: #FF9494; color: #FFF; font-weight: bold; font-family: '微軟正黑體'; font-size: 9px">
