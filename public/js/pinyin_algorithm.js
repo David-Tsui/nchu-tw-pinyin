@@ -90,7 +90,8 @@
 			}*/
 		}).mouseup(function(){                                           //調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
 			var DOM_textbox = document.getElementById("input");
-			mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  // 記錄滑鼠彈起去時的游標位置
+			mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  	// 記錄滑鼠彈起來時的游標位置
+			input_loc = mouseup_loc;
 
 			show_text = $("#show").html();
 			if (tow_check == true && show_text != ""){                  // 如果不能選字或是拼音還存在，則反白會失效，游標自動跑到當前的input_loc
