@@ -10,6 +10,7 @@
 		$arr = array();
 
 		if (strtoupper($key[0]) == ($key[0])){
+			$mode = 2;
 			$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 				    WHERE `abbr` = :key
 				    ORDER BY char_length(`characters`) ASC, `score` DESC";
@@ -21,17 +22,16 @@
 			$i = 0;
 			$row = $stmt->fetch();
 		  	do{
-		    	if ($row != "")
-				{						
+		    	if ($row != "")						
 					$arr[$i] = $row[0];
-				}
 				else
 					break;
 				$i++;
 		  	}while ($row = $stmt->fetch());
+		  	if (count($arr) == 0)
+		  		$mode = 0;
 		}
-
-		else if ($mode == 0){		// 如果是自選模式，全抓
+		if ($mode == 0){		// 如果是自選模式，全抓
 			$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 				    WHERE `sound` = :key OR `sound` LIKE :key_super 
 				    ORDER BY char_length(`characters`) ASC, `score` DESC";
@@ -44,10 +44,8 @@
 			$i = 0;
 			$row = $stmt->fetch();
 		  	do{
-		    	if ($row != "")
-				{						
+		    	if ($row != "")						
 					$arr[$i] = $row[0];
-				}
 				else
 					break;
 				$i++;

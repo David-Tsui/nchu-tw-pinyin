@@ -1477,7 +1477,7 @@
 				}
 
 				if (check_over_three == 1){                 // 如果是，則調整auto_search_key
-					var cut_index = auto_search_key.indexOf(pinyin_record[0]);   // 第一個要固定詞的起始位置
+					var cut_index = auto_search_key.search(pinyin_record[0]);   // 第一個要固定詞的起始位置
 					var first_word_len = word_record_loc[1];
 					auto_start = first_word_len;            // 調整auto_start為當前第二詞的起始位置
 					var first_pinyin_len = pinyin_record[0].length;
@@ -1700,7 +1700,7 @@
 	function get_auto_start(){                                  // 取得自動選詞的起點，每一次預設取第一個span的位置
 		var textbox = $("#input");
 		var html = textbox.html();
-		var first_span_loc = html.indexOf("<span");             // 尋找textbox是否有span tag
+		var first_span_loc = html.search("<span");             // 尋找textbox是否有span tag
 		var start = 0;
 		if (first_span_loc < 0){                                // 如果在非自動選詞的狀態下
 			start = input_loc;                                  // auto_start == input_loc
@@ -1967,7 +1967,7 @@
 						if (del_loc != 0){
 							var left = auto_search_key.substring(0,del_loc);
 							var right = auto_search_key.substring(del_loc + 1,auto_search_key.length);
-							var check_behind = right.indexOf(" ");
+							var check_behind = right.search(" ");
 							left = left.trim();
 							right = right.trim();
 							console.log("left: " + left);
@@ -1981,7 +1981,7 @@
 							}
 						}
 						else {
-							var check_behind = auto_search_key.indexOf(" ");
+							var check_behind = auto_search_key.search(" ");
 							auto_search_key = auto_search_key.substring(check_behind + 1,auto_search_key.length);
 						}
 						//console.log("auto_search_key: " + auto_search_key);
@@ -2045,7 +2045,7 @@
 				var char_arr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 				input_word = text;
 				var del_word = char_arr[keyCode - 65];
-				var del_loc = input_word.indexOf(del_word);
+				var del_loc = input_word.search(del_word);
 				var left = input_word.substring(0,del_loc);
 				var right = input_word.substring(del_loc + 1,input_word.length);
 				input_word = left + right;
@@ -2167,7 +2167,7 @@
 				if (del_loc != 0){                  // 不是在最前端刪字
 					var left = key.substring(0,del_loc);
 					var right = key.substring(del_loc + 1,key.length);
-					var check_behind = right.indexOf(" ");
+					var check_behind = right.search(" ");
 					left = left.trim();
 					right = right.trim();
 					if (check_behind == -1)         // 如果後面沒有" "
@@ -2178,7 +2178,7 @@
 					}
 				}
 				else{                               // 在最前端刪字
-					var check_behind = key.indexOf(" ");
+					var check_behind = key.search(" ");
 					after_key = key.substring(check_behind + 1,key.length);
 				}   
 				break;
@@ -2231,7 +2231,7 @@
 				search_key = "";
 				associated_search_flag = false;
 				text = textbox.html();
-				if (text.indexOf("</span>") < 0)
+				if (text.search("</span>") < 0)
 					mode = 0;
 				else
 					mode = 2;
@@ -2295,7 +2295,7 @@
 				}      
 			}
 		}   
-		while (search_key.indexOf("&nbsp;") >= 0){
+		while (search_key.search("&nbsp;") >= 0){
 			search_key = search_key.replace("&nbsp;"," ");  
 		}
 		search_key = search_key.trim();
@@ -2315,8 +2315,9 @@
 			'<br>'
 		];
 		var after_text = text;
+
 		for(var i = 0; i < tags.length; i++){
-			while (after_text.indexOf(tags[i]) >= 0){
+			while (after_text.search(tags[i]) >= 0){
 				after_text = after_text.replace(tags[i],"");
 			}
 		}
