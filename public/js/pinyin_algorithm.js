@@ -2312,10 +2312,11 @@
 			'</span>',
 			'</u>',
 			'<u>',
-			'<br>'
 		];
 		var after_text = text;
-
+		if (after_text.search("<br>") == 0){
+			after_text = after_text.replace("<br>","");
+		}
 		for(var i = 0; i < tags.length; i++){
 			while (after_text.search(tags[i]) >= 0){
 				after_text = after_text.replace(tags[i],"");
