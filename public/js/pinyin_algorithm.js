@@ -1808,7 +1808,9 @@
 				}
 				else
 					obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);       // 音節數!=字數，只能在最前方修改
+				$.ajaxSettings.async = false;
 				addRecord(obj,input_loc);
+				$.ajaxSettings.async = true;
 				var text = "";
 				console.log("幾個record: " + pinyin_record.length);
 				for(var i = 0; i < pinyin_record.length; i++){
@@ -2068,17 +2070,23 @@
 		}
 		else if (loc == 0){     // 最前端補字
 			pinyin_record.unshift(pinyin_obj);
+			$.ajaxSettings.async = false;
 			modify_obj_loc(0, 0, 0);
+			$.ajaxSettings.async = true;
 		}
 		else{                   // 中間情形，得細分是在各字區首尾還是會造成字區被切割
 			var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
 			if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
 				pinyin_record.splice(which_word,0,pinyin_obj);
+				$.ajaxSettings.async = false;
 				modify_obj_loc(which_word, 0, 0);
+				$.ajaxSettings.async = true;
 			}
 			else if (loc == pinyin_record[which_word].end_loc){ // 在某字區尾端
 				pinyin_record.splice(which_word + 1,0,pinyin_obj);
+				$.ajaxSettings.async = false;
 				modify_obj_loc(which_word + 1, 0, 0);
+				$.ajaxSettings.async = true;
 			}
 			else if (loc < pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間
 				var temp_loc = loc - pinyin_record[which_word].start_loc;
@@ -2118,8 +2126,10 @@
 
 				$.ajaxSettings.async = false;
 				rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
+				$.ajaxSettings.async = true;
 				console.log("最後一個record的index: " + record_last_index);
 				pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
+				$.ajaxSettings.async = false;
 				rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
 				$.ajaxSettings.async = true;
 			}   
@@ -2180,21 +2190,17 @@
 	function get_Which_Word(this_loc,head_or_tail){         // 判斷游標所在位置屬於第幾個詞(回傳陣列的index)
 		if (this_loc == pinyin_record[pinyin_record.length - 1].end_loc)
 			return pinyin_record.length - 1;
-
 		for(var i = 0; i < pinyin_record.length; i++){
-			if (this_loc == 0){
-				return 0;
-			}
+			if (this_loc == 0)
+				return 0;			
 			else{
 				if (head_or_tail == "tail"){
-					if (this_loc > pinyin_record[i].start_loc && this_loc <= pinyin_record[i].end_loc){
-						return i;
-					}
+					if (this_loc > pinyin_record[i].start_loc && this_loc <= pinyin_record[i].end_loc)
+						return i;					
 				}
 				else if (head_or_tail == "head"){
-					if (this_loc >= pinyin_record[i].start_loc && this_loc < pinyin_record[i].end_loc){
-						return i;
-					}
+					if (this_loc >= pinyin_record[i].start_loc && this_loc < pinyin_record[i].end_loc)
+						return i;					
 				}
 			}
 		}
@@ -2305,7 +2311,8 @@
 			'<span class="in_pinyin_window">',
 			'</span>',
 			'</u>',
-			'<u>'
+			'<u>',
+			'<br>'
 		];
 		var after_text = text;
 		for(var i = 0; i < tags.length; i++){
