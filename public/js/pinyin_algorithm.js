@@ -720,7 +720,7 @@
 				}
 			}
 				
-			if (search_key == ""){                              // 沒有文字輸入，則textarea為空
+			if (search_key == ""){                            
 				$("#show").html("");
 				$("#show_flat").html("");
 				prompt_txtbox.val("");
@@ -1266,6 +1266,7 @@
 			}
 			else if (data[0] == "associated pinyin"){
 				number_letters = Object.keys(data).length - 1;      // 取得總字數，第一項被當作判斷是否有接續拼音的flag，故 -1
+				thispage = 1;
 				getPage();                                          // 取得該key值所對應文字的總頁數
 				select_letter = [];
 				for(var i = 0; i < number_letters; i++)             // 將回傳的json複製到陣列
@@ -1317,6 +1318,7 @@
 			else{
 				if (only_one == 0){
 					number_letters = Object.keys(data).length;          // 取得總字數
+					thispage = 1;
 					getPage();                                          // 取得該key值所對應文字的總頁數
 					select_letter = [];
 					for(var i = 0; i < number_letters; i++)             // 將回傳的json複製到陣列
@@ -1812,7 +1814,6 @@
 				addRecord(obj,input_loc);
 				$.ajaxSettings.async = true;
 				var text = "";
-				console.log("幾個record: " + pinyin_record.length);
 				for(var i = 0; i < pinyin_record.length; i++){
 					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 				}
@@ -1937,12 +1938,22 @@
 								key = split_key(key,temp_loc,input_loc);
 							}
 							console.log("word: " + word);
+							$.ajaxSettings.async = false;
 							rearrange_objs(key,word,which_word,1,0);
+							$.ajaxSettings.async = true;
 						}
 						else{
+							$.ajaxSettings.async = false;
 							rearrange_objs("","",which_word,0,0);
+							$.ajaxSettings.async = true;
 						}   
-					}                            
+						var text = "";
+						for(var i = 0; i < pinyin_record.length; i++){
+							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+						}
+						textbox.html(text);
+						textbox.setCursorPosition(input_loc);
+					}      				                  
 				}
 			} 
 			/**************************************************************************************************/

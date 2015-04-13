@@ -60,8 +60,8 @@
 			}
 
 			.in_pinyin_window {
-				margin-left: 1.2px; 
-				margin-right: 1.2px; 
+				margin-left: 1.1px; 
+				margin-right: 1.1px; 
 				text-decoration: underline;
 			}
 		</style>
