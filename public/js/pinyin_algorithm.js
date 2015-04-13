@@ -267,7 +267,6 @@
 
 			if (keyin == 40 && sel_mode == 0 && search_key == ""){
 				var which_word = get_Which_Word(input_loc,"head");
-				console.log("which_word: " + which_word);
 				switch (pinyin_record[which_word].modifiable){
 					case 0: 
 						var key = pinyin_record[which_word].pinyin;
@@ -287,6 +286,7 @@
 						console.log("search_key: " + search_key);
 						mode = 3;
 						search_char(0);
+						return false;
 						break;
 					case 1:
 
@@ -302,7 +302,7 @@
 				
 			}
 
-			if (keyin == 40 && sel_mode == 1 && mode == 2){            // 自動選詞時按方向鍵"下"來改字
+			/*if (keyin == 40 && sel_mode == 1 && mode == 2){            // 自動選詞時按方向鍵"下"來改字
 				if (temp_loc >= word_record_loc[0] && temp_loc < word_record_loc[1]){
 					var j = 0;
 					var pinyin = pinyin_record[0];
@@ -346,7 +346,7 @@
 				mode = 3;
 				search_char(0);
 				return false;
-			}
+			}*/
 			
 			if (keyin == 8){
 				if (sel_mode == 1 && mode == 2 && reachLeft() == true) 
@@ -680,8 +680,9 @@
 				if (isNumber(keyin)){
 					if (mode == 1 || mode == 3) 
 						push_before_selected();
-					console.log("ABCIAJHO");
+					//$.ajaxSettings.async = false;
 					setWord();
+					//$.ajaxSettings.async = true;
 					push_undo_record();
 					textbox.focus().setCursorPosition(input_loc);       
 					if (prefix_key != "")
@@ -1780,8 +1781,9 @@
 					insert_word = select_letter[keyin - 97 + (thispage - 1) * 10];
 				else if (keyin >= 49)
 					insert_word = select_letter[keyin - 49 + (thispage - 1) * 10];
+				//var letter_span = '<span class="in_pinyin_window">' + insert_word + '</span>';
 				input_word = left + insert_word + right;
-				textbox.html(input_word);
+				//textbox.html(input_word);
 				word_length = insert_word.length;
 				prefix_key = insert_word;
 				
@@ -1798,6 +1800,11 @@
 				else
 					obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);       // 音節數!=字數，只能在最前方修改
 				addRecord(obj,input_loc);
+				var text = "";
+				for(var i = 0; i < pinyin_record.length; i++){
+					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+				}
+				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數
 				search_key = "";                                            // 清空buffer
 				mode = 2;
@@ -2200,6 +2207,7 @@
 		var now_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 		var text = textbox.html();
 		text = remove_tags(text);
+		console.log("text: " + text);
 		var temp_key_len = text.length - input_len;
 		
 		if (keyCode == 8){
@@ -2275,8 +2283,27 @@
 			search_key = search_key.replace("&nbsp;"," ");  
 		}
 		search_key = search_key.trim();
-		console.log("search_key: " + search_key + "123");    
+		console.log("search_key: " + search_key);    
 		console.log("");          
+	}
+
+	function remove_tags(text){             // 不取html的tag，得到純文字
+		var tags = [
+			'<span id="first" class="in_pinyin_window">',
+			'<span id="second" class="in_pinyin_window">',
+			'<span id="third" class="in_pinyin_window">',
+			'<span class="in_pinyin_window">',
+			'</span>',
+			'</u>',
+			'<u>'
+		];
+		var after_text = text;
+		for(var i = 0; i < tags.length; i++){
+			while (after_text.indexOf(tags[i]) >= 0){
+				after_text = after_text.replace(tags[i],"");
+			}
+		}
+		return after_text;
 	}
 		
 	function getPage(){                                             // 得到回傳字的總頁數
@@ -2290,13 +2317,19 @@
 		var range = document.createRange();          
 		try{
 			var sel = window.getSelection();
-			var check_child_node = element.childNodes[1];                               
-			if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
+			var which_word = get_Which_Word(pos,"tail");
+			console.log("which_word: " + which_word);
+			console.log("element: " + element.childNodes[0]);
+			var loc = pos - pinyin_record[which_word].start_loc;
+			element = element.childNodes[which_word];
+			console.log("element: " + element);
+			range.setStart(element.childNodes[0], loc);                          
+			/*if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
 				throw "set in span";
 			}
 			else{
 				range.setStart(element.childNodes[0], pos);
-			}
+			}*/
 		}
 		catch (err){                                                // 此區塊直接針對各span設定其游標位置
 			console.log("err_msg: " + err);
@@ -2375,23 +2408,6 @@
 			range.text = replacementText;
 		}
 	}
-
-	function remove_tags(text){             // 不取html的tag，得到純文字
-		var tags = [
-			'<span id="first" class="in_pinyin_window">',
-			'<span id="second" class="in_pinyin_window">',
-			'<span id="third" class="in_pinyin_window">',
-			'</span>',
-			'</u>',
-			'<u>'
-		];
-		for(var i = 0; i < tags.length; i++){
-			if (text.indexOf(tags[i]) >= 0)
-				text = text.replace(tags[i],"");
-		}
-		return text;
-	}
-
 
 	function get_sel_mode(text){                                    // 判斷dropdown中的值，並決定輸入法模式
 		var textbox = $("#input");
