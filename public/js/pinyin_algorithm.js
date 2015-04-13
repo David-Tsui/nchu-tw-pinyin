@@ -1572,8 +1572,10 @@
 						}
 						record_last_index = temp_index;
 						temp_index++;
-					}               
+					}        
+					$.ajaxSettings.async = false;       
 					modify_obj_loc(index, 0, after_flag);
+					$.ajaxSettings.async = true;
 				}
 			},"json");
 		}
@@ -1601,7 +1603,9 @@
 				var obj = new pinyin_obj("", word, start_loc, end_loc, 2);
 				pinyin_record.splice(index, 0, obj);
 			}
+			$.ajaxSettings.async = false;
 			modify_obj_loc(index, 0, 0);
+			$.ajaxSettings.async = true;
 			record_last_index = index;
 		}
 		for(var i = 0; i < pinyin_record.length; i++){      
@@ -1734,8 +1738,6 @@
 				console.log("left: " + left);
 				console.log("right: " + right);              
 				input_word = left + insert_word + right;
-				textbox.html(input_word);
-
 				var obj = "";
 				if (getSyllable(search_key) == word_length){
 					$.ajaxSettings.async = false;
@@ -1750,6 +1752,11 @@
 				else
 					obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
 				addRecord(obj,input_loc);
+				var text = "";
+				for(var i = 0; i < pinyin_record.length; i++){
+					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+				}         
+				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數
 				search_key = "";                                            // 清空buffer
 				mode = 0;
@@ -1764,11 +1771,15 @@
 				else if (keyin >= 49)
 					insert_word = select_letter[keyin - 49 + (thispage - 1) * 10];
 				input_word = left + insert_word + right;
-				textbox.html(input_word);
 				word_length = insert_word.length;
 							
 				var obj = new pinyin_obj("",insert_word,input_loc,input_loc + word_length,2);
-				addRecord(obj,input_loc);            
+				addRecord(obj,input_loc);   
+				var text = "";
+				for(var i = 0; i < pinyin_record.length; i++){
+					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+				}         
+				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數                                 
 				prefix_key = "";                                            // 清空buffer
 				mode = 0;   
@@ -1781,9 +1792,7 @@
 					insert_word = select_letter[keyin - 97 + (thispage - 1) * 10];
 				else if (keyin >= 49)
 					insert_word = select_letter[keyin - 49 + (thispage - 1) * 10];
-				//var letter_span = '<span class="in_pinyin_window">' + insert_word + '</span>';
 				input_word = left + insert_word + right;
-				//textbox.html(input_word);
 				word_length = insert_word.length;
 				prefix_key = insert_word;
 				
@@ -1801,6 +1810,7 @@
 					obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);       // 音節數!=字數，只能在最前方修改
 				addRecord(obj,input_loc);
 				var text = "";
+				console.log("幾個record: " + pinyin_record.length);
 				for(var i = 0; i < pinyin_record.length; i++){
 					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 				}
