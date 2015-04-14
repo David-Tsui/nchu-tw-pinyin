@@ -1516,7 +1516,6 @@
 		if (key != ""){                                             // 如果刪除前該字區超過一個音節，就會需要回傳去分割
 			var key_arr = key.split("");
 			if (key_arr[0] == key_arr[0].toUpperCase()){			// 如果是音首模式
-				console.log("here");
 				var pinyin_objs = [];
 				var word_arr = word.split("");
 				var temp_index = index;
@@ -1542,7 +1541,7 @@
 					if (i == 0)
 						pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
 					else
-						pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
+						pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
 					record_last_index = temp_index;
 					temp_index++;
 				}
