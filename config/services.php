@@ -37,7 +37,7 @@ return [
 	'facebook' => [
 	    'client_id' => '811007622269243',
 	    'client_secret' => '6adb494b91d709723f222e9d9fb07787',
-	    'redirect' => 'http://speechlab.cs.nchu.edu.tw/l5_pinyin/public/auth/facebook/callback',
+	    'redirect' => 'http://localhost/nchu-tw-pinyin/public/auth/facebook/callback',
 	],
 
 ];

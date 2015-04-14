@@ -1501,7 +1501,7 @@
 	function search_correspond(key,word){
 		$.post('search_correspond.php',{KEY:key,WORD:word},function(data){
 			if (data == ""){
-				return;
+				correspond_flag = false;
 			}
 			else{
 				if (data[0] == 1)
@@ -1514,77 +1514,110 @@
 
 	function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是字區被分割時，會將該字詞區剩下的拼音重新分配
 		if (key != ""){                                             // 如果刪除前該字區超過一個音節，就會需要回傳去分割
-			$.post('pinyin_split.php',{THE_KEY:key},function(data){
-				if (data == ""){
-					return;
+			var key_arr = key.split("");
+			if (key_arr[0] == key_arr[0].toUpperCase()){			// 如果是音首模式
+				console.log("here");
+				var pinyin_objs = [];
+				var word_arr = word.split("");
+				var temp_index = index;
+				var temp_loc = 0;
+				try{
+					temp_loc = pinyin_record[index].start_loc;
 				}
-				else{
-					var key_num = Object.keys(data).length; 
-					var word_num = word.length;
-					var pinyin_objs = [];
-					var j = 0;
-					var temp_loc = 0;
-					try{
-						temp_loc = pinyin_record[index].start_loc;
-					}
-					catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
-						temp_loc = pinyin_record[index - 1].end_loc;
-					}
+				catch(err){                                     	// 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
+					temp_loc = pinyin_record[index - 1].end_loc;
+				}
+				var start_loc = temp_loc;
+				var end_loc = temp_loc + 1;
+				obj = new pinyin_obj(key,word_arr[0],start_loc,end_loc,2);
+				pinyin_objs.push(obj);                      		// 插入到物件陣列裡
 
-					var temp_index = index;
-					var start_loc = 0;
-					var end_loc = 0;
-					for(var i = 0; i < key_num; i++){
-						var pinyin_piece = data[i];                 // 被切出來的拼音
-						var syllable = getSyllable(pinyin_piece);   // 計算該拼音的音節，以便將原本區域間的字分割正確
-						var word_piece = word.substring(j,j + syllable);
-						word_num -= word_piece.length;
-						console.log("被切的字: " + word_piece);
-						start_loc = j + temp_loc;
-						end_loc = j + temp_loc + syllable;
-						var obj = "";
-						$.ajaxSettings.async = false;
-						search_correspond(pinyin_piece,word_piece); // 檢查拼音是否與字依序相符
-						$.ajaxSettings.async = true;
-						if (correspond_flag)                            
-							obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,0);
-						else
-							obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,2);
-						j += syllable;
-						pinyin_objs.push(obj);
-					}      
-					if (word_num > 0){                              // 如果字數超過音節數
-						var word_piece = word.substring((word.length - word_num),word.length);  // 則把剩下來的字併為一詞
-						start_loc = end_loc;
-						end_loc = start_loc + word_num;
-						obj = new pinyin_obj("",word_piece,start_loc,end_loc,2);
-						pinyin_objs.push(obj);                      // 插入到物件陣列裡
+				for(var i = 1; i < word_arr.length; i++){
+					start_loc = end_loc;
+					end_loc = start_loc + 1;
+					obj = new pinyin_obj("",word_arr[i],start_loc,end_loc,2);
+					pinyin_objs.push(obj);                      	// 插入到物件陣列裡
+				}
+				for(var i = 0; i < pinyin_objs.length; i++){
+					if (i == 0)
+						pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
+					else
+						pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
+					record_last_index = temp_index;
+					temp_index++;
+				}
+			}
+			else{
+				$.post('pinyin_split.php',{THE_KEY:key},function(data){
+					if (data == ""){
 					}
-					for(var i = 0; i < pinyin_objs.length; i++){
-						if (i == 0){
-							if (del_flag){
-								pinyin_record.splice(temp_index, 1, pinyin_objs[i]);                                
+					else{
+						var key_num = Object.keys(data).length; 
+						var word_num = word.length;
+						var pinyin_objs = [];
+						var j = 0;
+						var temp_loc = 0;
+						try{
+							temp_loc = pinyin_record[index].start_loc;
+						}
+						catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
+							temp_loc = pinyin_record[index - 1].end_loc;
+						}
+
+						var temp_index = index;
+						var start_loc = 0;
+						var end_loc = 0;
+						for(var i = 0; i < key_num; i++){
+							var pinyin_piece = data[i];                 // 被切出來的拼音
+							var syllable = getSyllable(pinyin_piece);   // 計算該拼音的音節，以便將原本區域間的字分割正確
+							var word_piece = word.substring(j,j + syllable);
+							word_num -= word_piece.length;
+							console.log("被切的字: " + word_piece);
+							start_loc = j + temp_loc;
+							end_loc = j + temp_loc + syllable;
+							var obj = "";
+							$.ajaxSettings.async = false;
+							search_correspond(pinyin_piece,word_piece); // 檢查拼音是否與字依序相符
+							$.ajaxSettings.async = true;
+							if (correspond_flag)                            
+								obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,0);
+							else
+								obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,2);
+							j += syllable;
+							pinyin_objs.push(obj);
+						}      
+						if (word_num > 0){                              // 如果字數超過音節數
+							var word_piece = word.substring((word.length - word_num),word.length);  // 則把剩下來的字併為一詞
+							start_loc = end_loc;
+							end_loc = start_loc + word_num;
+							obj = new pinyin_obj("",word_piece,start_loc,end_loc,2);
+							pinyin_objs.push(obj);                      // 插入到物件陣列裡
+						}
+						for(var i = 0; i < pinyin_objs.length; i++){
+							if (i == 0){
+								if (del_flag){
+									pinyin_record.splice(temp_index, 1, pinyin_objs[i]);                                
+								}
+								else{
+									pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
+								}
 							}
 							else{
 								pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
 							}
-						}
-						else{
-							pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
-						}
-						record_last_index = temp_index;
-						temp_index++;
-					}        
-					$.ajaxSettings.async = false;       
-					modify_obj_loc(index, 0, after_flag);
-					$.ajaxSettings.async = true;
-				}
-			},"json");
+							record_last_index = temp_index;
+							temp_index++;
+						}        
+						$.ajaxSettings.async = false;       
+						modify_obj_loc(index, 0, after_flag);
+						$.ajaxSettings.async = true;
+					}
+				},"json");
+			}
 		}
 		else if (key == "" && word == ""){              // 只剩一單字（先調整，後刪除）
 			modify_obj_loc(index + 1, 1, 0);            // 先將會被刪除的字區後方的所有字區先調整位置
 			pinyin_record.splice(index, 1);             // 再把該字詞刪除
-			//record_last_index = index;
 		}
 		else if (key == "" && word != ""){              // 沒有拼音的詞
 			try {
@@ -2105,12 +2138,14 @@
 				var word_right = pinyin_record[which_word].word.substring(temp_loc,pinyin_record[which_word].word.length);
 				var pinyin_left = "";
 				var pinyin_right = "";
-				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來.
+
+				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
+				console.log("key: " + key);
 				var syllable = getSyllable(key);
 				temp_loc = pinyin_record[which_word].start_loc;
 
 				if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
-					if (loc > syllable){                    // 字詞的位置超過拼音
+					if (loc > syllable){                    	// 字詞的位置超過拼音
 						pinyin_left = key;
 					}
 					else{
