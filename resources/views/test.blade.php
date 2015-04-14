@@ -143,7 +143,7 @@
         </nav>
         <div id="push"></div>
 		<div id="push"></div>
-		<br><br>
+		<div id="push"></div>
 		
 		@yield('content')
 
