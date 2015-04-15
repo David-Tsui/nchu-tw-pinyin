@@ -399,7 +399,8 @@
 				mode = 0;
 				$("#show").html("");
 				$("#show_flat").html("");
-				//input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+				search_key = "";
+				prefix_key = "";
 			}
 			
 			if ((mode != 0 || associated_search_flag == true) && reachTail() == true){          // 選字模式下，若翻頁已達末頁，則+號無效，若所選數字不存在文字，亦禁止該數字的鍵入
@@ -633,9 +634,11 @@
 			if (sel_mode == 0){ 
 				if (keyin == 37 && mode != 1 && !(mode == 0 && search_key != "")){               // 非拼音時，左右鍵將會調整輸入位置
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+					console.log("INPUT_LOC: " + input_loc);
 				}
 				if (keyin == 39 && mode != 1 && !(mode == 0 && search_key != "")){               // 非拼音時，左右鍵將會調整輸入位置 
-					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);                 
+					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);      
+					console.log("INPUT_LOC: " + input_loc);           
 				}       
 				if (mode == 0 && keyin == 35 && associated_search_flag == false){
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);  
@@ -645,7 +648,7 @@
 				}
 			}
 			if (sel_mode == 1){
-				if (keyin == 37 && (mode == 0 || mode == 2)){       // 非拼音時，左右鍵將會調整輸入位置
+				if (keyin == 37 && (mode == 0 || mode == 2 )){       // 非拼音時，左右鍵將會調整輸入位置
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 				}
 				if (keyin == 39 && (mode == 0 || mode == 2)){       // 非拼音時，左右鍵將會調整輸入位置                     
