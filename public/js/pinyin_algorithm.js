@@ -291,6 +291,7 @@
 					case 1:
 						var key = pinyin_record[which_word].pinyin;
 						var start_loc = pinyin_record[which_word].start_loc;
+						var end_loc = pinyin_record[which_word].end_loc;
 						if (input_loc == start_loc){
 							search_key = key;
 							console.log("search_key: " + search_key);
@@ -298,11 +299,22 @@
 							search_char(0);				
 						}
 						else{
-							var text = "此處無法修改，請移至此詞最前端!";
+							var text = "此處無法修改，請移至最前端!";
 							prompt_txtbox.val(text);
 							prompt_flat_txtbox.val(text);
 							caption_effect();
 						}
+						var mainDiv = document.getElementById("input");
+						var element = mainDiv.childNodes[0];
+						var which_word = get_Which_Word(input_loc);
+						element = element.childNodes[which_word];
+
+						var range = document.createRange();
+						range.setStart(element, start_loc); // 6 is the offset of "world" within "Hello world"
+						range.setEnd(element, end_loc); // 7 is the length of "this is"
+						var sel = window.getSelection();
+						sel.removeAllRanges();
+						sel.addRange(range);
 						return false;
 						break;
 					case 2:
@@ -2166,7 +2178,6 @@
 				var pinyin_right = "";
 
 				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
-				console.log("key: " + key);
 				var syllable = getSyllable(key);
 				start_loc = pinyin_record[which_word].start_loc;
 				var temp_loc = loc - start_loc;
@@ -2192,15 +2203,14 @@
 					}
 				}
 
-				console.log("pinyin_left: " + pinyin_left);
+				/*console.log("pinyin_left: " + pinyin_left);
 				console.log("pinyin_right: " + pinyin_right);
 				console.log("word_left: " + word_left);
-				console.log("word_right: " + word_right);
+				console.log("word_right: " + word_right);*/
 
 				$.ajaxSettings.async = false;
 				rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
 				$.ajaxSettings.async = true;
-				console.log("最後一個record的index: " + record_last_index);
 				pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
 				$.ajaxSettings.async = false;
 				rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
