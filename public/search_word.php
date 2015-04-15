@@ -3,7 +3,7 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		//$key = 'diong hing dai hak';
+		//$key = "hak";
 		$mode = $_POST['MODE'];
 		//$mode = 2;
 		$key_super = $key . " %";
@@ -84,24 +84,28 @@
 					break;
 				$i++;
 		  	}while ($row = $stmt->fetch());
+		  	$syllables = getSyllable($key);
 
-			$key = strtok($key," ");		// 把拼音用空白切開
-			if ($key != false){
-				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-					    WHERE `sound` = :key 
-					    ORDER BY char_length(`characters`) ASC, `score` DESC";
-				$stmt = $db->prepare($sql);
-				$stmt->bindParam(':key',$key);
-				$stmt->execute();
-				$stmt->setFetchMode(PDO::FETCH_NUM);
-				$row = $stmt->fetch();
-			  	do{
-			    	if ($row != "")						
-						$arr[$i] = $row[0];
-					else
-						break;
-					$i++;
-			  	}while ($row = $stmt->fetch());
+		  	if ($syllables > 1){
+				$key = strtok($key," ");		// 把拼音用空白切開
+				echo "key = $key<br>";
+				if ($key != false){
+					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+						    WHERE `sound` = :key 
+						    ORDER BY char_length(`characters`) ASC, `score` DESC";
+					$stmt = $db->prepare($sql);
+					$stmt->bindParam(':key',$key);
+					$stmt->execute();
+					$stmt->setFetchMode(PDO::FETCH_NUM);
+					$row = $stmt->fetch();
+				  	do{
+				    	if ($row != "")						
+							$arr[$i] = $row[0];
+						else
+							break;
+						$i++;
+				  	}while ($row = $stmt->fetch());
+				}
 			}
 		}
 		
@@ -147,5 +151,16 @@
 	}
 	else{
 		echo "Haven't got a post value!!";
+	}
+
+	function getSyllable($key){                  // 得到key的音節數
+		$blanks = 0;
+		$syllable = 0;
+		for($i = 0; $i < strlen($key); $i++){
+			if (strcmp($key[$i]," ") == 0) 
+				$blanks++;
+		}
+		$syllable = $blanks + 1;
+		return $syllable;
 	}
 ?>
