@@ -3,7 +3,7 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		//$key = "hak";
+		//$key = "hing dai hak";
 		$mode = $_POST['MODE'];
 		//$mode = 2;
 		$key_super = $key . " %";
@@ -66,7 +66,7 @@
 				$arr[0] = $row[0];
 			}
 		}
-		else if ($mode == 2){	// 如果是修改模式，先找整個拼音，再找第一音節
+		else if ($mode == 2){	// 如果是修改模式，先找整個拼音，再找其他音節
 		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 				    WHERE `sound` = :key OR `sound`
 				    ORDER BY char_length(`characters`) ASC, `score` DESC";
@@ -87,23 +87,30 @@
 
 		  	$syllables = getSyllable($key);
 		  	if ($syllables > 1){
-				$key = strtok($key," ");		// 把拼音用空白切開
-				if ($key != false){
-					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-						    WHERE `sound` = :key 
-						    ORDER BY char_length(`characters`) ASC, `score` DESC";
-					$stmt = $db->prepare($sql);
-					$stmt->bindParam(':key',$key);
-					$stmt->execute();
-					$stmt->setFetchMode(PDO::FETCH_NUM);
-					$row = $stmt->fetch();
-				  	do{
-				    	if ($row != "")						
-							$arr[$i] = $row[0];
-						else
-							break;
-						$i++;
-				  	}while ($row = $stmt->fetch());
+		  		$flag = 1;
+				while ($flag){
+					$pos = strrpos($key," ");
+					if ($pos != false){
+						$key = substr($key,0,$pos);
+						//echo "key = $key<br>";
+						$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+							    WHERE `sound` = :key 
+							    ORDER BY char_length(`characters`) DESC, `score` DESC";
+						$stmt = $db->prepare($sql);
+						$stmt->bindParam(':key',$key);
+						$stmt->execute();
+						$stmt->setFetchMode(PDO::FETCH_NUM);
+						$row = $stmt->fetch();
+					  	do{
+					    	if ($row != "")						
+								$arr[$i] = $row[0];
+							else
+								break;
+							$i++;
+					  	}while ($row = $stmt->fetch());
+					}
+					else
+						$flag = 0;	
 				}
 			}
 		}

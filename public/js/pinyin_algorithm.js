@@ -98,9 +98,9 @@
 			if (tow_check == true && show_text != ""){                  // 如果不能選字或是拼音還存在，則反白會失效，游標自動跑到當前的input_loc
 				textbox.setCursorPosition(input_loc);           		// 一律固定到該次輸入的位置
 			}
-			else if (tow_check == false && mode == 2 && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
+			else if (tow_check == false && (mode == 2 || mode == 3) && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
 				mode = 0;                                               // 而後視為選字成功之後續歸零
-				$("#show").html("");
+				$("#show, #show_flat").html("");
 				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			}
 			else if (tow_check == false && show_text != ""){            // 如果沒有拖拉反白，而是單純的點選
@@ -293,8 +293,8 @@
 						var start_loc = pinyin_record[which_word].start_loc;
 						var end_loc = pinyin_record[which_word].end_loc;
 						if (input_loc == start_loc){
-							search_key = key;
-							console.log("search_key: " + search_key);
+							search_key = key;							
+							//select_word(input_loc,start_loc,end_loc);
 							mode = 3;
 							search_char(0);				
 						}
@@ -304,17 +304,7 @@
 							prompt_flat_txtbox.val(text);
 							caption_effect();
 						}
-						var mainDiv = document.getElementById("input");
-						var element = mainDiv.childNodes[0];
-						var which_word = get_Which_Word(input_loc);
-						element = element.childNodes[which_word];
-
-						var range = document.createRange();
-						range.setStart(element, start_loc); // 6 is the offset of "world" within "Hello world"
-						range.setEnd(element, end_loc); // 7 is the length of "this is"
-						var sel = window.getSelection();
-						sel.removeAllRanges();
-						sel.addRange(range);
+						
 						return false;
 						break;
 					case 2:
@@ -325,7 +315,6 @@
 						return false;
 						break;
 				}
-				
 			}
 
 			/*if (keyin == 40 && sel_mode == 1 && mode == 2){            // 自動選詞時按方向鍵"下"來改字
@@ -2412,6 +2401,19 @@
 		totalpage = parseInt(number_letters / 10);
 		if (number_letters % 10 != 0) 
 			totalpage++;
+	}
+
+	function select_word(loc,start,end){
+		var mainDiv = document.getElementById("input");
+		var element = mainDiv.childNodes[0];
+		var which_word = get_Which_Word(loc);
+		element = element.childNodes[which_word];
+		var range = document.createRange();
+		range.setStart(element, start); 
+		range.setEnd(element, end); 
+		var sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
 	}
 
 	$.fn.setCursorPosition = function(pos){                         // 控制游標顯示位置   
