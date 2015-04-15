@@ -149,11 +149,11 @@
 					<div class="jumbotron" id="public_note">
 						<div style="margin-top: -15px">
 							<h3>系統公告</h3>
-							<p style="text-align: right; font-size: 9px">3/25.2015</p>
+							<p style="text-align: right; font-size: 9px">4/15.2015</p>
 							<div style="text-align: left">
+								<p style="font-size: 14px">● 智能模式維修中!</p>
 								<p style="font-size: 14px">● 手機介面請使用自選模式</p>
-								<p style="font-size: 14px">● 會員系統即將上線!</p>
-								<p style="font-size: 14px">● 智能模式仍在開發中!</p>
+								<p style="font-size: 14px">● 會員系統、聯絡系統已上線!</p>
 							</div>
 							<div id="hide_btn" style="text-align: center; margin-bottom: -20px">
 								<div class="ui huge buttons" style="font-size: 14px">
