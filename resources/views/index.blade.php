@@ -26,8 +26,8 @@
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
-				min-height: 375px;
-				max-height: 375px;
+				min-height: 385px;
+				max-height: 385px;
 			}
 
 			.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
@@ -149,11 +149,13 @@
 					<div class="jumbotron" id="public_note">
 						<div style="margin-top: -15px">
 							<h3>系統公告</h3>
-							<p style="text-align: right; font-size: 9px">4/15.2015</p>
+							<p style="text-align: right; font-size: 12px">4/15.2015</p>
 							<div style="text-align: left">
-								<p style="font-size: 14px">● 智能模式維修中!</p>
-								<p style="font-size: 14px">● 手機介面請使用自選模式</p>
-								<p style="font-size: 14px">● 會員系統、聯絡系統已上線!</p>
+								<div style="font-size: 16px; margin-bottom: 30px">
+									<p>● 智能模式維修中!</p>
+									<p>● 手機介面請使用自選模式</p>
+									<p>● 會員系統、聯絡系統已上線!</p>
+								</div>
 							</div>
 							<div id="hide_btn" style="text-align: center; margin-bottom: -20px">
 								<div class="ui huge buttons" style="font-size: 14px">
