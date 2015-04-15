@@ -226,7 +226,7 @@
 					textbox.setCursorPosition(input_loc + search_key.length);
 					return false;
 				}
-				if (mode == 2){                                        // 關聯詞模式下，若按下方向鍵視為放棄
+				if (mode == 2 || mode == 3){                           // 關聯詞模式下，若按下方向鍵視為放棄
 					mode = 0;
 					$("#show").html("");
 					$("#show_flat").html("");
@@ -244,7 +244,7 @@
 					textbox.setCursorPosition(input_loc);
 					return false;
 				}
-				if (mode == 2){                                        // 關聯詞模式下，若按下方向鍵視為放棄
+				if (mode == 2 || mode == 3){                           // 關聯詞模式下，若按下方向鍵視為放棄
 					mode = 0;
 					$("#show").html("");
 					$("#show_flat").html("");
@@ -296,6 +296,12 @@
 							console.log("search_key: " + search_key);
 							mode = 3;
 							search_char(0);				
+						}
+						else{
+							var text = "此處無法修改，請移至此詞最前端!";
+							prompt_txtbox.val(text);
+							prompt_flat_txtbox.val(text);
+							caption_effect();
 						}
 						return false;
 						break;
@@ -388,11 +394,11 @@
 				}
 			}
 			
-			if (sel_mode == 0 && mode == 2 && (keyin >= 37 && keyin <= 40)){                // 關聯詞模式下，若按下方向鍵視為放棄
+			if (sel_mode == 0 && (mode == 2 || mode == 3) && (keyin >= 37 && keyin <= 40)){     // 關聯詞模式下，若按下方向鍵視為放棄
 				mode = 0;
 				$("#show").html("");
 				$("#show_flat").html("");
-				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+				//input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			}
 			
 			if ((mode != 0 || associated_search_flag == true) && reachTail() == true){          // 選字模式下，若翻頁已達末頁，則+號無效，若所選數字不存在文字，亦禁止該數字的鍵入
@@ -1647,9 +1653,7 @@
 				var obj = new pinyin_obj("", word, start_loc, end_loc, 2);
 				pinyin_record.splice(index, 0, obj);
 			}
-			$.ajaxSettings.async = false;
 			modify_obj_loc(index, 0, 0);
-			$.ajaxSettings.async = true;
 			record_last_index = index;
 		}
 		for(var i = 0; i < pinyin_record.length; i++){      
@@ -1777,6 +1781,7 @@
 				else if (keyin >= 49)
 					insert_word = select_letter[keyin - 49 + (thispage - 1) * 10];
 				word_length = insert_word.length;
+				prefix_key = insert_word;
 
 				var replace_end = input_loc + word_length;
 				/*console.log("replace_end: " + replace_end);  
@@ -1808,6 +1813,7 @@
 				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數
 				search_key = "";                                            // 清空buffer
+
 				mode = 0;
 			}
 			else if (mode == 2){     // 關聯詞模式  
@@ -2153,19 +2159,20 @@
 				$.ajaxSettings.async = true;
 			}
 			else if (loc < pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間
-				var temp_loc = loc - pinyin_record[which_word].start_loc;
-				var word_left = pinyin_record[which_word].word.substring(0,temp_loc);
-				var word_right = pinyin_record[which_word].word.substring(temp_loc,pinyin_record[which_word].word.length);
+				var start_loc = loc - pinyin_record[which_word].start_loc;
+				var word_left = pinyin_record[which_word].word.substring(0,start_loc);
+				var word_right = pinyin_record[which_word].word.substring(start_loc,pinyin_record[which_word].word.length);
 				var pinyin_left = "";
 				var pinyin_right = "";
 
 				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
 				console.log("key: " + key);
 				var syllable = getSyllable(key);
-				temp_loc = pinyin_record[which_word].start_loc;
+				start_loc = pinyin_record[which_word].start_loc;
+				var temp_loc = loc - start_loc;
 
 				if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
-					if (loc > syllable){                    	// 字詞的位置超過拼音
+					if (temp_loc > syllable){                    	// 字詞的位置超過拼音
 						pinyin_left = key;
 					}
 					else{
@@ -2173,7 +2180,7 @@
 						for(var i = 0; i < key.length; i++){
 							if (key[i] == " ") 
 								j++;
-							if (j == (loc - temp_loc)){         
+							if (j == temp_loc){         
 								var split_loc = i;          
 								pinyin_left = key.substring(0,split_loc);
 								pinyin_right = key.substring(split_loc + 1,key.length);
@@ -2405,9 +2412,11 @@
 			var which_word = get_Which_Word(pos,"tail");
 			console.log("which_word: " + which_word);
 			console.log("element: " + element.childNodes[0]);
+			console.log("現在record有 " + pinyin_record.length + " 個元素");
 			var loc = pos - pinyin_record[which_word].start_loc;
+			console.log("loc: " + loc);
 			element = element.childNodes[which_word];
-			console.log("element: " + element);
+			console.log("child-element: " + element);
 			range.setStart(element.childNodes[0], loc);                          
 			/*if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
 				throw "set in span";

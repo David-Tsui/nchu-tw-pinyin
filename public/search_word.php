@@ -84,11 +84,10 @@
 					break;
 				$i++;
 		  	}while ($row = $stmt->fetch());
-		  	$syllables = getSyllable($key);
 
+		  	$syllables = getSyllable($key);
 		  	if ($syllables > 1){
 				$key = strtok($key," ");		// 把拼音用空白切開
-				echo "key = $key<br>";
 				if ($key != false){
 					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 						    WHERE `sound` = :key 
