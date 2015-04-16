@@ -1,5 +1,5 @@
 body {
-	/*pink*/
+	/*xmas*/
 	background: url(xmas_back1.jpg) no-repeat center center fixed;
 	/*common*/
 	-webkit-background-size: cover;
@@ -19,7 +19,7 @@ body {
 }
 
 .navbar-inverse {
-	/*pink*/
+	/*xmas*/
 	background-color: rgba(252, 6, 6, 0.5);
 	border-color: #7B0000;
 	box-shadow: inset 0px 8px 25px 5px rgba(7, 87, 24, 0.81); 
@@ -42,7 +42,7 @@ body {
 .navbar-collapse .navbar-nav > li > a { color: #FFFFFF;	}
 
 #footer {
-	/*pink*/
+	/*xmas*/
 	background-color: rgba(252, 6, 6, 0.5);
 	/*common*/
 	box-shadow: inset 0px -8px 25px 5px rgba(7, 87, 24, 0.81); 
@@ -53,7 +53,7 @@ body {
 #search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }
 
 #public_note {
-	/*pink*/
+	/*xmas*/
 	background: rgba(255, 255, 255, 0.5);
 	/*common*/
 	padding-top: 20px;
@@ -62,7 +62,7 @@ body {
 }
 
 #Input_place {
-	/*pink*/
+	/*xmas*/
 	background-color: hsla(0, 100%, 100%, 0.65); 
 	box-shadow: inset 0px 2px 20px 10px #C50E0E; 
 	-webkit-box-shadow: inset 0px 2px 20px 10px #C50E0E; 
@@ -74,7 +74,7 @@ body {
 }
 
 #select_mode {
-	/*pink*/
+	/*xmas*/
 	background-color: rgba(255, 118, 118, 0.8); 
 	color: #FFF;
 	box-shadow: inset 0px 0px 10px 2px #FFF; 
@@ -88,7 +88,7 @@ body {
 } 
 
 #prompt {
-	/*pink*/
+	/*xmas*/
 	border: solid #FFF;
 	border-width: 3px;
 	border-bottom: solid rgba(255, 255, 255, 0);
@@ -107,7 +107,7 @@ body {
 }
 
 #show {
-	/*pink*/
+	/*xmas*/
 	background-color: rgba(255, 208, 208, 0.3);
 	border: solid #FFF;
 	border-width: 3px; 
@@ -124,6 +124,64 @@ body {
 	overflow-y: auto; 
 	background-attachment: scroll; 
 	background-clip: border-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; 
+	border-radius: 10px; 
+	margin-top: 8px; 
+	margin-bottom: 10px;" 
+}
+
+#select_mode_flat {
+	/*xmas*/
+	background-color: rgba(255, 118, 118, 0.8); 
+	color: #FFF;
+	box-shadow: inset 0px 0px 10px 2px #FFF; 
+	-webkit-box-shadow: inset 0px 0px 10px 2px #FFF; 
+	-moz-box-shadow: inset 0px 0px 10px 2px #FFF;
+	/*common*/
+	margin-top: 10px; 
+	font-weight: bold;  
+	font-size: 12px;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+} 
+
+#prompt_flat {
+	/*xmas*/
+	border: solid #FFF;
+	border-width: 3px;
+	border-bottom: solid rgba(255, 255, 255, 0);
+	border-bottom-width: 1px;
+	color: #000;
+	background-color: rgba(255, 208, 208, 0.5);
+	/*common*/
+	font-size: 12px; 
+	font-weight: bold; 
+	text-align: center; 
+	margin-left: 3px;
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	width: 100%;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+}
+
+#show_flat {
+	/*xmas*/
+	background-color: rgba(255, 208, 208, 0.3);
+	border: solid #FFF;
+	border-width: 3px; 
+	border-top: solid rgba(255, 255, 255, 0);
+	border-top-width: 5px;
+	color: #000;
+	/*common*/
+	height: 70px; 
+	width: 70%; 
+	margin-left: 12px;
+	max-height: 70px; 
+	max-width: 70%;
+	font-size: 12px; 
+	padding-left: 10px; 
+	overflow-y: auto; 
+	background-attachment: scroll; 
+	background-clip: border-box; 
+	-webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; 
 	border-radius: 10px; 
 	margin-top: 8px; 
 	margin-bottom: 10px;" 

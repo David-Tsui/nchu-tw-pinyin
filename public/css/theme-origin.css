@@ -93,20 +93,6 @@ body {
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
 } 
 
-#select_mode_flat {
-	/*origin*/
-	background-color: rgba(44, 44, 44, 0.8); 
-	color: #FFF;
-	box-shadow: inset 0px 1px 10px 1px #ABABAB;
-	-webkit-box-shadow: inset 0px 1px 10px 1px #ABABAB; 
-	-moz-box-shadow: inset 0px 1px 10px 1px #ABABAB;
-	/*common*/
-	margin-top: 10px; 
-	font-weight: bold;  
-	font-size: 12px;
-	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-} 
-
 #prompt {
 	/*origin*/
 	background-color: rgba(211, 211, 211, 1);
@@ -122,25 +108,6 @@ body {
 	margin-left: 3px;
 	margin-top: 10px; 
 	margin-bottom: 5px; 
-	width: 100%;
-	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-}
-
-#prompt_flat {
-	/*origin*/
-	background-color: rgba(211, 211, 211, 1);
-	border: solid #707271;
-	border-width: 3px;
-	border-bottom: solid rgba(255, 255, 255, 0);
-	border-bottom-width: 3px;
-	color: #000;
-	/*common*/
-	font-size: 12px; 
-	font-weight: bold; 
-	text-align: center; 
-	margin-left: 3px;
-	margin-top: 10px; 
-	margin-bottom: 10px; 
 	width: 100%;
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
 }
@@ -167,6 +134,39 @@ body {
 	border-radius: 10px; 
 	margin-top: 8px; 
 	margin-bottom: 10px;" 
+}
+
+#select_mode_flat {
+	/*origin*/
+	background-color: rgba(44, 44, 44, 0.8); 
+	color: #FFF;
+	box-shadow: inset 0px 1px 10px 1px #ABABAB;
+	-webkit-box-shadow: inset 0px 1px 10px 1px #ABABAB; 
+	-moz-box-shadow: inset 0px 1px 10px 1px #ABABAB;
+	/*common*/
+	margin-top: 10px; 
+	font-weight: bold;  
+	font-size: 12px;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+} 
+
+#prompt_flat {
+	/*origin*/
+	background-color: rgba(211, 211, 211, 1);
+	border: solid #707271;
+	border-width: 3px;
+	border-bottom: solid rgba(255, 255, 255, 0);
+	border-bottom-width: 3px;
+	color: #000;
+	/*common*/
+	font-size: 12px; 
+	font-weight: bold; 
+	text-align: center; 
+	margin-left: 3px;
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	width: 100%;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
 }
 
 #show_flat {
