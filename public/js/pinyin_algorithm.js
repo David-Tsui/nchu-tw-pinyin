@@ -1747,11 +1747,15 @@
 				else if (keyin >= 49)
 					insert_word = select_letter[keyin - 49 + (thispage - 1) * 10];
 				word_length = insert_word.length;
+				
 				if (former_word == insert_word){								// 如果更改之後的字跟原本一樣，則跳過
 					var text = "";
 					for(var i = 0; i < pinyin_record.length; i++){
-						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
-					}         
+						if (pinyin_record[i].modifiable == 2)
+							text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+						else
+							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					}          
 					textbox.html(text);
 					search_key = "";                                            // 清空buffer
 					mode = 0;
@@ -1762,38 +1766,39 @@
 					input_loc += word_length;                                   // 調整下一次的輸入位置
 					return;
 				}
-
-				var replace_end = input_loc + word_length;
-				right = input_word.substring(replace_end,input_word.length);            
-				console.log("left: " + left);
-				console.log("right: " + right);              
-				input_word = left + insert_word + right;
-				var obj = "";
-				if (getSyllable(search_key) == word_length){				// 先檢查音節數與字數相等與否
-					$.ajaxSettings.async = false;
-					search_correspond(search_key,insert_word);              // 檢查拼音是否與字依序相符
-					$.ajaxSettings.async = true;
-					if (correspond_flag)                                        
-						obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,0);
+				else{
+					var replace_end = input_loc + word_length;
+					right = input_word.substring(replace_end,input_word.length);            
+					console.log("left: " + left);
+					console.log("right: " + right);              
+					input_word = left + insert_word + right;
+					var obj = "";
+					if (getSyllable(search_key) == word_length){				// 先檢查音節數與字數相等與否
+						$.ajaxSettings.async = false;
+						search_correspond(search_key,insert_word);              // 檢查拼音是否與字依序相符
+						$.ajaxSettings.async = true;
+						if (correspond_flag)                                        
+							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,0);
+						else
+							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
+					}
 					else
 						obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
+					$.ajaxSettings.async = false;
+					addRecord(obj,input_loc);
+					$.ajaxSettings.async = true;
+					var text = "";
+					for(var i = 0; i < pinyin_record.length; i++){
+						if (pinyin_record[i].modifiable == 2)
+							text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+						else
+							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					}         
+					textbox.html(text);
+					input_len += word_length;                                   // 調整成功字數
+					search_key = "";                                            // 清空buffer
+					mode = 0;
 				}
-				else
-					obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
-				$.ajaxSettings.async = false;
-				addRecord(obj,input_loc);
-				$.ajaxSettings.async = true;
-				var text = "";
-				for(var i = 0; i < pinyin_record.length; i++){
-					if (pinyin_record[i].modifiable == 2)
-						text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-					else
-						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
-				}         
-				textbox.html(text);
-				input_len += word_length;                                   // 調整成功字數
-				search_key = "";                                            // 清空buffer
-				mode = 0;
 			}
 			else if (mode == 2){     // 關聯詞模式  
 				var insert_word = "";               
@@ -2688,10 +2693,10 @@
 			customJqte.remove();
 			customJqte_flat.remove();
 			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
+			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
 			$("#jqte").jqte({css:"jqte_origin"});
 			customJqte = $(".jqte_origin");
 			$("#jqte_flat").jqte({css:"jqte_origin_flat"});
-			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
 			customJqte_flat = $(".jqte_origin_flat");                  
 		}
 		else if (theme == "pink"){
@@ -2702,8 +2707,8 @@
 			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
 			$("#jqte").jqte({css:"jqte_pink"});
 			customJqte = $(".jqte_pink");
-			$("#jqte_flat").jqte({css:"jqte_pink_flat"});
 			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
+			$("#jqte_flat").jqte({css:"jqte_pink_flat"});
 			customJqte_flat = $(".jqte_pink_flat");
 		}
 		else if (theme == "blue"){
@@ -2714,8 +2719,8 @@
 			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
 			$("#jqte").jqte({css:"jqte_blue"});
 			customJqte = $(".jqte_blue");
-			$("#jqte_flat").jqte({css:"jqte_blue_flat"});
 			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
+			$("#jqte_flat").jqte({css:"jqte_blue_flat"});
 			customJqte_flat = $(".jqte_blue_flat");
 		}
 		else if (theme == "xmas"){
@@ -2726,8 +2731,8 @@
 			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
 			$("#jqte").jqte({css:"jqte_xmas"});
 			customJqte = $(".jqte_xmas");
-			$("#jqte_flat").jqte({css:"jqte_xmas_flat"});
 			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
+			$("#jqte_flat").jqte({css:"jqte_xmas_flat"});
 			customJqte_flat = $(".jqte_xmas_flat");
 		}
 		if (typeof(Storage) != "undefined") {                   
