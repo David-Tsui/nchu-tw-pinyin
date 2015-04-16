@@ -64,6 +64,12 @@
 				margin-right: 1.1px; 
 				text-decoration: underline;
 			}
+
+			.cannotMod {
+				margin-left: 0px; 
+				margin-right: 0px; 
+				text-decoration: none;
+			}
 		</style>
 	</head>
 
@@ -187,7 +193,7 @@
 					</div>
 					<div class="ui input">
 						<div class="visible-xs">
-							<div class="ui left pointing dropdown icon button" id="select_mode_flat" data-offset="-8" style="margin-top: 10px; background-color: #FF9494; color: #FFF; font-weight: bold; font-family: '微軟正黑體'; font-size: 9px">
+							<div class="ui left pointing dropdown icon button" id="select_mode_flat" data-offset="-8">
 								<div class="text" style="margin-left: 5px">自選模式</div>
 								<i class="down icon"></i>
 								<div class="menu">

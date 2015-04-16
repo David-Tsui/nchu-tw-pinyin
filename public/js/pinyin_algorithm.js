@@ -1785,7 +1785,10 @@
 				$.ajaxSettings.async = true;
 				var text = "";
 				for(var i = 0; i < pinyin_record.length; i++){
-					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					if (pinyin_record[i].modifiable == 2)
+						text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+					else
+						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 				}         
 				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數
@@ -1807,7 +1810,10 @@
 				addRecord(obj,input_loc);   
 				var text = "";
 				for(var i = 0; i < pinyin_record.length; i++){
-					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					if (pinyin_record[i].modifiable == 2)
+						text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+					else
+						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 				}         
 				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數                                 
@@ -1843,7 +1849,10 @@
 				$.ajaxSettings.async = true;
 				var text = "";
 				for(var i = 0; i < pinyin_record.length; i++){
-					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					if (pinyin_record[i].modifiable == 2)
+						text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+					else
+						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 				}
 				textbox.html(text);
 				input_len += word_length;                                   // 調整成功字數
@@ -1978,7 +1987,10 @@
 						}   
 						var text = "";
 						for(var i = 0; i < pinyin_record.length; i++){
-							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+							if (pinyin_record[i].modifiable == 2)
+								text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+							else
+								text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
 						}
 						textbox.html(text);
 						textbox.setCursorPosition(input_loc);
@@ -2356,6 +2368,7 @@
 			'<span id="second" class="in_pinyin_window">',
 			'<span id="third" class="in_pinyin_window">',
 			'<span class="in_pinyin_window">',
+			'<span class="in_pinyin_window cannotMod">',
 			'</span>',
 			'</u>',
 			'<u>',
