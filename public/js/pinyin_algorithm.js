@@ -1581,7 +1581,7 @@
 							else{
 								pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
 							}
-							record_last_index = temp_index;
+							record_last_index = temp_index;						
 							temp_index++;
 						}        
 						$.ajaxSettings.async = false;       
@@ -1709,7 +1709,7 @@
 	function get_auto_start(){                                  // 取得自動選詞的起點，每一次預設取第一個span的位置
 		var textbox = $("#input");
 		var html = textbox.html();
-		var first_span_loc = html.search("<span");             // 尋找textbox是否有span tag
+		var first_span_loc = html.search("<span class='first'>");   // 尋找textbox是否有span tag
 		var start = 0;
 		if (first_span_loc < 0){                                // 如果在非自動選詞的狀態下
 			start = input_loc;                                  // auto_start == input_loc
@@ -1772,17 +1772,17 @@
 					console.log("right: " + right);              
 					input_word = left + insert_word + right;
 					var obj = "";
-					if (getSyllable(search_key) == word_length){				// 先檢查音節數與字數相等與否
+					if (getSyllable(search_key) == word_length){                // 如果音節數=字數
 						$.ajaxSettings.async = false;
 						search_correspond(search_key,insert_word);              // 檢查拼音是否與字依序相符
 						$.ajaxSettings.async = true;
-						if (correspond_flag)                                        
-							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,0);
+						if (correspond_flag)                                    
+							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,0);   // 是則可修改
 						else
-							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
+							obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);   // 不是則只能在前方修改
 					}
 					else
-						obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);
+						obj = new pinyin_obj(search_key,insert_word,input_loc,input_loc + word_length,1);       // 音節數!=字數，只能在最前方修改
 					$.ajaxSettings.async = false;
 					addRecord(obj,input_loc);
 					$.ajaxSettings.async = true;
@@ -2153,12 +2153,8 @@
 					console.log("word_right: " + word_right);
 					pinyin_obj.pinyin = pinyin_left;
 					pinyin_record.splice(which_word,1,pinyin_obj);
-					/*$.ajaxSettings.async = false;
-					rearrange_objs(pinyin_left, word_left, record_last_index + 1, 1, 0);
-					$.ajaxSettings.async = true;*/
 					$.ajaxSettings.async = false;
-
-					rearrange_objs(pinyin_right, word_right, record_last_index + 1, 0, 0);
+					rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
 					$.ajaxSettings.async = true;
 				}
 			}
@@ -2171,18 +2167,43 @@
 		else{                   // 中間情形，得細分是在各字區首尾還是會造成字區被切割
 			var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
 			if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
-				if (mode == 3)
-					pinyin_record.splice(which_word,1,pinyin_obj);
+				if (mode == 3){
+					if (pinyin_obj.word.length == pinyin_record[which_word].word.length)
+						pinyin_record.splice(which_word,1,pinyin_obj);
+					else{
+						var word_len = pinyin_obj.word.length;
+						var former_word = pinyin_record[which_word].word;
+						var word_left = former_word.substring(0,word_len);
+						var word_right = former_word.substring(word_len,former_word.length);
+						var j = 0;
+						var key = pinyin_obj.pinyin;
+						for(var i = 0; i < key.length; i++){
+							if (key[i] == " ") 
+								j++;
+							if (j == word_len){         
+								var split_loc = i;          
+								pinyin_left = key.substring(0,split_loc);
+								pinyin_right = key.substring(split_loc + 1,key.length);
+								pinyin_left = pinyin_left.trim();
+								pinyin_right = pinyin_right.trim();
+								break;
+							}
+						}
+						console.log("pinyin_left: " + pinyin_left);
+						console.log("pinyin_right: " + pinyin_right);
+						console.log("word_right: " + word_right);
+						pinyin_obj.pinyin = pinyin_left;
+						console.log("which_word: " + which_word);
+						pinyin_record.splice(which_word,1,pinyin_obj);
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
+						$.ajaxSettings.async = true;
+					}
+				}
 				else
 					pinyin_record.splice(which_word,0,pinyin_obj);
 				$.ajaxSettings.async = false;
 				modify_obj_loc(which_word, 0, 0);
-				$.ajaxSettings.async = true;
-			}
-			else if (loc == pinyin_record[which_word].end_loc){ // 在某字區尾端
-				pinyin_record.splice(which_word + 1,0,pinyin_obj);
-				$.ajaxSettings.async = false;
-				modify_obj_loc(which_word + 1, 0, 0);
 				$.ajaxSettings.async = true;
 			}
 			else if (loc < pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間
