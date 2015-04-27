@@ -31,13 +31,22 @@
 		  	if (count($arr) == 0)
 		  		$mode = 0;
 		}
-		if ($mode == 0){		// 如果是自選模式，全抓
-			$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-				    WHERE `sound` = :key OR `sound` LIKE :key_super 
-				    ORDER BY char_length(`characters`) ASC, `score` DESC";
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam(':key',$key);
-			$stmt->bindParam(':key_super',$key_super);
+		if ($mode == 0 || $mode == 0.5){		// 如果是自選模式，全抓
+			if ($mode == 0){
+				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+						WHERE `sound` = :key OR `sound` LIKE :key_super 
+				    	ORDER BY char_length(`characters`) ASC, `score` DESC";
+				$stmt = $db->prepare($sql);
+				$stmt->bindParam(':key',$key);
+				$stmt->bindParam(':key_super',$key_super);
+			}
+			else{
+				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+						WHERE `sound` = :key
+				    	ORDER BY char_length(`characters`) ASC, `score` DESC";
+				$stmt = $db->prepare($sql);
+				$stmt->bindParam(':key',$key);
+			}
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
 
