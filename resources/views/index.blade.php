@@ -221,7 +221,7 @@
 					<div class="fluid visible-xs">
 						<textarea id="show_flat" data-variation="small" readonly></textarea>
 						<br>
-						<div style="margin-left: 4px">
+						<!--<div style="margin-left: 4px">
 							<div class="ui left attached button" id="btn_previous" style="font-size: 10px; margin-bottom: 10px; padding-right: 15px; border-radius: 5px;">
 								<i class="small arrow sign left icon"></i>上一頁
 							</div>
@@ -229,7 +229,7 @@
 							<div class="right attached ui button" id="btn_next" style="font-size: 10px; margin-bottom: 10px; padding-left: 15px; border-radius: 5px;">
 								下一頁<i class="small arrow sign right icon"></i>
 							</div>
-						</div>
+						</div>-->
 					</div>
 					<br>
 				</div>

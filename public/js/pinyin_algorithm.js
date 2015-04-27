@@ -25,13 +25,14 @@
 		word: "",
 		start_loc: 0,
 		end_loc: 0,
-		modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:只能刪除)
+		modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:無法修改)
 	];*/
 	var record_last_index = 0;
 	var auto_static_word = "";                                          // 記錄因超出三詞範圍，以及經由選定而無法再自動變動的字詞
 
 	var sel_mode = 0;                                                   // 記錄當前dropdown選單中的模式
 	var select_letter = [];                                             // 陣列-記錄回傳的文字
+	var mod_pinyin_bound = [];											// 陣列-在修正字詞時，記錄出詞的拼音邊界
 
 	var number_letters = 0;                                             // 記錄該拼音回傳之結果總共有幾個字
 	var keyin = 0;                                                      // 記錄按下鍵盤的Ascii code
@@ -62,7 +63,7 @@
 	$(document).ready(function(){
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
-		set_default();                                                   // 設定一些畫面的初始狀態
+		set_default();                                                   // 設定初始狀態
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 
@@ -292,7 +293,6 @@
 						var end_loc = pinyin_record[which_word].end_loc;
 						if (input_loc == start_loc){
 							search_key = key;							
-							//select_word(input_loc,start_loc,end_loc);
 							mode = 3;
 							search_char(0);				
 						}
@@ -714,137 +714,6 @@
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑與輸入法相關↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-		$("#btn_previous").click(function(){                        // 在小螢幕模式時的"上一頁"按鈕
-			var prompt_txtbox = $("#prompt");
-			var prompt_flat_txtbox = $("#prompt_flat");
-			if (mode == 0){ 
-				prompt_txtbox.val("現在還不能換頁!");
-				prompt_flat_txtbox.val("現在還不能換頁!");
-				caption_effect();
-				return;
-			}
-			if (totalpage > 1){
-				if (mode != 0 && reachHead() == true){              // 選字模式下，若翻頁已達首頁，則-號無效
-					prompt_txtbox.val("已達首頁!");
-					prompt_flat_txtbox.val("已達首頁!");
-					caption_effect();
-					return;
-				}
-				else{
-					thispage--;                                     // 刷新頁數
-					var temp_text = "";
-					var temp_text_flat = "";
-					var i = 0 + (10 * (thispage - 1));
-					var counter = 0;
-					var next_flag = false;
-					while (i < number_letters && counter < 10){
-						temp_text += (i + 1) + ". " + select_letter[i] + "\n";
-						if (((i % 10) == 3 || (i % 10) == 7) && (thispage < totalpage)){
-							if ((i % 10) == 3) 
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-							if (((i % 10) == 7) && (select_letter[i + 1].length <= 4) && (select_letter[i + 2].length <= 4)){
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-								next_flag = true;
-							}
-							else if ((i % 10) == 7)
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + " +:下頁\n";
-						}
-						else
-							temp_text_flat += (i + 1) + ". " + select_letter[i] + " ";
-						i++;    
-						counter++;
-					}
-					if (thispage < totalpage && thispage > 1){
-						temp_text += "+:下一頁 -:上一頁";
-						if (next_flag == true)
-							temp_text_flat += " +:下頁";
-						temp_text_flat += " -:上頁";
-					}
-					else{
-						temp_text += "+:下一頁";
-						temp_text_flat += " +:下頁";
-					}
-
-					if (mode == 1 || mode == 3)
-						temp_text = "候選字\n" + temp_text;
-					if (mode == 2)
-						temp_text = "關聯詞\n" + temp_text;
-					$("#show").html(temp_text);
-					$("#show_flat").html(temp_text_flat);
-				}
-			}
-			else    
-				return;
-		});
-
-		$("#btn_next").click(function(){                            // 在小螢幕模式時的"下一頁"按鈕
-			var prompt_txtbox = $("#prompt");
-			var prompt_flat_txtbox = $("#prompt_flat");
-			if (mode == 0){
-				prompt_txtbox.val("現在還不能換頁!");
-				prompt_flat_txtbox.val("現在還不能換頁!");
-				caption_effect();
-				return;
-			}
-			if (totalpage > 1){
-				if (mode != 0 && reachTail() == true){              // 選字模式下，若翻頁已達末頁，則+號無效
-					prompt_txtbox.val("已達末頁!");
-					prompt_flat_txtbox.val("已達末頁!");
-					caption_effect();
-					return;
-				}
-				else{
-					thispage++;                                     // 刷新頁數
-					var temp_text = "";
-					var temp_text_flat = "";
-					var i = 0 + (10 * (thispage - 1));
-					var counter = 0;
-					var next_flag = false;
-					while (i < number_letters && counter < 10){
-						temp_text += (i + 1) + ". " + select_letter[i] + "\n";
-						if (((i % 10) == 3 || (i % 10) == 7) && (thispage < totalpage)){
-							if ((i % 10) == 3) 
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-							if (((i % 10) == 7) && (select_letter[i + 1].length <= 4) && (select_letter[i + 2].length <= 4)){
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-								next_flag = true;
-							}
-							else if (((i % 10) == 7))
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + " +:下頁\n";
-						}
-						else if (((i % 10) == 3 || (i % 10) == 7) && (thispage == totalpage)){
-							if ((i % 10) == 3) 
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-							if ((i % 10) == 7)
-								temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-						}
-						else
-							temp_text_flat += (i + 1) + ". " + select_letter[i] + " ";
-						i++;    
-						counter++;
-					}
-					if (thispage < totalpage){
-						temp_text += "+:下一頁 -:上一頁";
-						if (next_flag == true)
-							temp_text_flat += " +:下頁";
-						temp_text_flat += " -:上頁";
-					}
-					else{
-						temp_text += "-:上一頁";
-						temp_text_flat += "-:上頁";
-					}
-					if (mode == 1 || mode == 3)
-						temp_text = "候選字\n" + temp_text; 
-					if (mode == 2)
-						temp_text = "關聯詞\n" + temp_text;
-					$("#show").html(temp_text);
-					$("#show_flat").html(temp_text_flat);
-				}
-			}
-			else
-				return;
-		});
-
 		$("#undo").click(function(){
 			get_record();           
 		});
@@ -894,58 +763,6 @@
 				caption_effect();       
 			}
 		});
-
-		$("#btn_initial").click(function(){
-			if (mode != 0 && reachHead() == true){                  // 選字模式下，若翻頁已達首頁，則-號無效
-				prompt_txtbox.val("已達首頁!");
-				prompt_flat_txtbox.val("已達首頁!");
-				caption_effect();
-				return;
-			}
-			thispage = 1;                                           // 回到首頁
-			var temp_text = "";
-			var temp_text_flat = "";
-			var i = 0;
-			var counter = 0;
-			var next_flag = false;
-			while  (i < number_letters && counter < 10){
-				temp_text += (i + 1) + ". " + select_letter[i] + "\n";
-				if (((i % 10) == 3 || (i % 10) == 7) && (thispage < totalpage)){
-					if ((i % 10) == 3) 
-						temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-					if (((i % 10) == 7) && (select_letter[i + 1].length <= 4) && (select_letter[i + 2].length <= 4)){
-						temp_text_flat += (i + 1) + ". " + select_letter[i] + "\n";
-						next_flag = true;
-					}
-					else if (((i % 10) == 7))
-					temp_text_flat += (i + 1) + ". " + select_letter[i] + " +:下頁\n";
-				}
-				else
-					temp_text_flat += (i + 1) + ". " + select_letter[i] + " ";
-				i++;    
-				counter++;
-			}
-			if (totalpage > 1){
-				if (thispage < totalpage && thispage > 1){
-					temp_text += "+:下一頁 -:上一頁";
-					if (next_flag == true)
-						temp_text_flat += " +:下頁";
-					temp_text_flat += " -:上頁";
-				}
-				else{
-					temp_text += "+:下一頁";
-					temp_text_flat += " +:下頁";
-				}
-
-				if (mode == 1)
-					temp_text = "候選字\n" + temp_text;
-				if (mode == 2)
-					temp_text = "關聯詞\n" + temp_text;
-				$("#show").html(temp_text);
-				$("#show_flat").html(temp_text_flat);
-			}
-		});
-
 						
 		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件
 			$("#tutor_panel").slideUp(700);
@@ -1292,6 +1109,19 @@
 				}       
 				associated_search_flag = true; 
 				mode = 0;
+			}
+			else if (data[0] == "modify letter"){
+				var number_pinyins = Object.keys(data[0]).length;		// 取得拼音數(包含不同拼音之邊界，以","存在裡面)
+				number_letters = Object.keys(data[1]).length;      		// 取得字詞數
+				thispage = 1;
+				getPage();                                          	// 取得該key值所對應文字的總頁數
+				select_letter = [];
+				mod_pinyin_bound = [];
+				for(var i = 0; i < number_pinyins; i++){           
+					mod_pinyin_bound[i] = data[0][i];     
+					select_letter[i] = data[1][i];
+				}
+
 			}
 			else{
 				if (search_mode == 0 || search_mode == 2){
@@ -1772,6 +1602,7 @@
 					console.log("right: " + right);              
 					input_word = left + insert_word + right;
 					var obj = "";
+					console.log("mod_search_key:　"　+ search_key);
 					if (getSyllable(search_key) == word_length){                // 如果音節數=字數
 						$.ajaxSettings.async = false;
 						search_correspond(search_key,insert_word);              // 檢查拼音是否與字依序相符
@@ -2127,7 +1958,7 @@
 		else if (loc == 0){     // 最前端補字
 			if (mode == 3){
 				var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
-				if (pinyin_obj.word.length == pinyin_record[which_word].word.length)
+				if (pinyin_obj.word.length == pinyin_record[which_word].word.length  && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 					pinyin_record.splice(0,1,pinyin_obj);
 				else{
 					var word_len = pinyin_obj.word.length;
@@ -2168,7 +1999,7 @@
 			var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
 			if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
 				if (mode == 3){
-					if (pinyin_obj.word.length == pinyin_record[which_word].word.length)
+					if (pinyin_obj.word.length == pinyin_record[which_word].word.length && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 						pinyin_record.splice(which_word,1,pinyin_obj);
 					else{
 						var word_len = pinyin_obj.word.length;
@@ -2212,6 +2043,59 @@
 				var word_right = pinyin_record[which_word].word.substring(start_loc,pinyin_record[which_word].word.length);
 				var pinyin_left = "";
 				var pinyin_right = "";
+				if (mode == 3){
+					if (pinyin_obj.word.length == word_right.length){
+
+
+
+
+
+
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
+						$.ajaxSettings.async = true;
+						pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
+						$.ajaxSettings.async = true;
+					}
+					else{
+						var word_len = pinyin_obj.word.length;
+						var former_word = pinyin_record[which_word].word;
+						var word_left = former_word.substring(0,word_len);
+						var word_right = former_word.substring(word_len,former_word.length);
+						var j = 0;
+						var key = pinyin_obj.pinyin;
+						for(var i = 0; i < key.length; i++){
+							if (key[i] == " ") 
+								j++;
+							if (j == word_len){         
+								var split_loc = i;          
+								pinyin_left = key.substring(0,split_loc);
+								pinyin_right = key.substring(split_loc + 1,key.length);
+								pinyin_left = pinyin_left.trim();
+								pinyin_right = pinyin_right.trim();
+								break;
+							}
+						}
+						console.log("pinyin_left: " + pinyin_left);
+						console.log("pinyin_right: " + pinyin_right);
+						console.log("word_right: " + word_right);
+						pinyin_obj.pinyin = pinyin_left;
+						console.log("which_word: " + which_word);
+						pinyin_record.splice(which_word,1,pinyin_obj);
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
+						$.ajaxSettings.async = true;
+					}
+					$.ajaxSettings.async = false;
+					rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
+					$.ajaxSettings.async = true;
+					pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
+					$.ajaxSettings.async = false;
+					rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
+					$.ajaxSettings.async = true;
+				}
 
 				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
 				var syllable = getSyllable(key);
@@ -2239,10 +2123,10 @@
 					}
 				}
 
-				/*console.log("pinyin_left: " + pinyin_left);
+				console.log("pinyin_left: " + pinyin_left);
 				console.log("pinyin_right: " + pinyin_right);
 				console.log("word_left: " + word_left);
-				console.log("word_right: " + word_right);*/
+				console.log("word_right: " + word_right);
 
 				$.ajaxSettings.async = false;
 				rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
@@ -3130,6 +3014,7 @@
 				e.preventDefault(); // no page reload 
 			}  
 		});
+
 
 		$("#nav_contact").click(function(){
 			$("#message_board").modal('show');

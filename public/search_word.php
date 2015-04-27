@@ -3,7 +3,7 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		//$key = "hing dai hak";
+		//$key = "diong hing dai hak";
 		$mode = $_POST['MODE'];
 		//$mode = 2;
 		$key_super = $key . " %";
@@ -67,6 +67,7 @@
 			}
 		}
 		else if ($mode == 2){	// 如果是修改模式，先找整個拼音，再找其他音節
+			$arr[0] = "modify letter";
 		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 				    WHERE `sound` = :key OR `sound`
 				    ORDER BY char_length(`characters`) ASC, `score` DESC";
@@ -74,16 +75,27 @@
 			$stmt->bindParam(':key',$key);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
+			$row = $stmt->fetch();
 
 			$i = 0;
-			$row = $stmt->fetch();
+			$j = 0;
+			$count = 0;
+			$has_word = false;
 		  	do{
-		    	if ($row != "")						
-					$arr[$i] = $row[0];
+		    	if ($row != ""){						
+					$arr[1][$i] = $row[0];
+					$count++;
+					$has_word = true;
+				}
 				else
 					break;
 				$i++;
 		  	}while ($row = $stmt->fetch());
+		  	if ($has_word){
+		  		$arr[2][$j] = $key;
+		  		$arr[3][$j] = $count;
+		  		$j++;
+		  	}
 
 		  	$syllables = getSyllable($key);
 		  	if ($syllables > 1){
@@ -92,7 +104,6 @@
 					$pos = strrpos($key," ");
 					if ($pos != false){
 						$key = substr($key,0,$pos);
-						//echo "key = $key<br>";
 						$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 							    WHERE `sound` = :key 
 							    ORDER BY char_length(`characters`) DESC, `score` DESC";
@@ -101,13 +112,24 @@
 						$stmt->execute();
 						$stmt->setFetchMode(PDO::FETCH_NUM);
 						$row = $stmt->fetch();
+
+						$count = 0;
+						$has_word = false;
 					  	do{
-					    	if ($row != "")						
-								$arr[$i] = $row[0];
+					    	if ($row != ""){						
+								$arr[1][$i] = $row[0];
+								$count++;
+								$has_word = true;
+							}
 							else
 								break;
 							$i++;
 					  	}while ($row = $stmt->fetch());
+					  	if ($has_word){
+					  		$arr[2][$j] = $key;
+		  					$arr[3][$j] = $count + $arr[3][$j - 1];
+					  		$j++;
+					  	}
 					}
 					else
 						$flag = 0;	
@@ -116,7 +138,6 @@
 		}
 		
 		if (count($arr) == 0){	// 如果沒有該拼音對應的字，找尋其相近(關聯)的拼音
-			$arr = array();
 			$blanks = 0;
 			for($i = 0 ; $i < strlen($key) ; $i++){
 				if ($key[$i] == " ")
