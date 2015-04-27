@@ -32,7 +32,8 @@
 
 	var sel_mode = 0;                                                   // 記錄當前dropdown選單中的模式
 	var select_letter = [];                                             // 陣列-記錄回傳的文字
-	var mod_pinyin_bound = [];											// 陣列-在修正字詞時，記錄出詞的拼音邊界
+	//var mod_pinyin_bound = [];											// 陣列-修正模式下，記錄詞對應拼音的索引邊界
+	var mod_pinyin_record = [];											// 陣列-修正模式下，記錄詞對應拼音
 
 	var number_letters = 0;                                             // 記錄該拼音回傳之結果總共有幾個字
 	var keyin = 0;                                                      // 記錄按下鍵盤的Ascii code
@@ -1116,12 +1117,17 @@
 				thispage = 1;
 				getPage();                                          	// 取得該key值所對應文字的總頁數
 				select_letter = [];
-				mod_pinyin_bound = [];
-				for(var i = 0; i < number_pinyins; i++){           
-					mod_pinyin_bound[i] = data[0][i];     
+				mod_pinyin_record = [];
+				for(var i = 0; i < number_letters; i++)
 					select_letter[i] = data[1][i];
-				}
-
+				for(var i = 0; i < number_pinyins; i++){
+					if (i == 0)
+						var obj = modify_record_obj(data[2][i],0,data[3][i]);										
+					else
+						var obj = modify_record_obj(data[2][i],data[3][i - 1],data[3][i]);
+					mod_pinyin_record[i] = obj;
+				}          
+					    				
 			}
 			else{
 				if (search_mode == 0 || search_mode == 2){
@@ -1951,6 +1957,12 @@
 		this.modifiable = modify_flag;
 	}
 
+	function modify_record_obj(pinyin,start_index,end_index){
+		this.pinyin = pinyin;
+		this.start_index = start_index;
+		this.end_index = end_index;
+	}
+
 	function addRecord(pinyin_obj,loc){                     	// 將pinyin物件加到pinyin_record陣列中  
 		if (pinyin_record.length > 0 && (loc == pinyin_record[pinyin_record.length - 1].end_loc)){  // 最末端打字，直接push
 			pinyin_record.push(pinyin_obj);
@@ -2226,7 +2238,6 @@
 		var now_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 		var text = textbox.html();
 		text = remove_tags(text);
-		console.log("text: " + text);
 		var temp_key_len = text.length - input_len;
 		
 		if (keyCode == 8){
@@ -2335,7 +2346,7 @@
 			totalpage++;
 	}
 
-	function select_word(loc,start,end){
+	/*function select_word(loc,start,end){
 		var mainDiv = document.getElementById("input");
 		var element = mainDiv.childNodes[0];
 		var which_word = get_Which_Word(loc,"head");
@@ -2346,7 +2357,7 @@
 		var sel = window.getSelection();
 		sel.removeAllRanges();
 		sel.addRange(range);
-	}
+	}*/
 
 	$.fn.setCursorPosition = function(pos){                         // 控制游標顯示位置   
 		var element = document.getElementById("input");
@@ -2354,13 +2365,8 @@
 		try{
 			var sel = window.getSelection();
 			var which_word = get_Which_Word(pos,"tail");
-			/*console.log("which_word: " + which_word);
-			console.log("element: " + element.childNodes[0]);
-			console.log("現在record有 " + pinyin_record.length + " 個元素");*/
 			var loc = pos - pinyin_record[which_word].start_loc;
-			//console.log("loc: " + loc);
 			element = element.childNodes[which_word];
-			//console.log("child-element: " + element);
 			range.setStart(element.childNodes[0], loc);                          
 			/*if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
 				throw "set in span";
