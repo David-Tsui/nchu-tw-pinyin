@@ -1681,8 +1681,7 @@
 					var syllables = getSyllable(search_key);
 					if (word_length > syllables)
 						replace_end = input_loc + syllables;
-					if (word_length < syllables)
-						replace_end = input_loc + word_length;
+					
 					console.log("replace_end: " + replace_end);
 					right = input_word.substring(replace_end,input_word.length);            
 					console.log("left: " + left);
@@ -2107,21 +2106,27 @@
 					if (pinyin_obj.word.length == pinyin_record[which_word].word.length && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 						pinyin_record.splice(which_word,1,pinyin_obj);
 					else{
+						var split_loc = getSyllable(pinyin_obj.pinyin);
 						var word_len = pinyin_obj.word.length;
 						var former_word = pinyin_record[which_word].word;
 						var pinyin_left = "";
 						var pinyin_right = "";
 						var word_left = former_word.substring(0,word_len);
 						var word_right = former_word.substring(word_len,former_word.length);
+						if (word_left.length != split_loc){
+							word_left = former_word.substring(0,word_len);
+							word_right = former_word.substring(word_len,former_word.length);
+						}
+
 						var j = 0;
 						var key = pinyin_obj.pinyin;
 						for(var i = 0; i < key.length; i++){
 							if (key[i] == " ") 
 								j++;
 							if (j == word_len){         
-								var split_loc = i;          
-								pinyin_left = key.substring(0,split_loc);
-								pinyin_right = key.substring(split_loc + 1,key.length);
+								var temp_loc = i;          
+								pinyin_left = key.substring(0,temp_loc);
+								pinyin_right = key.substring(temp_loc + 1,key.length);
 								pinyin_left = pinyin_left.trim();
 								pinyin_right = pinyin_right.trim();
 								break;
