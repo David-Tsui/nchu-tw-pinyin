@@ -2119,7 +2119,7 @@
 						}
 
 						var j = 0;
-						var key = pinyin_obj.pinyin;
+						var key = pinyin_record[which_word].pinyin;
 						for(var i = 0; i < key.length; i++){
 							if (key[i] == " ") 
 								j++;
