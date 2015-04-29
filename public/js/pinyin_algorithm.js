@@ -1678,15 +1678,19 @@
 				}
 				else{
 					var replace_end = input_loc + word_length;
+					if (pinyin_record[which_word].modifiable == 1)
+						replace_end = input_loc + pinyin_record[which_word].word.length;
+					var split_loc = replace_end;
 					var syllables = getSyllable(search_key);
 					if (word_length > syllables)
-						replace_end = input_loc + syllables;
+						split_loc = input_loc + syllables;
 					
 					console.log("replace_end: " + replace_end);
-					right = input_word.substring(replace_end,input_word.length);            
+					right = input_word.substring(split_loc,input_word.length);            
+					input_word = left + insert_word + right;
 					console.log("left: " + left);
 					console.log("right: " + right);              
-					input_word = left + insert_word + right;
+					console.log("input_word: " + input_word);
 					var obj = "";
 					console.log("mod_search_key: "　+ search_key);
 					if (getSyllable(search_key) == word_length){                // 如果音節數=字數
@@ -2053,8 +2057,14 @@
 				if (pinyin_obj.word.length == pinyin_record[which_word].word.length  && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 					pinyin_record.splice(0,1,pinyin_obj);
 				else{
-					var split_loc = getSyllable(pinyin_obj.pinyin);
+					console.log("A");
+					var key_syllable = getSyllable(pinyin_obj.pinyin);
 					var word_len = pinyin_obj.word.length;
+					var split_loc = 0;
+					if (word_len >= key_syllable)
+						split_loc = word_len;
+					else
+						split_loc = key_syllable
 					var former_word = pinyin_record[which_word].word;
 					var pinyin_left = "";
 					var pinyin_right = "";
@@ -2062,12 +2072,6 @@
 					var word_right = former_word.substring(split_loc,former_word.length);
 					console.log("word_left: " + word_left);
 					console.log("word_right: " + word_right);
-					if (word_left.length != split_loc){
-						word_left = former_word.substring(0,word_len);
-						word_right = former_word.substring(word_len,former_word.length);
-						console.log("word_left: " + word_left);
-						console.log("word_right: " + word_right);
-					}
 					
 					var j = 0;
 					var key = pinyin_record[which_word].pinyin;
@@ -2157,10 +2161,6 @@
 				var pinyin_right = "";
 				if (mode == 3){
 					if (pinyin_obj.word.length == word_right.length){
-
-
-
-
 
 
 						$.ajaxSettings.async = false;
