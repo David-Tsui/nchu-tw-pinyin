@@ -2057,44 +2057,55 @@
 				if (pinyin_obj.word.length == pinyin_record[which_word].word.length  && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 					pinyin_record.splice(0,1,pinyin_obj);
 				else{
-					console.log("A");
 					var key_syllable = getSyllable(pinyin_obj.pinyin);
-					var word_len = pinyin_obj.word.length;
-					var split_loc = 0;
-					if (word_len >= key_syllable)
-						split_loc = word_len;
-					else
-						split_loc = key_syllable
+					var former_word_len = 0;
 					var former_word = pinyin_record[which_word].word;
+					
+					if (pinyin_record[which_word].modifiable == 1)
+						former_word_len = pinyin_record[which_word].word.length;
+					var split_loc = 0;
+					if (former_word_len >= key_syllable)
+						split_loc = former_word_len;
+					else
+						split_loc = key_syllable;
+					console.log("split_loc: " + split_loc);
 					var pinyin_left = "";
 					var pinyin_right = "";
 					var word_left = former_word.substring(0,split_loc);
 					var word_right = former_word.substring(split_loc,former_word.length);
 					console.log("word_left: " + word_left);
 					console.log("word_right: " + word_right);
-					
+
 					var j = 0;
 					var key = pinyin_record[which_word].pinyin;
-					for(var i = 0; i < key.length; i++){
-						if (key[i] == " ") 
-							j++;
-						if (j == split_loc){         
-							var temp_loc = i;          
-							pinyin_left = key.substring(0,temp_loc);
-							pinyin_right = key.substring(temp_loc + 1,key.length);
-							pinyin_left = pinyin_left.trim();
-							pinyin_right = pinyin_right.trim();
-							break;
-						}
+					if (pinyin_record[which_word].modifiable == 1){
+						pinyin_left = pinyin_obj.pinyin;
+						console.log("pinyin_left: " + pinyin_left);
+						console.log("pinyin_right: " + pinyin_right);
+						pinyin_obj.pinyin = pinyin_left;
+						pinyin_record.splice(which_word,1,pinyin_obj);
 					}
-					console.log("pinyin_left: " + pinyin_left);
-					console.log("pinyin_right: " + pinyin_right);
-
-					pinyin_obj.pinyin = pinyin_left;
-					pinyin_record.splice(which_word,1,pinyin_obj);
-					$.ajaxSettings.async = false;
-					rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
-					$.ajaxSettings.async = true;
+					else{
+						for(var i = 0; i < key.length; i++){
+							if (key[i] == " ") 
+								j++;
+							if (j == key_syllable){         
+								var temp_loc = i;        
+								pinyin_left = key.substring(0,temp_loc);
+								pinyin_right = key.substring(temp_loc + 1,key.length);
+								pinyin_left = pinyin_left.trim();
+								pinyin_right = pinyin_right.trim();
+								break;
+							}
+						}
+						console.log("pinyin_left: " + pinyin_left);
+						console.log("pinyin_right: " + pinyin_right);
+						pinyin_obj.pinyin = pinyin_left;
+						pinyin_record.splice(which_word,1,pinyin_obj);
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
+						$.ajaxSettings.async = true;
+					}		
 				}
 			}
 			else
@@ -2107,44 +2118,59 @@
 			var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
 			if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
 				if (mode == 3){
-					if (pinyin_obj.word.length == pinyin_record[which_word].word.length && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
+					var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
+					if (pinyin_obj.word.length == pinyin_record[which_word].word.length  && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
 						pinyin_record.splice(which_word,1,pinyin_obj);
 					else{
-						var split_loc = getSyllable(pinyin_obj.pinyin);
-						var word_len = pinyin_obj.word.length;
+						var key_syllable = getSyllable(pinyin_obj.pinyin);
+						var former_word_len = 0;
 						var former_word = pinyin_record[which_word].word;
+						
+						if (pinyin_record[which_word].modifiable == 1)
+							former_word_len = pinyin_record[which_word].word.length;
+						var split_loc = 0;
+						if (former_word_len >= key_syllable)
+							split_loc = former_word_len;
+						else
+							split_loc = key_syllable;
+						console.log("split_loc: " + split_loc);
 						var pinyin_left = "";
 						var pinyin_right = "";
-						var word_left = former_word.substring(0,word_len);
-						var word_right = former_word.substring(word_len,former_word.length);
-						if (word_left.length != split_loc){
-							word_left = former_word.substring(0,word_len);
-							word_right = former_word.substring(word_len,former_word.length);
-						}
+						var word_left = former_word.substring(0,split_loc);
+						var word_right = former_word.substring(split_loc,former_word.length);
+						console.log("word_left: " + word_left);
+						console.log("word_right: " + word_right);
 
 						var j = 0;
 						var key = pinyin_record[which_word].pinyin;
-						for(var i = 0; i < key.length; i++){
-							if (key[i] == " ") 
-								j++;
-							if (j == word_len){         
-								var temp_loc = i;          
-								pinyin_left = key.substring(0,temp_loc);
-								pinyin_right = key.substring(temp_loc + 1,key.length);
-								pinyin_left = pinyin_left.trim();
-								pinyin_right = pinyin_right.trim();
-								break;
-							}
+						if (pinyin_record[which_word].modifiable == 1){
+							pinyin_left = pinyin_obj.pinyin;
+							console.log("pinyin_left: " + pinyin_left);
+							console.log("pinyin_right: " + pinyin_right);
+							pinyin_obj.pinyin = pinyin_left;
+							pinyin_record.splice(which_word,1,pinyin_obj);
 						}
-						console.log("pinyin_left: " + pinyin_left);
-						console.log("pinyin_right: " + pinyin_right);
-						console.log("word_right: " + word_right);
-						pinyin_obj.pinyin = pinyin_left;
-						console.log("which_word: " + which_word);
-						pinyin_record.splice(which_word,1,pinyin_obj);
-						$.ajaxSettings.async = false;
-						rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
-						$.ajaxSettings.async = true;
+						else{
+							for(var i = 0; i < key.length; i++){
+								if (key[i] == " ") 
+									j++;
+								if (j == key_syllable){         
+									var temp_loc = i;        
+									pinyin_left = key.substring(0,temp_loc);
+									pinyin_right = key.substring(temp_loc + 1,key.length);
+									pinyin_left = pinyin_left.trim();
+									pinyin_right = pinyin_right.trim();
+									break;
+								}
+							}
+							console.log("pinyin_left: " + pinyin_left);
+							console.log("pinyin_right: " + pinyin_right);
+							pinyin_obj.pinyin = pinyin_left;
+							pinyin_record.splice(which_word,1,pinyin_obj);
+							$.ajaxSettings.async = false;
+							rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
+							$.ajaxSettings.async = true;
+						}		
 					}
 				}
 				else
