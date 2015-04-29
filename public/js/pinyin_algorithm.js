@@ -2078,7 +2078,7 @@
 
 					var j = 0;
 					var key = pinyin_record[which_word].pinyin;
-					if (pinyin_record[which_word].modifiable == 1){
+					if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(key) == 1)){
 						pinyin_left = pinyin_obj.pinyin;
 						console.log("pinyin_left: " + pinyin_left);
 						console.log("pinyin_right: " + pinyin_right);
@@ -2143,7 +2143,7 @@
 
 						var j = 0;
 						var key = pinyin_record[which_word].pinyin;
-						if (pinyin_record[which_word].modifiable == 1){
+						if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(key) == 1)){
 							pinyin_left = pinyin_obj.pinyin;
 							console.log("pinyin_left: " + pinyin_left);
 							console.log("pinyin_right: " + pinyin_right);
