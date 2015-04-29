@@ -3,34 +3,58 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		//$key = "diong hing dai hak";
+		//$key = "Dinner";
 		$mode = $_POST['MODE'];
-		//$mode = 2;
+		//$mode = 0;
 		$key_super = $key . " %";
 		$arr = array();
 
 		if (strtoupper($key[0]) == ($key[0])){
-			$mode = 3;
-			$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-				    WHERE `abbr` = :key
-				    ORDER BY char_length(`characters`) ASC, `score` DESC";
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam(':key',$key);
-			$stmt->execute();
-			$stmt->setFetchMode(PDO::FETCH_NUM);
+			if (strtoupper($key) == ($key)){		// 全大寫->英文縮寫MODE=4
+				$key_super = $key . "%";
+				$mode = 4;
+				$sql = "SELECT DISTINCT `cht` FROM `eng_abbr` 
+					    WHERE `abbr` = :key OR `abbr` LIKE :key_super
+					    ORDER BY char_length(`cht`) ASC, `score` DESC";
+				$stmt = $db->prepare($sql);
+				$stmt->bindParam(':key',$key);
+				$stmt->bindParam(':key_super', $key_super);
+				$stmt->execute();
+				$stmt->setFetchMode(PDO::FETCH_NUM);
+				$i = 0;
+				$row = $stmt->fetch();
+			  	do{
+			    	if ($row != "")						
+						$arr[$i] = $row[0];
+					else
+						break;
+					$i++;
+			  	}while ($row = $stmt->fetch());
+			}
+			else{									// 第一個字大寫->台語縮寫MODE=3
+				$mode = 3;
+				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+					    WHERE `abbr` = :key
+					    ORDER BY char_length(`characters`) ASC, `score` DESC";
+				$stmt = $db->prepare($sql);
+				$stmt->bindParam(':key',$key);
+				$stmt->execute();
+				$stmt->setFetchMode(PDO::FETCH_NUM);
 
-			$i = 0;
-			$row = $stmt->fetch();
-		  	do{
-		    	if ($row != "")						
-					$arr[$i] = $row[0];
-				else
-					break;
-				$i++;
-		  	}while ($row = $stmt->fetch());
-		  	if (count($arr) == 0)
-		  		$mode = 0;
+				$i = 0;
+				$row = $stmt->fetch();
+			  	do{
+			    	if ($row != "")						
+						$arr[$i] = $row[0];
+					else
+						break;
+					$i++;
+			  	}while ($row = $stmt->fetch());
+			  	if (count($arr) == 0)
+			  		$mode = 0;
+			}
 		}
+
 		if ($mode == 0 || $mode == 0.5){		// 如果是自選模式，全抓
 			if ($mode == 0){
 				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
@@ -153,12 +177,12 @@
 					$blanks++;
 			}
 			$temp = $blanks + 1;
-			$key = $key . "%";
+			$more_key = $key . "%";
 			$sql = "SELECT SUBSTRING_INDEX(`sound`,' ',$temp) FROM `pinyin_formal` 
 					WHERE `sound` LIKE :key 
 					GROUP BY SUBSTRING_INDEX(`sound`,' ',$temp)";
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam(':key',$key);
+			$stmt->bindParam(':key',$more_key);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
 			$row = $stmt->fetch();
@@ -178,6 +202,30 @@
 					$i++;
 				}while ($row = $stmt->fetch());
 			}
+
+			if (count($arr) == 0){	//都沒有，查英文字典 mode=5
+				$key = strtolower($key);
+				$key_super = $key . "%";
+				$mode = 5;
+				$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
+					    WHERE `eng` = :key 
+					    ORDER BY CHAR_LENGTH(`cht`) ASC, `score` DESC";
+				$stmt = $db->prepare($sql);
+				$stmt->bindParam(':key',$key);
+				//$stmt->bindParam(':key_super', $key_super);
+				$stmt->execute();
+				$stmt->setFetchMode(PDO::FETCH_NUM);
+				$i = 0;
+				$row = $stmt->fetch();
+			  	do{
+			    	if ($row != "")						
+						$arr[$i] = $row[0];
+					else
+						break;
+					$i++;
+			  	}while ($row = $stmt->fetch());
+			}
+
 			echo json_encode($arr);
 		}
 		else{
