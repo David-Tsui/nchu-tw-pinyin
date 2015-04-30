@@ -198,7 +198,7 @@
 								<i class="down icon"></i>
 								<div class="menu">
 									<div class="item active" style="font-size: 10px" onclick="get_sel_mode('自選模式')"><i class="edit icon"></i>自選模式</div>
-									<div class="item" style="font-size: 10px" onclick="get_sel_mode('智能模式')"><i class="edit sign icon"></i>智能模式</div>			
+									<div class="item" style="font-size: 10px" onclick="get_sel_mode('智能模式')"><i class="edit sign icon"></i>智能模式</div>           
 								</div>
 							</div>
 							<input type="text" id="prompt_flat" data-offset="-45" readonly>
@@ -288,48 +288,48 @@
 			</div>
 		</div>
 	 
-        <!-- message_board  -->
-        <div id="message_board" class="modal fade" tabindex="-1" data-width="400" style="display: none;">
-            <div class = "modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin-left: 18px"><i class="glyphicon glyphicon-edit"></i>聯絡我們</h4>
-            </div>
-            <form method="post">
-                <div class="modal-body">
-                    <div class="form-group" id="info_form_msg">
-                        <div class="ui fluid input" class="form-control" style="font-size: 14px; font-weight: bold">
-                            <div>
-                                <p><i class="smile icon"></i>姓名</p>
-                                <input type="text" class="form-control" name="mes_name" id="mes_name" onchange="CheckName()"
-                                 placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>">
-                                <span id="name_check_mes"></span>
-                            </div>
-                            <div style="margin-top: 8px">
-                                <p><i class="mail icon"></i>電子郵件</p>
-                                <input type="text" class="form-control" name="mes_email" id="mes_email" onchange="CheckEmail()"
-                                placeholder="請輸入您的常用信箱，回信將會寄往該信箱，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->email; ?>">
-                                <span id="email_check_mes"></span>
-                            </div>
-                            <div style="margin-top: 8px">
-                                <p><i class="glyphicon glyphicon-leaf"></i>主旨</p>
-                                <input type="text" class="form-control" name="mes_title" id="mes_title" onchange="CheckTitle()">
-                                <span id="title_check_mes"></span>
-                            </div>
-                            <div style="margin-top: 8px">
-                                <p><i class="glyphicon glyphicon-comment"></i>內容</p>
-                                <textarea id="mes_comment" name="mes_comment" aria-required="true" style="height: 100px; width: 100%" onchange="CheckComment()"></textarea>
-                                <span id="comment_check_mes"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                    <button type="button" data-dismiss="modal" class="btn">放棄</button>
-                    <button type="submit" class="btn btn-primary" onclick="return CheckBeforeSubmit();">發送</button>
-                </div>
-            </form>
-        </div>
+		<!-- message_board  -->
+		<div id="message_board" class="modal fade" tabindex="-1" data-width="400" style="display: none;">
+			<div class = "modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 style="margin-left: 18px"><i class="glyphicon glyphicon-edit"></i>聯絡我們</h4>
+			</div>
+			<form method="post">
+				<div class="modal-body">
+					<div class="form-group" id="info_form_msg">
+						<div class="ui fluid input" class="form-control" style="font-size: 14px; font-weight: bold">
+							<div>
+								<p><i class="smile icon"></i>姓名</p>
+								<input type="text" class="form-control" name="mes_name" id="mes_name" onchange="CheckName()"
+								 placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>">
+								<span id="name_check_mes"></span>
+							</div>
+							<div style="margin-top: 8px">
+								<p><i class="mail icon"></i>電子郵件</p>
+								<input type="text" class="form-control" name="mes_email" id="mes_email" onchange="CheckEmail()"
+								placeholder="請輸入您的常用信箱，回信將會寄往該信箱，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->email; ?>">
+								<span id="email_check_mes"></span>
+							</div>
+							<div style="margin-top: 8px">
+								<p><i class="glyphicon glyphicon-leaf"></i>主旨</p>
+								<input type="text" class="form-control" name="mes_title" id="mes_title" onchange="CheckTitle()">
+								<span id="title_check_mes"></span>
+							</div>
+							<div style="margin-top: 8px">
+								<p><i class="glyphicon glyphicon-comment"></i>內容</p>
+								<textarea id="mes_comment" name="mes_comment" aria-required="true" style="height: 100px; width: 100%" onchange="CheckComment()"></textarea>
+								<span id="comment_check_mes"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+					<button type="button" data-dismiss="modal" class="btn">放棄</button>
+					<button type="submit" class="btn btn-primary" onclick="return CheckBeforeSubmit();">發送</button>
+				</div>
+			</form>
+		</div>
 
 		<!-- 註腳 -->
 		<div id="footer" class="navbar-static-bottom">
@@ -356,7 +356,7 @@
 		<script src="./js/jquery.zclip.js"></script>
 		<script src="./js/buttons.js"></script>
 		<script src="./js/jsnow.js"></script>
-        <script src="./js/checkmessage.js"></script>
+		<script src="./js/checkmessage.js"></script>
 		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>
 			var switchTo5x=true;

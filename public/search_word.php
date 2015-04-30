@@ -87,17 +87,15 @@
 		else if ($mode == 1){	// 如果是智能模式，抓第一個字
 		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 		    		WHERE `sound` = :key 
-		    		ORDER BY CHAR_LENGTH(`characters`) ASC, `score` DESC 
+		    		ORDER BY char_length(`characters`) ASC, `score` DESC 
 		    		LIMIT 0,1";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':key',$key);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
 			$row = $stmt->fetch();
-			if ($row[0] != "")
-			{	
+			if ($row[0] != "")	
 				$arr[0] = $row[0];
-			}
 		}
 		else if ($mode == 2){	// 如果是修改模式，先找整個拼音，再找其他音節
 			$arr[0] = "modify letter";
@@ -194,9 +192,7 @@
 				$arr[0] = "associated pinyin";
 				do{	
 					if ($row[0] != "")
-					{
 						$arr[$i] = $row[0];	
-					}
 					else
 						break;
 					$i++;
@@ -209,7 +205,7 @@
 				$mode = 5;
 				$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
 					    WHERE `eng` = :key 
-					    ORDER BY CHAR_LENGTH(`cht`) ASC, `score` DESC";
+					    ORDER BY char_length(`cht`) ASC, `score` DESC";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam(':key',$key);
 				//$stmt->bindParam(':key_super', $key_super);

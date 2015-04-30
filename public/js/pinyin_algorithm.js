@@ -1386,7 +1386,7 @@
 	function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是字區被分割時，會將該字詞區剩下的拼音重新分配
 		if (key != ""){                                             // 如果刪除前該字區超過一個音節，就會需要回傳去分割
 			var key_arr = key.split("");
-			if (key_arr[0] == key_arr[0].toUpperCase()){			// 如果是音首模式
+			if (key_arr[0] == key_arr[0].toUpperCase()){			// 如果是音首、英文、縮寫模式
 				var pinyin_objs = [];
 				var word_arr = word.split("");
 				var temp_index = index;
@@ -1420,6 +1420,7 @@
 			else{
 				$.post('pinyin_split.php',{THE_KEY:key},function(data){
 					if (data == ""){
+						console.log("no correspond pinyin");
 					}
 					else{
 						var key_num = Object.keys(data).length; 
@@ -1437,31 +1438,42 @@
 						var temp_index = index;
 						var start_loc = 0;
 						var end_loc = 0;
-						for(var i = 0; i < key_num; i++){
-							var pinyin_piece = data[i];                 // 被切出來的拼音
-							var syllable = getSyllable(pinyin_piece);   // 計算該拼音的音節，以便將原本區域間的字分割正確
-							var word_piece = word.substring(j,j + syllable);
-							word_num -= word_piece.length;
-							start_loc = j + temp_loc;
-							end_loc = j + temp_loc + syllable;
-							var obj = "";
-							$.ajaxSettings.async = false;
-							search_correspond(pinyin_piece,word_piece); // 檢查拼音是否與字依序相符
-							$.ajaxSettings.async = true;
-							if (correspond_flag)                            
-								obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,0);
-							else
-								obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,2);
-							j += syllable;
-							pinyin_objs.push(obj);
-						}      
-						if (word_num > 0){                              // 如果字數超過音節數
-							var word_piece = word.substring((word.length - word_num),word.length);  // 則把剩下來的字併為一詞
-							start_loc = end_loc;
+						if (key_num > word_num){
+							var word_piece = word;
+							start_loc = pinyin_record[index - 1].end_loc;
 							end_loc = start_loc + word_num;
+							console.log("start_loc: " + start_loc);
+							console.log("end_loc: " + end_loc);
 							obj = new pinyin_obj("",word_piece,start_loc,end_loc,2);
 							pinyin_objs.push(obj);                      // 插入到物件陣列裡
 						}
+						else{
+							for(var i = 0; i < key_num; i++){
+								var pinyin_piece = data[i];                 // 被切出來的拼音
+								var syllable = getSyllable(pinyin_piece);   // 計算該拼音的音節，以便將原本區域間的字分割正確
+								var word_piece = word.substring(j,j + syllable);
+								word_num -= word_piece.length;
+								start_loc = j + temp_loc;
+								end_loc = j + temp_loc + syllable;
+								var obj = "";
+								$.ajaxSettings.async = false;
+								search_correspond(pinyin_piece,word_piece); // 檢查拼音是否與字依序相符
+								$.ajaxSettings.async = true;
+								if (correspond_flag)                            
+									obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,0);
+								else
+									obj = new pinyin_obj(pinyin_piece,word_piece,start_loc,end_loc,2);
+								j += syllable;
+								pinyin_objs.push(obj);
+							}
+							if (word_num > 0){                              // 如果字數超過音節數
+								var word_piece = word.substring((word.length - word_num),word.length);  // 則把剩下來的字併為一詞
+								start_loc = end_loc;
+								end_loc = start_loc + word_num;
+								obj = new pinyin_obj("",word_piece,start_loc,end_loc,2);
+								pinyin_objs.push(obj);                      // 插入到物件陣列裡
+							}
+						}      
 						for(var i = 0; i < pinyin_objs.length; i++){
 							if (i == 0){
 								if (del_flag){
@@ -2236,12 +2248,15 @@
 				}
 
 				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
-				var syllable = getSyllable(key);
+				var syllables = getSyllable(key);
 				start_loc = pinyin_record[which_word].start_loc;
 				var temp_loc = loc - start_loc;
 
 				if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
-					if (temp_loc > syllable){                   // 字詞的位置超過拼音
+					if (temp_loc > syllables){                   // 字詞的位置超過拼音
+						pinyin_left = key;
+					}
+					else if (syllables > pinyin_record[which_word].word.length){
 						pinyin_left = key;
 					}
 					else{
