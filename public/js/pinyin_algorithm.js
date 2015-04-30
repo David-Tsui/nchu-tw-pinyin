@@ -1424,6 +1424,7 @@
 					}
 					else{
 						var key_num = Object.keys(data).length; 
+						var key_len = getSyllable(key);
 						var word_num = word.length;
 						var pinyin_objs = [];
 						var j = 0;
@@ -1438,7 +1439,7 @@
 						var temp_index = index;
 						var start_loc = 0;
 						var end_loc = 0;
-						if (key_num > word_num){
+						if (key_len > word_num){
 							var word_piece = word;
 							start_loc = pinyin_record[index - 1].end_loc;
 							end_loc = start_loc + word_num;
@@ -2254,9 +2255,6 @@
 
 				if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
 					if (temp_loc > syllables){                   // 字詞的位置超過拼音
-						pinyin_left = key;
-					}
-					else if (syllables > pinyin_record[which_word].word.length){
 						pinyin_left = key;
 					}
 					else{
