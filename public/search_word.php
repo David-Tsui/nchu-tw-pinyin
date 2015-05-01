@@ -40,8 +40,7 @@
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
 					$stmt->setFetchMode(PDO::FETCH_NUM);
-
-					$i = 0;
+					
 					$row = $stmt->fetch();
 				  	do{
 				    	if ($row != "")						
@@ -59,8 +58,7 @@
 					$stmt = $db->prepare($sql);
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
-					$stmt->setFetchMode(PDO::FETCH_NUM);
-					$i = 0;
+					$stmt->setFetchMode(PDO::FETCH_NUM);			
 					$row = $stmt->fetch();
 				  	do{
 				    	if ($row != "")						
@@ -260,12 +258,13 @@
 					$blanks++;
 			}
 			$temp = $blanks + 1;
+			$key = strtolower($key);
 			$key_super = $key . "%";
 			$sql = "SELECT SUBSTRING_INDEX(`sound`,' ',$temp) FROM `pinyin_formal` 
-					WHERE `sound` LIKE :key 
+					WHERE `sound` LIKE :key_super 
 					GROUP BY SUBSTRING_INDEX(`sound`,' ',$temp)";
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam(':key',$key_super);
+			$stmt->bindParam(':key_super',$key_super);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
 			$row = $stmt->fetch();
