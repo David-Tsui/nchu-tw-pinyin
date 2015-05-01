@@ -30,6 +30,46 @@
 						break;
 					$i++;
 			  	}while ($row = $stmt->fetch());
+
+			  	if (strlen($key) == 1){
+			  		$mode = 3;
+					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+						    WHERE `abbr` = :key
+						    ORDER BY char_length(`characters`) ASC, `score` DESC";
+					$stmt = $db->prepare($sql);
+					$stmt->bindParam(':key',$key);
+					$stmt->execute();
+					$stmt->setFetchMode(PDO::FETCH_NUM);
+
+					$i = 0;
+					$row = $stmt->fetch();
+				  	do{
+				    	if ($row != "")						
+							$arr[$i] = $row[0];
+						else
+							break;
+						$i++;
+				  	}while ($row = $stmt->fetch());
+
+				  	$key = strtolower($key);
+					$mode = 5;
+					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
+						    WHERE `eng` = :key
+						    ORDER BY char_length(`cht`) ASC, `score` DESC";
+					$stmt = $db->prepare($sql);
+					$stmt->bindParam(':key',$key);
+					$stmt->execute();
+					$stmt->setFetchMode(PDO::FETCH_NUM);
+					$i = 0;
+					$row = $stmt->fetch();
+				  	do{
+				    	if ($row != "")						
+							$arr[$i] = $row[0];
+						else
+							break;
+						$i++;
+				  	}while ($row = $stmt->fetch());
+			  	}
 			}
 			else{									// 第一個字大寫->台語縮寫MODE=3
 				$mode = 3;
@@ -53,7 +93,6 @@
 
 			  	if (count($arr) == 0){				// 都沒有，查英文字典 mode=5
 					$key = strtolower($key);
-					$key_super = $key . "%";
 					$mode = 5;
 					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
 						    WHERE `eng` = :key
