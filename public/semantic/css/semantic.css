@@ -7650,7 +7650,8 @@ img.ui.image {
 }
 .ui.input input {
   width: 100%;
-  font-family: "Helvetica Neue", "Helvetica", Arial;
+  /*font-family: "Helvetica Neue", "Helvetica", Arial;*/
+  font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
   margin: 0em;
   padding: 0.65em 1em;
   font-size: 1em;

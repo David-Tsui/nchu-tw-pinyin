@@ -125,18 +125,19 @@
                     <a class="navbar-brand" id="prefix_title" href="#">興大台語輸入法</a>
                 </div>
                 <div id="navbarCollapse" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <!--<ul class="nav navbar-nav">
                         <li><a href="{{ url('') }}" id="nav_home"><span class="glyphicon glyphicon-home"></span> 首頁</a></li>
-                    </ul>
+                    </ul>-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ url('/#about') }}" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
-                        <li><a href="{{ url('/#tutorial') }}" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
-                        <li><a href="{{ url('/#contact') }}" id="nav_contact" date-toggle="modal"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
+                        <li data-menuanchor="aboutPage"><a href="{{ url('/#aboutPage') }}" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
+                        <li data-menuanchor="mainPage"><a href="{{ url('/#mainPage') }}" id="nav_home"><span class="glyphicon glyphicon-home"></span> 首頁</a></li>
+                        <li data-menuanchor="tutorialPage"><a href="{{ url('/#tutorialPage') }}" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
+                        <li data-menuanchor="contactPage"><a href="{{ url('/#contactPage') }}" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
                         @if (Auth::user())
                             <li><a href="{{ url('/auth/logout') }}" id="nav_login"><span class="glyphicon glyphicon-user"></span>會員登出</a></li>
                         @else
                             <li><a href="{{ url('/auth/login') }}" id="nav_login"><span class="glyphicon glyphicon-user"></span>會員登入/註冊</a></li>                 
-                    	@endif
+                        @endif
                     </ul>
                 </div>
             </div>

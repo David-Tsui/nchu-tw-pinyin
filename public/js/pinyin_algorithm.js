@@ -1,7 +1,7 @@
 	/***********************************************興大台語拼音輸入法演算法*********************************************/
 	/*********************************************Mainly coded by David Tsui*******************************************/
 	/******************************************************************************************************************/
-	var nav_arr = ["#nav_home","#nav_about","#nav_tutorial","#nav_contact","#nav_login"];   // navbar的元素
+	var nav_arr = ["#nav_login","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];  // navbar的元素
 	var nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];                    // 初始navbar的顏色
 	var customJqte = "";                                                                    // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
@@ -769,9 +769,9 @@
 		});
 						
 		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件
-			$("#tutor_panel").slideUp(700);
+			/*$("#tutor_panel").slideUp(700);
 			$("#hide_push").height(50);
-			$("#hide_br").html("<br><br>");                 
+			$("#hide_br").html("<br><br>");*/              
 			if ($("#prompt_flat").is(":hidden")){
 				var pause_timer = setInterval(function(){
 					$('html,body').animate({scrollTop: $("#Input_place").offset().top - 75},1200);
@@ -942,9 +942,9 @@
 		});
 
 		$("#NO").click(function(){
-			$("#tutor_panel").slideUp(700);
+			/*$("#tutor_panel").slideUp(700);
 			$("#hide_push").height(50);
-			$("#hide_br").html("<br><br>");
+			$("#hide_br").html("<br><br>");*/
 			generate_prompt_btn();
 
 			if ($("#prompt_flat").is(":hidden")){
@@ -962,67 +962,8 @@
 				$("#input").focus();
 			}
 		});
-
-		var form_elements = ["#email","#uid","#password","#password_confirm","#nickname"];
-		var error_arr = ["#error_email","#error_prompt1","#error_prompt2","#error_prompt3","#error_prompt4"];
-
-		$("#close_modal").click(function(){
-			var all_blank = true;
-			for(var i = 0; i < form_elements.length; i++){
-				if ($(form_elements[i]).val() != ""){
-					all_blank = false;
-					break;
-				}
-			}
-			if (all_blank){
-				$("#myModal").modal('hide');
-			}
-			else{
-				$("#close_myModal").modal('show');
-				$("#delete_modal").click(function(){
-					for(var i = 0; i < form_elements.length; i++){
-						$(form_elements[i]).val("");
-						$(error_arr[i]).hide();
-					}
-					$("#close_myModal").modal('hide');
-				});
-				$("#cancel_modal").click(function(){
-					$("#close_myModal").modal('hide');
-					$("#myModal").modal('show');
-				});
-				$("#close_modal3").click(function(){
-					$("#close_myModal").modal('hide');
-					$("#myModal").modal('show');
-				});
-			}
-		});
-
-		$(form_elements[0]).focusin(function(){
-			$(error_arr[0]).hide();
-		});
-		$(form_elements[1]).focusin(function(){
-			$(error_arr[1]).hide();
-		});
-		$(form_elements[2]).focusin(function(){
-			$(error_arr[2]).hide();
-		});
-		$(form_elements[3]).focusin(function(){
-			$(error_arr[3]).hide();
-		});
-		$(form_elements[4]).focusin(function(){
-			$(error_arr[4]).hide();
-		});
-
-		var error_login1 = $("#error_login_prompt1");
-		var error_login2 = $("#error_login_prompt2");
-		$("#login_uid").focusin(function(){
-			error_login1.hide();
-		});
-		$("#login_password").focusin(function(){
-			error_login2.hide();
-		});
 											
-		for (i = 0; i < nav_arr.length; i++){
+		for(var i = 0; i < nav_arr.length; i++){
 			$(nav_arr[i]).mouseenter(function(){$(this).css('color',"white");});
 		}
 					
@@ -2764,7 +2705,7 @@
 	/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑與輸入法相關↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 	/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
-	function nav_to_white(){                                        // 讓上方的navbar的元素有白色跑馬燈特效
+	/*function nav_to_white(){                                        // 讓上方的navbar的元素有白色跑馬燈特效
 		function auto_count(){                                      // 用來控制變色的index的anonymous function，本身記錄index
 			var count = 0;
 			return function(){
@@ -2781,7 +2722,7 @@
 				clearInterval(pause_timer);                         
 			},1500);
 		},1500);
-	}
+	}*/
 
 	function nav_assign_white(element){                             // 把元素顏色變白色
 		$(nav_arr[element]).css('color',"white");
@@ -2879,7 +2820,7 @@
 			for(var i = 0; i < nav_arr.length; i++){
 				$(nav_arr[i]).css('color',nav_color[i]);
 			}
-			nav_to_white();
+			//nav_to_white();
 			for(var i = 0; i < nav_arr.length; i++){
 				$(nav_arr[i]).mouseenter(function(){$(this).css('color',"white");});
 			}
@@ -3203,6 +3144,9 @@
 			}  
 		});
 
+		$('#fullpage').fullpage({
+			anchors:['firstPage', 'secondPage', 'thirdPage']
+		});
 
 		$("#nav_contact").click(function(){
 			$("#message_board").modal('show');

@@ -40,7 +40,7 @@
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
 					$stmt->setFetchMode(PDO::FETCH_NUM);
-					
+
 					$row = $stmt->fetch();
 				  	do{
 				    	if ($row != "")						
@@ -251,7 +251,7 @@
 			}
 		}
 		
-		if (count($arr) == 0){	// 如果沒有該拼音對應的字，找尋其相近(關聯)的拼音
+		if (!($mode == 3 || $mode == 4 || $mode == 5) && count($arr) == 0){	// 如果沒有該拼音對應的字，找尋其相近(關聯)的拼音
 			$blanks = 0;
 			for($i = 0 ; $i < strlen($key) ; $i++){
 				if ($key[$i] == " ")
