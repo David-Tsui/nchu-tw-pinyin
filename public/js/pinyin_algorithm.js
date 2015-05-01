@@ -63,7 +63,7 @@
 	$(document).ready(function(){
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
-		set_default();                                                   // 設定初始狀態
+		set_default();                                                  // 設定初始狀態
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 
@@ -2850,8 +2850,20 @@
 			$("#jqte_flat").jqte({css:"jqte_xmas_flat"});
 			customJqte_flat = $(".jqte_xmas_flat");
 		}
-		if (typeof(Storage) != "undefined") {                   
+		if (typeof(Storage) != "undefined"){                   
 			localStorage.setItem("theme", theme); 
+			var text = localStorage.getItem("text", text);
+			$(".jqte_" + theme + "_editor").html(text);
+			$(".jqte_" + theme + "_flat_editor").html(text);
+			var jqte_text = "";
+			$(".jqte_" + theme + "_editor").keyup(function(){
+				jqte_text = $(this).html();
+				localStorage.setItem("text", jqte_text); 
+			});
+			$(".jqte_" + theme + "_flat_editor").keyup(function(){
+				jqte_text = $(this).html();
+				localStorage.setItem("text", jqte_text); 
+			});
 		} 
 		for(var i = 1; i <= 4; i++){
 			if (i == css_num)
@@ -3207,9 +3219,10 @@
 		var theme = "origin";
 		var valid_css_num = 0;
 		var style = ["origin","pink","blue","xmas"];
-
+		var text = "";
 		if (typeof(Storage) != "undefined") {                           // 先從localStorage取theme資料
 			var data = localStorage.getItem("theme");
+			text = localStorage.getItem("text");
 			if (data != null){                                          // 如果storage中有資料
 				theme = data;                                           // 則更改主題，若無則為預設的origin
 				for(var i = 0; i < style.length; i++){
@@ -3224,6 +3237,8 @@
 		var flat_initial_style = initial_style + "_flat";
 		$("#jqte").jqte({css: initial_style});
 		$("#jqte_flat").jqte({css: flat_initial_style});
+		$(".jqte_" + theme + "_editor").html(text);
+		$(".jqte_" + theme + "_flat_editor").html(text);
 
 		customJqte = $("." + initial_style);
 		customJqte_flat = $("." + flat_initial_style);   

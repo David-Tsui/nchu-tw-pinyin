@@ -50,8 +50,54 @@
 						break;
 					$i++;
 			  	}while ($row = $stmt->fetch());
-			  	if (count($arr) == 0)
-			  		$mode = 0;
+
+			  	if (count($arr) == 0){				// 都沒有，查英文字典 mode=5
+					$key = strtolower($key);
+					$key_super = $key . "%";
+					$mode = 5;
+					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
+						    WHERE `eng` = :key
+						    ORDER BY char_length(`cht`) ASC, `score` DESC";
+					$stmt = $db->prepare($sql);
+					$stmt->bindParam(':key',$key);
+					$stmt->execute();
+					$stmt->setFetchMode(PDO::FETCH_NUM);
+					$i = 0;
+					$row = $stmt->fetch();
+				  	do{
+				    	if ($row != "")						
+							$arr[$i] = $row[0];
+						else
+							break;
+						$i++;
+				  	}while ($row = $stmt->fetch());
+
+				  	if (count($arr) == 0){
+				  		$key_super = $key . "%";
+						$sql = "SELECT DISTINCT `eng` FROM `eng_formal` 
+						    WHERE `eng` LIKE :key_super
+						    ORDER BY char_length(`eng`) ASC, `score` DESC";
+						$stmt = $db->prepare($sql);
+						$stmt->bindParam(':key_super',$key_super);
+						$stmt->execute();
+						$stmt->setFetchMode(PDO::FETCH_NUM);
+						$row = $stmt->fetch();
+
+						$i = 1;
+						if ($row[0] == ""){
+						}
+						else{			
+							$arr[0] = "associated pinyin";
+							do{	
+								if ($row[0] != "")
+									$arr[$i] = $row[0];	
+								else
+									break;
+								$i++;
+							}while ($row = $stmt->fetch());
+						}
+				  	}
+				}
 			}
 		}
 
@@ -175,12 +221,12 @@
 					$blanks++;
 			}
 			$temp = $blanks + 1;
-			$more_key = $key . "%";
+			$key_super = $key . "%";
 			$sql = "SELECT SUBSTRING_INDEX(`sound`,' ',$temp) FROM `pinyin_formal` 
 					WHERE `sound` LIKE :key 
 					GROUP BY SUBSTRING_INDEX(`sound`,' ',$temp)";
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam(':key',$more_key);
+			$stmt->bindParam(':key',$key_super);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_NUM);
 			$row = $stmt->fetch();
@@ -197,29 +243,6 @@
 						break;
 					$i++;
 				}while ($row = $stmt->fetch());
-			}
-
-			if (count($arr) == 0){	//都沒有，查英文字典 mode=5
-				$key = strtolower($key);
-				$key_super = $key . "%";
-				$mode = 5;
-				$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
-					    WHERE `eng` = :key OR `eng` LIKE :key_super
-					    ORDER BY char_length(`cht`) ASC, `score` DESC";
-				$stmt = $db->prepare($sql);
-				$stmt->bindParam(':key',$key);
-				$stmt->bindParam(':key_super', $key_super);
-				$stmt->execute();
-				$stmt->setFetchMode(PDO::FETCH_NUM);
-				$i = 0;
-				$row = $stmt->fetch();
-			  	do{
-			    	if ($row != "")						
-						$arr[$i] = $row[0];
-					else
-						break;
-					$i++;
-			  	}while ($row = $stmt->fetch());
 			}
 
 			echo json_encode($arr);
