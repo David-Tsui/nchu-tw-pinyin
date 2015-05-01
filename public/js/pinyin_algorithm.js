@@ -2472,8 +2472,13 @@
 				}      
 			}
 		}   
-		while (search_key.search("&nbsp;") >= 0){
-			search_key = search_key.replace("&nbsp;"," ");  
+		var blanks = [' &nbsp; ',' &nbsp;','&nbsp;'];
+		var blanks_num = blanks.length;
+		for(var i = 0; i < blanks_num; i++){
+			var the_blank = blanks[i];
+			while (search_key.search(the_blank) >= 0){
+				search_key = search_key.replace(the_blank," ");
+			}
 		}
 		search_key = search_key.trim();
 		console.log("search_key: " + search_key);    
@@ -2495,9 +2500,11 @@
 		if (after_text.search("<br>") == 0){
 			after_text = after_text.replace("<br>","");
 		}
-		for(var i = 0; i < tags.length; i++){
-			while (after_text.search(tags[i]) >= 0){
-				after_text = after_text.replace(tags[i],"");
+		var tags_num = tags.length;
+		for(var i = 0; i < tags_num; i++){
+			var the_tag = tags[i];
+			while (after_text.search(the_tag) >= 0){
+				after_text = after_text.replace(the_tag,"");
 			}
 		}
 		return after_text;

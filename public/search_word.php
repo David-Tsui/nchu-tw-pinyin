@@ -204,11 +204,11 @@
 				$key_super = $key . "%";
 				$mode = 5;
 				$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
-					    WHERE `eng` = :key 
+					    WHERE `eng` = :key OR `eng` LIKE :key_super
 					    ORDER BY char_length(`cht`) ASC, `score` DESC";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam(':key',$key);
-				//$stmt->bindParam(':key_super', $key_super);
+				$stmt->bindParam(':key_super', $key_super);
 				$stmt->execute();
 				$stmt->setFetchMode(PDO::FETCH_NUM);
 				$i = 0;
