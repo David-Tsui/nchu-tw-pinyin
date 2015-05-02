@@ -388,36 +388,40 @@
 								<form method="post">
 									<div class="ui form myForm_body">
 										<div class="form-group" id="info_form_msg">
-											<div class="ui fluid input" class="form-control" style="font-size: 14px; font-weight: bold">
-												<div>
-													<p><i class="smile icon"></i>姓名</p>
-													<input type="text" class="form-control" name="mes_name" id="mes_name" onchange="CheckName()"
-													 placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>">
-													<span id="name_check_mes"></span>
-												</div>
-												<div style="margin-top: 8px">
-													<p><i class="mail icon"></i>電子郵件</p>
+											<div class="field">
+												<label><i class="smile icon"></i>姓名</label>
+												<input type="text" class="form-control" name="mes_name" id="mes_name" onchange="CheckName()"
+												placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>">
+												<span id="name_check_mes"></span>
+											</div>
+											<div style="margin-top: 8px">
+												<div class="field">
+													<label><i class="mail icon"></i>電子郵件</label>
 													<input type="text" class="form-control" name="mes_email" id="mes_email" onchange="CheckEmail()"
 													placeholder="請輸入您的常用信箱，回信將會寄往該信箱，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->email; ?>">
 													<span id="email_check_mes"></span>
 												</div>
-												<div style="margin-top: 8px">
-													<p><i class="glyphicon glyphicon-leaf"></i> 主旨</p>
+											</div>
+											<div style="margin-top: 8px">
+												<div class="field">
+													<label><i class="glyphicon glyphicon-leaf"></i> 主旨</label>
 													<input type="text" class="form-control" name="mes_title" id="mes_title" onchange="CheckTitle()">
 													<span id="title_check_mes"></span>
 												</div>
-												<div style="margin-top: 8px">
-													<p><i class="glyphicon glyphicon-comment"></i> 內容</p>
+											</div>
+											<div style="margin-top: 8px">
+												<div class="field">
+													<label><i class="glyphicon glyphicon-comment"></i> 內容</label>
 													<textarea id="mes_comment" name="mes_comment" aria-required="true" onchange="CheckComment()"></textarea>
 													<span id="comment_check_mes"></span>
 												</div>
 											</div>
 										</div>
 									</div>
-									<br>
 									<div class="myForm_footer" style="text-align: center">
 										<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 										<button type="submit" class="btn btn-primary" onclick="return CheckBeforeSubmit();">發送</button>
+										<button class="btn btn-default" onclick="return truncateMessage();">清空</button>
 									</div>
 								</form>
 							</div>

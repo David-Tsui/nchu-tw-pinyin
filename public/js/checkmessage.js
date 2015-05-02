@@ -1,35 +1,39 @@
 function CheckEmail()
 {
-    var email = document.getElementById("mes_email").value;
+    var email = $("#mes_email").val();
     reg = /^[^\s]+@[^\s]+\.[^\s]{2,3}$/;
     if (email == "")
     {
         $("#email_check_mes").html("<i class='remove circle icon'></i>" + "請輸入E-Mail!");
         $("#email_check_mes").css({"color":"red", "font-size":"15px"});
+        $("#email_check_mes").show();
+        $("#mes_email").focus(function(){$("#email_check_mes").hide();});
         return false;
     }
     if (reg.test(email))
     {
-        $("#email_check_mes").html("<i class='ok circle icon'></i>" + "E-Mail 格式正確!");
-        $("#email_check_mes").css({"color":"blue", "font-size":"15px"});
+        $("#email_check_mes").hide();
         return true;
     }
     else
     {
         $("#email_check_mes").html("<i class='remove circle icon'></i>" + "E-Mail 格式錯誤!");
         $("#email_check_mes").css({"color":"red", "font-size":"15px"});
+        $("#email_check_mes").show();
+        $("#mes_email").focus(function(){$("#email_check_mes").hide();});
         return false;
     }
 }
 
 function CheckName()
 {
-    var name = document.getElementById("mes_name").value;
+    var name = $("#mes_name").val();
     if (name == "")
     {
         $("#name_check_mes").html("<i class='remove circle icon'></i>" + "請輸入姓名");
         $("#name_check_mes").css({"color":"red", "font-size":"15px"});
         $("#name_check_mes").show();
+        $("#mes_name").focus(function(){$("#name_check_mes").hide();});
         return false;
     }
     else
@@ -41,12 +45,13 @@ function CheckName()
 
 function CheckTitle()
 {
-    var title = document.getElementById("mes_title").value;
+    var title = $("#mes_title").val();
     if (title == "")
     {
         $("#title_check_mes").html("<i class='remove circle icon'></i>" + "請輸入主旨");
         $("#title_check_mes").css({"color":"red", "font-size":"15px"});
         $("#title_check_mes").show();
+        $("#mes_title").focus(function(){$("#title_check_mes").hide();});
         return false;
     }
     else
@@ -58,12 +63,13 @@ function CheckTitle()
 
 function CheckComment ()
 {
-    var comment = document.getElementById("mes_comment").value;
+    var comment = $("#mes_comment").val();
     if (comment == "")
     {
         $("#comment_check_mes").html("<i class='remove circle icon'></i>" + "請輸入內容");
         $("#comment_check_mes").css({"color":"red", "font-size":"15px"});
         $("#comment_check_mes").show();
+        $("#mes_comment").focus(function(){$("#comment_check_mes").hide();});
         return false;
     }
     else
@@ -85,4 +91,12 @@ function CheckBeforeSubmit()
         return true;
     else
         return false;
+}
+
+function truncateMessage()
+{
+    var arr = ["#mes_name","#mes_email","#mes_title","#mes_comment"];
+    for(var i = 0; i < arr.length; i++)
+        $(arr[i]).val("");
+     return false;
 }
