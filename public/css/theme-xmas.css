@@ -66,6 +66,13 @@ body {
 	padding-right: 30px;
 }
 
+#public_intro {
+	border-style: ridge;
+	border-width: 15px;
+	border-radius: 5px;
+	border-color: #FFF;
+}
+
 #Input_place {
 	/*xmas*/
 	background-color: hsla(0, 100%, 100%, 0.65); 
@@ -78,19 +85,30 @@ body {
 	text-align: center;
 }
 
-#select_mode {
-	/*xmas*/
-	background-color: rgba(255, 118, 118, 0.8); 
-	color: #FFF;
-	box-shadow: inset 0px 0px 10px 2px #FFF; 
-	-webkit-box-shadow: inset 0px 0px 10px 2px #FFF; 
-	-moz-box-shadow: inset 0px 0px 10px 2px #FFF;
-	/*common*/
-	margin-top: 10px; 
+.ui.slider.checkbox .box:before, .ui.slider.checkbox label:before {
+	background-color: rgba(32, 131, 48, 0.75);
+}
+
+.ui.slider.checkbox input[type="checkbox"]:checked ~ .box:before, 
+.ui.slider.checkbox input[type="checkbox"]:checked ~ label:before {
+	background-color: rgba(32, 131, 48, 0.75);
+}
+
+.ui.slider.checkbox .box:hover::before,
+.ui.slider.checkbox label:hover::before {
+  	background: rgba(32, 131, 48, 0.75);
+}
+
+.ui.slider.checkbox .box:after, .ui.slider.checkbox label:after {
+	background: #FFFFFF linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+}
+
+#select_mode > label{
+	color: #000;
 	font-weight: bold;  
-	font-size: 13px;
+	font-size: 14px;
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-} 
+}
 
 #prompt {
 	/*xmas*/

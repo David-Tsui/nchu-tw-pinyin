@@ -768,35 +768,39 @@
 			}
 		});
 						
-		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件            
+		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件  
+			var height = $("#tutorial_panel").height();
+			$("#hide_panel").height(height + 22);
+			$("#tutorial_panel").fadeOut('2000',function(){
+				$("#hide_panel").show();
+			});        
+
 			if ($("#prompt_flat").is(":hidden")){
 				var pause1 = setInterval(function(){
-					$(".lab_qrcode").animate({
+					/*$(".lab_qrcode").animate({
 						margin: '0 0'  
-					},"slow");
+					},"slow");*/
 					$("#input").popup({
 						content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
 						position: 'left center'
 					}).popup('show');
-					var textbox = $("#input");
-					var prompt_txtbox = $("#prompt");
-					qrcode_toleft();
+					//qrcode_toleft();
 					clearInterval(pause1);
 					var pause2 = setInterval(function(){
 						$("#input").popup('hide');
-						$(".lab_qrcode").animate({
+						/*$(".lab_qrcode").animate({
 							margin: '0 28%'  
-						},"slow");
+						},"slow");*/
 						$("#select_mode").popup({
-							content: '這是選擇不同輸入模式的下拉式選單',
+							content: '這是選擇不同輸入模式的滑動選單',
 							position: 'left center'
 						}).popup('show');
 						clearInterval(pause2);
 						var pause3 = setInterval(function(){
 							$("#select_mode").popup('hide');
-							$(".lab_qrcode").animate({
+							/*$(".lab_qrcode").animate({
 								margin: '0 17%'  
-							},"slow");
+							},"slow");*/
 							$("#prompt").popup({
 								content: '這是簡易提示欄，成功或失敗操作時會有提示',
 								position: 'left center'
@@ -804,9 +808,9 @@
 							clearInterval(pause3);                                      
 							var pause4 = setInterval(function(){
 								$("#prompt").popup('hide');
-								$(".lab_qrcode").animate({
+								/*$(".lab_qrcode").animate({
 									margin: '0 28%'  
-								},"slow");
+								},"slow");*/
 								$("#copy").popup({
 									content: '這是複製按鈕，將輸入的文字複製到剪貼簿',
 									position: 'left center'
@@ -842,20 +846,28 @@
 													position: 'left center'
 												}).popup('show');
 												clearInterval(pause8);
-												var pause9 = setInterval(function(){
-													customJqte.popup('hide');
-													generate_prompt_btn();
-													$("#input").focus();
+												var pause9 = setInterval(function(){													
+													customJqte.popup('hide');	
+													$("#search_pinyin").popup({
+														content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+														position: 'right center'
+													}).popup('show');											
 													clearInterval(pause9);
-												},2500);
-											},2500);
-										},2500);
-									},2500);
-								},2500);
-							},2500);
-						},2500);
-					},2500);
-				},2000);
+													var pause10 = setInterval(function(){
+														$("#search_pinyin").popup('hide');
+														generate_prompt_btn();
+														$("#input").focus();
+														clearInterval(pause10);
+													},3000);
+												},3000);
+											},3000);
+										},3000);
+									},3000);
+								},3000);
+							},3000);
+						},3000);
+					},3000);
+				},1000);
 			}
 			else{
 				var pause1 = setInterval(function(){
@@ -867,7 +879,7 @@
 					var pause2 = setInterval(function(){
 						$("#input").popup('hide');
 						$("#select_mode_flat").popup({
-							content: '這是選擇不同輸入模式的下拉式選單',
+							content: '這是選擇不同輸入模式的滑動選單',
 							position: 'left center'
 						}).popup('show');
 						clearInterval(pause2);
@@ -908,35 +920,43 @@
 											clearInterval(pause7);
 											var pause8 = setInterval(function(){
 												$("#show_flat").popup('hide');
-												$(".jqte").popup({
+												customJqte_flat.popup({
 													content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
 													position: 'top center',
 												}).popup('show');                                                           
 												clearInterval(pause8);
 												var pause9 = setInterval(function(){
-													$(".jqte").popup('hide');
-													generate_prompt_btn();
-													$("#input").focus();
+													customJqte_flat.popup('hide');
+													$("#search_pinyin").popup({
+														content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+														position: 'right center'
+													}).popup('show');											
 													clearInterval(pause9);
-												},2500);
-											},2500);
-										},2500);
-									},2500);
-								},2500);
-							},2500);
-						},2500);
-					},2500);
-				},1500);
+													var pause10 = setInterval(function(){
+														$("#search_pinyin").popup('hide');
+														generate_prompt_btn();
+														$("#input").focus();
+														clearInterval(pause10);
+													},3000);
+												},3000);
+											},3000);
+										},3000);
+									},3000);
+								},3000);
+							},3000);
+						},3000);
+					},3000);
+				},1000);
 			}
 		});
 
 		$("#NO").click(function(){
+			var height = $("#tutorial_panel").height();
 			generate_prompt_btn();
-			if ($("#prompt_flat").is(":hidden")){
-				
-			}
-			else{
-			}
+			$("#hide_panel").height(height + 22);
+			$("#tutorial_panel").fadeOut('2000',function(){
+				$("#hide_panel").show();
+			});
 			$("#input").focus();
 		});
 											
@@ -2541,32 +2561,6 @@
 		}
 	}
 
-	function get_sel_mode(text){                                    // 判斷dropdown中的值，並決定輸入法模式
-		var textbox = $("#input");
-		var prompt_txtbox = $("#prompt");
-		var prompt_flat_txtbox = $("#prompt_flat");
-		
-		if (text == "自選模式"){
-			sel_mode = 0;
-			prompt_txtbox.val("已切換至自選模式!");
-			prompt_flat_txtbox.val("已切換至自選模式!");
-		}
-		if (text == "智能模式"){
-			sel_mode = 1;
-			prompt_txtbox.val("已切換至智能模式!");
-			prompt_flat_txtbox.val("已切換至智能模式!");
-		}
-		textbox.focus();
-		caption_effect();   
-	}
-
-	/*function enter_sel_mode(e,text){
-		alert("Here!");
-		if (e.keyCode == 13){
-			get_sel_mode(text);
-		}
-	}*/
-
 	function reachHead(){                                           // 已達首頁
 		if (thispage == 1) return true;
 	}
@@ -2839,8 +2833,8 @@
 	}
 
 	/***********************************************************************提示按鈕相關***********************************************************************/
-	function generate_prompt_btn(){                                 // 產生開啟提示、關閉提示按鈕
-		$("#hide_btn").fadeIn();
+	function generate_prompt_btn(height){                            // 產生開啟提示、關閉提示按鈕
+		$("#hide_btn").delay('500').fadeIn();
 		generate_open();
 		generate_close();
 	}
@@ -2850,8 +2844,9 @@
 			if ($("#prompt_flat").is(":hidden")){
 				var textbox = $("#input");
 				var prompt_txtbox = $("#prompt");
-				qrcode_toleft();
-				if (ispopup_visible()){
+				//qrcode_toleft();
+				var check_popup_hide = ispopup_hidden();
+				if (!check_popup_hide){
 					//已經彈出popup時，則不需要再開啟
 				}
 				else{
@@ -2861,7 +2856,7 @@
 					}).popup('hide');
 									
 					$("#select_mode").popup({
-						content: '這是選擇不同輸入模式的下拉式選單',
+						content: '這是選擇不同輸入模式的滑動選單',
 						position: 'left center'
 					}).popup('hide');
 					
@@ -2890,10 +2885,17 @@
 						position: 'right center'
 					}).popup('hide');
 					
+					customJqte.attr('data-variation','large');
+					customJqte.attr('data-offset',35);
 					customJqte.popup({
 						content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
 						position: 'left center'
 					}).popup('hide');
+
+					$("#search_pinyin").popup({
+						content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+						position: 'right center'
+					}).popup('hide');	
 				}
 			}
 			else{
@@ -2903,7 +2905,7 @@
 				}).popup('hide');
 				
 				$("#select_mode_flat").popup({
-					content: '這是選擇不同輸入模式的下拉式選單',
+					content: '這是選擇不同輸入模式的滑動選單',
 					position: 'left center'
 				}).popup('hide');
 								
@@ -2932,10 +2934,15 @@
 					position: 'top center'
 				}).popup('hide');
 				
-				$(".jqte").popup({
+				customJqte_flat.popup({
 					content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
-					position: 'top center'
+					position: 'left center'
 				}).popup('hide');
+
+				$("#search_pinyin").popup({
+					content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+					position: 'right center'
+				}).popup('show');
 			}
 			$("#prompt").val("提示功能已開啟!");
 			$("#prompt_flat").val("提示功能已開啟!");
@@ -2945,76 +2952,77 @@
 
 	function generate_close(){                                          // 讓"關閉提示"的button有其功能
 		$("#close_prompt").click(function(){
-			if ($("#prompt_flat").is(":hidden")){
-				$("#input").popup('hide');
-				$("#select_mode").popup('hide');
-				$("#prompt").popup('hide');
-				$("#copy").popup('hide');
-				$("#undo").popup('hide');
-				$("#cut").popup('hide');
-				$("#show").popup('hide');
-				customJqte.popup('hide');
-				$(".lab_qrcode").animate({margin: '0 28%'});
-				var pause_timer = setInterval(function(){
-					$("body").off("mouseenter","#input");
-					$("body").off("mouseleave","#input");
-					$("body").off("mouseenter","#prompt");
-					$("body").off("mouseleave","#prompt");
-					$("#input").popup('destroy');
-					$("#select_mode").popup('destroy');
-					$("#prompt").popup('destroy');
-					$("#copy").popup('destroy');
-					$("#undo").popup('destroy');
-					$("#cut").popup('destroy');
-					$("#show").popup('destroy');
-					customJqte.popup('destroy');
-					$("#prompt").val("提示功能已關閉!");
-					caption_effect();
-					clearInterval(pause_timer);
-				},200);
-			}
-			else{
-				$("#input").popup('hide');
-				$("#select_mode_flat").popup('hide');
-				$("#prompt_flat").popup('hide');
-				$("#copy_flat").popup('hide');
-				$("#undo_flat").popup('hide');
-				$("#cut_flat").popup('hide');
-				$("#show_flat").popup('hide');
-				$(".jqte").popup('hide');
-				var pause_timer = setInterval(function(){
-					$("#input").popup('destroy');
-					$("#select_mode_flat").popup('destroy');
-					$("#prompt_flat").popup('destroy');
-					$("#copy_flat").popup('destroy');
-					$("#undo_flat").popup('destroy');
-					$("#cut_flat").popup('destroy');
-					$("#show_flat").popup('destroy');
-					$(".jqte").popup('destroy');
-					$("#prompt_flat").val("提示功能已關閉!");
-					caption_effect();
-					clearInterval(pause_timer);
-				},200);
-			}
+			//if ($("#prompt_flat").is(":hidden")){
+			$("#input").popup('hide');
+			$("#select_mode, #select_mode_flat").popup('hide');
+			$("#prompt, #prompt_flat").popup('hide');
+			$("#copy, #copy_flat").popup('hide');
+			$("#undo, #undo_flat").popup('hide');
+			$("#cut, #cut_flat").popup('hide');
+			$("#show, #show_flat").popup('hide');
+			customJqte.popup('hide');
+			customJqte_flat.popup('hide');
+			$("#search_pinyin").popup('hide');
+			//$(".lab_qrcode").animate({margin: '0 28%'});
+			var pause_timer = setInterval(function(){
+
+				$("#input").popup('destroy');
+				$("#select_mode, #select_mode_flat").popup('destroy');
+				$("#prompt, #prompt_flat").popup('destroy');
+				$("#copy, #copy_flat").popup('destroy');
+				$("#undo, #undo_flat").popup('destroy');
+				$("#cut, #cut_flat").popup('destroy');
+				$("#show, #show_flat").popup('destroy');
+				customJqte.popup('destroy');
+				customJqte_flat.popup('destroy');
+				$("#search_pinyin").popup('destroy');
+				$("#prompt, #prompt_flat").val("提示功能已關閉!");
+				caption_effect();
+				clearInterval(pause_timer);
+			},100);
 		});
 	}
 
-	function ispopup_visible(){                                         // 判斷畫面上是否還有存在的popup
-		if ($("#input").popup('is visible') || $("#select_mode").popup('is visible') || $("#prompt").popup('is visible') || $("#copy").popup('is visible') ||
-			$("#undo").popup('is visible') || $("#cut").popup('is visible') || $("#show").popup('is visible') || customJqte.popup('is visible')){
-			return true;
+	function ispopup_hidden(){                                         // 判斷畫面上是否還有存在的popup
+		var pop_arr = ["#input","#select_mode","#prompt","#copy","#undo","#cut","#show","#search_pinyin"];
+		var check = false;
+		var temp = $("#input").popup('is hidden');
+		for(var i = 0; i < pop_arr.length; i++){
+			if ($(pop_arr[i]).popup('is hidden')){
+				check = true;
+			}
+			else{
+				check = false;
+				break;
+			}
 		}
+		if (!check)
+			return check;
+		else if (check && customJqte.popup('is hidden'))
+			check = true;
 		else
-			return false;
+			check = false;
+		return check;
 	}
 
-	function ispopup_flat_visible(){                                    // 判斷手機畫面上是否還有存在的popup
-		if ($("#input").popup('is visible') || $("#select_mode_flat").popup('is visible') || $("#prompt_flat").popup('is visible') || $("#copy_flat").popup('is visible') ||
-			$("#undo_flat").popup('is visible') || $("#cut_flat").popup('is visible') || $("#show_flat").popup('is visible') || $(".jqte").popup('is visible')){
-			return true;
+	function ispopup_flat_hidden(){                                    // 判斷手機畫面上是否還有存在的popup
+		var pop_arr = ["#input","#select_mode_flat","#prompt_flat","#copy_flat","#undo_flat","#cut_flat","#show_flat","#search_pinyin"];
+		var check = false;
+		for(var i = 0; i < pop_arr.length; i++){
+			if ($(pop_arr[i]).popup('is hidden'))
+				check = true;
+			else{
+				check = false;
+				break;
+			}
 		}
+		if (!check)
+			return check;
+		else if (check && customJqte_flat.popup('is hidden'))
+			check = true;
 		else
-			return false;
+			check = false;
+		return check;
 	}
 	/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 	/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓會員資料驗證↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
@@ -3108,11 +3116,21 @@
 		}
 	}
 
+	function google(){
+		var str = remove_tags($('#input').html());
+		if (str == ""){
+			$("#prompt, #prompt_flat").val("搜尋字串不能為空白!");
+			caption_effect();
+		}
+		else{
+			str = "https://www.google.com.tw/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=" + str;
+			var replaced=str.replace(" ","+");
+			window.location.replace(replaced);
+		}
+	}
+
 	function set_default(){
 		//$(document).jSnow();
-		$("#input").focus();
-		$("#hide_btn").hide();
-		$('<audio id="chatAudio"><source src="error.mp3" type="audio/mpeg"></audio>').appendTo('body');  
 		$(window).on('load', function(e){                               // 讓從FB導回來的頁面沒有'#_=_' 
 			if (window.location.hash == '#_=_') { 
 				window.location.hash = '';                              // for older browsers, leaves a # behind 
@@ -3120,6 +3138,11 @@
 				e.preventDefault(); // no page reload 
 			}  
 		});
+
+		$("#input").focus();
+		$("#hide_btn").hide();
+		$("#hide_panel").hide();
+		$('<audio id="chatAudio"><source src="error.mp3" type="audio/mpeg"></audio>').appendTo('body');  
 
 		$('#fullpage').fullpage({
 			anchors:['about', 'pinyin_IME', 'tutorial', 'contact'],
@@ -3135,6 +3158,7 @@
 			$(this).transition('tada');
 		});
 		$('.ui.dropdown').dropdown();                                   // 啟用dropdown元素   
+		$('.ui.checkbox').checkbox();
 		$("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
 			source: 'search_pinyin.php'
 		});                         

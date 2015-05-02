@@ -98,5 +98,6 @@ function truncateMessage()
     var arr = ["#mes_name","#mes_email","#mes_title","#mes_comment"];
     for(var i = 0; i < arr.length; i++)
         $(arr[i]).val("");
-     return false;
+    $("#name_check_mes, #email_check_mes, #title_check_mes, #comment_check_mes").hide();
+    return false;
 }

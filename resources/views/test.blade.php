@@ -15,7 +15,7 @@
         <script src="{{ asset('/js/jquery-1.11.1.js') }}"></script>
         <script>
         	var style = ["origin","pink","blue","xmas"];
-        	var nav_arr = ["#nav_home","#nav_about","#nav_tutorial","#nav_contact","#nav_login"];   // navbar的元素
+        	var nav_arr = ["#nav_log","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];    // navbar的元素
             var nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];                    // 初始navbar的顏色
         	$(document).ready(function(){
 				var theme = get_theme();

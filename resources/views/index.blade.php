@@ -28,13 +28,39 @@
 
 		<style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
-				min-height: 385px;
-				max-height: 385px;
+				min-height: 380px;
+				max-height: 380px;
 			}
 
 			.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
 				min-height: 180px;
 				max-height: 180px;
+			}
+
+			.thumbnail_img { width: 60%; }
+
+			#google_btn {
+				width: 76px;
+				height: 24px;
+				padding-top: 5px;
+				padding-bottom: 0px;
+				padding-left: 6px;
+				padding-right: 3px;
+				margin-top: 12px;
+				margin-left: -32px;
+				font-size: 11px;
+			}
+
+			#google_btn_flat {
+				width: 76px;
+				height: 24px;
+				padding-top: 5px;
+				padding-bottom: 0px;
+				padding-left: 11px;
+				padding-right: 4px;
+				margin: auto;
+				margin-top: 6px;
+				font-size: 9px;
 			}
 
 			#input {
@@ -137,17 +163,15 @@
 									<img src="./images/pinyinQR.png" id="my_qrcode" onclick="change_pic()" width="160px" height="160px" style="margin-top: -13px"/>
 								</div>
 								<div class="jumbotron" id="public_message">
-									<div style="margin-top: -15px">
-										<h3>系統公告</h3>
-										<p style="text-align: right; font-size: 12px">4/15.2015</p>
-										<div style="text-align: left">
-											<div style="font-size: 16px; margin-bottom: 20px">
-												<p>● 智能模式維修中!</p>
-												<p>● 手機介面請使用自選模式</p>
-												<p>● 會員系統、聯絡系統已上線!</p>
-											</div>
-										</div>										
-									</div>
+									<h3>系統公告</h3>
+									<p style="text-align: right; font-size: 12px">4/15.2015</p>
+									<div style="text-align: left">
+										<div style="font-size: 14px">
+											<p>● 智能模式開發中!</p>
+											<p>● 手機介面請使用自選模式</p>
+											<p>● 會員、聯絡系統已上線!</p>
+										</div>
+									</div>										
 								</div>
 							</div>
 							<div class="col-sm-6 col-md-6 col-lg-6">
@@ -158,23 +182,13 @@
 											主體為台語拼音，兼容縮寫、音首以及英文輸入，是個比想像中還要__的輸入法。
 										</p>
 										<p style="line-height: 1.8;">
-											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」。
-											前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
+											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」
+											。前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
 										</p>
 										<p style="line-height: 1.8;">
-											頁面主題有多種配色主題可更換，讓您可以在賞心悅目的顏色中進行打字。
+											頁面主題有多種配色主題可更換，讓您可以在賞心悅目的色彩中進行打字，點擊兩側箭頭即可瀏覽主題。
 										</p>							
-									</div>
-									<div class="panel panel-default" style="border-radius: 5px">
-										<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
-										<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
-										<div class="panel-footer clearfix" style="background-color: #FAEFC4">
-											<div class="pull-right">
-												<div class="btn btn-primary" id="GO" style="font-size: 10px">開始教學!</div>
-												<div class="btn btn-default" id="NO" style="font-size: 10px">直接開始!</div>
-											</div>
-										</div>
-									</div>
+									</div>						
 								</div>				
 							</div>
 							<div class="col-sm-3 col-md-3 col-lg-3"></div>
@@ -187,7 +201,7 @@
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(1/4)</p>
 							<div class="thumbnail">
-								<img src="./images/theme/origin.jpg" style="width: 50%" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/origin.jpg" alt="img not found!">
 								<div class="caption">
 									<h3>簡約黑白</h3>
 									<p><button class="btn btn-primary" role="button" onclick="change_theme('origin')">套用</button></p>
@@ -201,7 +215,7 @@
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(2/4)</p>
 							<div class="thumbnail">
-								<img src="./images/theme/pink.jpg" style="width: 50%" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3>甜蜜粉紅</h3>
 									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink')">套用</button></p>
@@ -215,7 +229,7 @@
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(3/4)</p>
 							<div class="thumbnail">
-								<img src="./images/theme/blue.jpg" style="width: 50%" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3>飄逸水藍</h3>
 									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue')">套用</button></p>
@@ -229,7 +243,7 @@
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(4/4)</p>
 							<div class="thumbnail">
-								<img src="./images/theme/xmas.jpg" style="width: 50%" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3>耶誕佳節</h3>
 									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas')">套用</button></p>
@@ -244,6 +258,24 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 col-md-4" id="left" style="text-align: center">
+							<div class="hidden-xs" id="hide_panel"></div>    
+							<div id="hide_btn" style="text-align: center">
+								<div class="ui buttons" style="font-size: 14px">
+									<div class="ui button" id="open_prompt" style="color: #FFF; background-color: #FFBABA">開啟提示</div>
+									<div class="or"></div>
+									<div class="ui button" id="close_prompt" style="color: #FFF; background-color: #AAD4FF">關閉提示</div>
+								</div>
+							</div>
+							<div class="panel panel-default" id="tutorial_panel" style="border-radius: 5px">
+								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
+								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
+								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
+									<div class="pull-right">
+										<div class="btn btn-primary" id="GO" style="font-size: 10px">馬上出發!</div>
+										<div class="btn btn-default" id="NO" style="font-size: 10px">下次再說!</div>
+									</div>
+								</div>
+							</div>
 							<div class="login_span">
 								<br>
 								<p id="login_status">
@@ -255,75 +287,55 @@
 											$url = "./auth/logout";
 											$exp = Auth::user()->name; 
 										}
-										$string = '<span class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $exp . '</span>';
+										$string = '<a class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $exp . '</a>';
 										echo $string;
 									?>   
 								</p>
-								<div class="ui button">更新資料</div>
-								<div class="ui button">管理辭庫</div>
-								<div id="hide_btn" style="text-align: center; margin-bottom: -20px">
-									<div class="ui huge buttons" style="font-size: 14px">
-										<div class="ui button" id="open_prompt" style="color: #FFF; background-color: #FFBABA">開啟提示</div>
-										<div class="or"></div>
-										<div class="ui button" id="close_prompt" style="color: #FFF; background-color: #AAD4FF">關閉提示</div>
-									</div>
+								<div class="ui buttons" style="font-size: 14px">
+									<div class="ui black basic button">更新資料</div>
+									<div class="ui black basic button">管理辭庫</div>
 								</div>
 								<br><br>
 							</div>
-							<div class="ui icon input" style="margin-top: -0px">
-								<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;">
+							<div class="ui icon input">
+								<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
 								<i class="search icon"></i>
-							</div>
-							<!--<div class="panel panel-default" style="border-radius: 5px">
-								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
-								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
-								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
-									<div class="pull-right">
-										<div class="btn btn-primary" id="GO" style="font-size: 10px">馬上出發!</div>
-										<div class="btn btn-default" id="NO" style="font-size: 10px">下次再說!</div>
-									</div>
-								</div>
-							</div>-->                                                                                                                                                 
+							</div>													                                                                                                                                            
 						</div>  
 										
 						<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
-							<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>
-							<div class="ui input">
-								<div class="hidden-xs">
-									<div class="ui left pointing dropdown icon button" tabindex="0" id="select_mode" data-variation="large">
-										<div class="text" style="margin-left: 7px">自選模式</div>
-										<i class="down icon"></i>                                   
-										<div class="menu">
-											<div class="item active" style="font-size: 10px" onclick="get_sel_mode('自選模式')" onkeydown="enter_sel_mode(event,'自選模式')"><i class="edit icon"></i>自選模式</div>
-											<div class="item" style="font-size: 10px" onclick="get_sel_mode('智能模式')" onkeydown="enter_sel_mode(event,'智能模式')"><i class="edit sign icon"></i>智能模式</div>
+							<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
+							<div class="col-xs-12 col-sm-2 col-md-2"></div>
+							<div class="col-xs-12 col-sm-8 col-md-8">
+								<div class="ui input hidden-xs">
+									<div style="margin-top: 5px">
+										<span style="font-size: 14px; color: #000">自選模式&nbsp;&nbsp;</span>
+										<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
+										    <input type="checkbox">
+										    <label></label>
 										</div>
-									</div>
-									<br>
-									<input type="text" id="prompt" data-variation="large" readonly>
+										<span style="font-size: 14px; color: #000">智能模式</span>
+									</div>												
 								</div>
+								<span id="google_btn_flat" class="ui blue button visible-xs" onclick="google();">google&nbsp;<i class="small search icon"></i></span>			
+							</div>		
+							<div class="col-xs-12 col-sm-2 col-md-2">		
+								<span id="google_btn" class="ui icon blue button hidden-xs" onclick="google();">google<i class="small search icon"></i></span>								
 							</div>
+							<br>
 							<div class="ui input">
-								<div class="visible-xs">
-									<div class="ui left pointing dropdown icon button" id="select_mode_flat" data-offset="-8">
-										<div class="text" style="margin-left: 5px">自選模式</div>
-										<i class="down icon"></i>
-										<div class="menu">
-											<div class="item active" style="font-size: 10px" onclick="get_sel_mode('自選模式')"><i class="edit icon"></i>自選模式</div>
-											<div class="item" style="font-size: 10px" onclick="get_sel_mode('智能模式')"><i class="edit sign icon"></i>智能模式</div>           
-										</div>
-									</div>
-									<input type="text" id="prompt_flat" data-offset="-45" readonly>
-								</div>  
+								<input type="text" class="hidden-xs" id="prompt" data-variation="large" style="margin-top: 3px; margin-left: -2px" readonly>
+								<input type="text" class="visible-xs" id="prompt_flat" data-offset="-45" style="margin-top: 3px" readonly>
 							</div>
 							<div class="buttons hidden-xs" id="middle_btn" style="margin-top: 5px;">
 								<div class="circular ui icon button" id="copy" data-variation="large" style="width: 65px; height: 35px; background-color: #7DFD8C">
-									<i class="copy icon" style="color: #000; margin-top: -2px"></i>
-								</div>
+									<i class="large copy icon" style="color: #000; margin-top: -2px"></i>
+								</div>							
 								<div class="circular ui icon button" id="undo" data-variation="large" style="width: 65px; height: 35px; background-color: #97F0FF">
-									<i class="undo icon" style="color: #000; margin-top: -2px"></i>
+									<i class="large undo icon" style="color: #000; margin-top: -2px"></i>
 								</div>
 								<div class="circular ui icon button" id="cut" data-variation="large" style="width: 65px; height: 35px; background-color: #FCF783">
-									<i class="cut icon" style="color: #000; margin-top: -3px"></i>
+									<i class="large cut icon" style="color: #000; margin-top: -3px"></i>
 								</div>
 							</div>
 							<div class="buttons visible-xs" id="middle_btn_flat" style="margin-left: 8px; margin-top: 0px; margin-bottom: 5px">
@@ -421,7 +433,7 @@
 									<div class="myForm_footer" style="text-align: center">
 										<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 										<button type="submit" class="btn btn-primary" onclick="return CheckBeforeSubmit();">發送</button>
-										<button class="btn btn-default" onclick="return truncateMessage();">清空</button>
+										<button class="btn btn-default" onclick="return truncateMessage();">重置</button>
 									</div>
 								</form>
 							</div>
