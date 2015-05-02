@@ -3124,9 +3124,11 @@
 		$('#fullpage').fullpage({
 			anchors:['about', 'pinyin_IME', 'tutorial', 'contact'],
 			menu: '#menu',
+			keyboardScrolling: false,
 			navigation: true,
 			navigationPosition: 'right',
-			navigationTooltips: ['關於輸入法', '輸入頁面', '拼音教學', '聯絡我們']
+			navigationTooltips: ['關於輸入法', '輸入頁面', '拼音教學', '聯絡我們'],
+			scrollOverflow: true
 		});
 
 		$("#my_qrcode").click(function(){

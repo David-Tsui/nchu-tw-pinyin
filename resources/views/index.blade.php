@@ -9,7 +9,7 @@
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
 		<!--<link href="./css/bootstrap-modal-bs3patch.css" rel="stylesheet">
 		<link href="./css/bootstrap-modal.css" rel="stylesheet">-->
-		<link href="./semantic/css/semantic.css" rel="stylesheet">
+		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
 		<link href="./css/theme-origin.css" rel="stylesheet" id="CSS1" disabled="disabled">
@@ -136,7 +136,7 @@
 								<div class="hidden-xs lab_qrcode" id="change_qr" style="text-align: left; margin-left: 28%">
 									<img src="./images/pinyinQR.png" id="my_qrcode" onclick="change_pic()" width="160px" height="160px" style="margin-top: -13px"/>
 								</div>
-								<div class="jumbotron" id="public_note">
+								<div class="jumbotron" id="public_message">
 									<div style="margin-top: -15px">
 										<h3>系統公告</h3>
 										<p style="text-align: right; font-size: 12px">4/15.2015</p>
@@ -151,16 +151,30 @@
 								</div>
 							</div>
 							<div class="col-sm-6 col-md-6 col-lg-6">
-								<div style="font-size: 16px">
-									<p>此網頁版輸入法是無需考慮聲調的多功能台語拼音輸入法。</p>
-									<p>主體為台語拼音，兼容縮寫、音首以及英文輸入，</p>
-									<p>是個比想像中還要__的輸入法。</p>
-									<br>
-									<p>本輸入法分為兩種模式 ── 「自選模式」及「智能模式」。</p>
-									<p>前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，</p>
-									<p>兩種模式皆支援改字。</p>
-									<br>
-									<p>頁面主題有多種配色主題可更換，讓您可以在賞心悅目的顏色中進行打字。</p>							
+								<div class="jumbotron" id="public_intro">
+									<div style="font-size: 16px">
+										<p style="line-height: 1.8;">
+											&emsp;&emsp;&nbsp;此網頁版輸入法是無需考慮聲調的多功能台語拼音輸入法。
+											主體為台語拼音，兼容縮寫、音首以及英文輸入，是個比想像中還要__的輸入法。
+										</p>
+										<p style="line-height: 1.8;">
+											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」。
+											前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
+										</p>
+										<p style="line-height: 1.8;">
+											頁面主題有多種配色主題可更換，讓您可以在賞心悅目的顏色中進行打字。
+										</p>							
+									</div>
+									<div class="panel panel-default" style="border-radius: 5px">
+										<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
+										<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
+										<div class="panel-footer clearfix" style="background-color: #FAEFC4">
+											<div class="pull-right">
+												<div class="btn btn-primary" id="GO" style="font-size: 10px">開始教學!</div>
+												<div class="btn btn-default" id="NO" style="font-size: 10px">直接開始!</div>
+											</div>
+										</div>
+									</div>
 								</div>				
 							</div>
 							<div class="col-sm-3 col-md-3 col-lg-3"></div>
@@ -260,7 +274,7 @@
 								<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;">
 								<i class="search icon"></i>
 							</div>
-							<div class="panel panel-default" style="border-radius: 5px">
+							<!--<div class="panel panel-default" style="border-radius: 5px">
 								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
 								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
 								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
@@ -269,7 +283,7 @@
 										<div class="btn btn-default" id="NO" style="font-size: 10px">下次再說!</div>
 									</div>
 								</div>
-							</div>                                                                                                                                                     
+							</div>-->                                                                                                                                                 
 						</div>  
 										
 						<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
@@ -302,14 +316,28 @@
 								</div>  
 							</div>
 							<div class="buttons hidden-xs" id="middle_btn" style="margin-top: 5px;">
-								<div class="circular ui icon button" id="copy" data-variation="large" style="width: 65px; height: 35px; background-color: #7DFD8C"><i class="big copy icon" style="color: #000; margin-top: -2px"></i></div>
-								<div class="circular ui icon button" id="undo" data-variation="large" style="width: 65px; height: 35px; background-color: #97F0FF"><i class="big undo icon" style="color: #000; margin-top: -2px"></i></div>
-								<div class="circular ui icon button" id="cut" data-variation="large" style="width: 65px; height: 35px; background-color: #FCF783"><i class="big cut icon" style="color: #000; margin-top: -3px"></i></div>
+								<div class="circular ui icon button" id="copy" data-variation="large" style="width: 65px; height: 35px; background-color: #7DFD8C">
+									<i class="copy icon" style="color: #000; margin-top: -2px"></i>
+								</div>
+								<div class="circular ui icon button" id="undo" data-variation="large" style="width: 65px; height: 35px; background-color: #97F0FF">
+									<i class="undo icon" style="color: #000; margin-top: -2px"></i>
+								</div>
+								<div class="circular ui icon button" id="cut" data-variation="large" style="width: 65px; height: 35px; background-color: #FCF783">
+									<i class="cut icon" style="color: #000; margin-top: -3px"></i>
+								</div>
 							</div>
 							<div class="buttons visible-xs" id="middle_btn_flat" style="margin-left: 8px; margin-top: 0px; margin-bottom: 5px">
-								<div class="circular ui button" id="copy_flat" style="background-color: #7DFD8C"><i class="copy icon" style="padding-left: 4px; color: #000"></i></div>&nbsp;&nbsp;&nbsp;
-								<div class="circular ui button" id="undo_flat" style="background-color: #97F0FF"><i class="undo icon" style="padding-left: 4px; color: #000"></i></div>&nbsp;&nbsp;&nbsp;
-								<div class="circular ui button" id="cut_flat" style="background-color: #FCF783"><i class="cut icon" style="padding-left: 4px; color: #000"></i></div>
+								<div class="circular ui button" id="copy_flat" style="background-color: #7DFD8C">
+									<i class="copy icon" style="padding-left: 4px; color: #000"></i>
+								</div>
+								&nbsp;&nbsp;&nbsp;
+								<div class="circular ui button" id="undo_flat" style="background-color: #97F0FF">
+									<i class="undo icon" style="padding-left: 4px; color: #000"></i>
+								</div>
+								&nbsp;&nbsp;&nbsp;
+								<div class="circular ui button" id="cut_flat" style="background-color: #FCF783">
+									<i class="cut icon" style="padding-left: 4px; color: #000"></i>
+								</div>
 								<br>
 							</div>
 							<div class="field hidden-xs">
@@ -418,7 +446,7 @@
 		<script src="./js/pinyin_algorithm.js"></script>
 		<script src="./jquery-ui-1.11.2/jquery-ui.js"></script>
 		<script src="./bootstrap/js/bootstrap.js"></script>
-		<script src="./semantic/js/semantic.js"></script>
+		<script src="./semantic/semantic.js"></script>
 		<script src="./fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 		<script src="./fullPage.js/jquery.fullPage.js"></script>
 		<script src="./js/bootstrap-modal.js"></script>
