@@ -53,6 +53,11 @@ body {
 	-webkit-box-shadow: inset 0px -8px 18px 8px rgba(255, 63, 150, 0.9); 
 	-moz-box-shadow: inset 0px -8px 18px 8px rgba(255, 63, 150, 0.9);
 	/*common*/
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 60px;
+	display: block;
 }
 
 #search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }

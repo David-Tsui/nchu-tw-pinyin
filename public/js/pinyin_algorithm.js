@@ -1,7 +1,7 @@
 	/***********************************************興大台語拼音輸入法演算法*********************************************/
 	/*********************************************Mainly coded by David Tsui*******************************************/
 	/******************************************************************************************************************/
-	var nav_arr = ["#nav_login","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];  // navbar的元素
+	var nav_arr = ["#nav_log","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];  // navbar的元素
 	var nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];                    // 初始navbar的顏色
 	var customJqte = "";                                                                    // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
@@ -768,15 +768,8 @@
 			}
 		});
 						
-		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件
-			/*$("#tutor_panel").slideUp(700);
-			$("#hide_push").height(50);
-			$("#hide_br").html("<br><br>");*/              
+		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件            
 			if ($("#prompt_flat").is(":hidden")){
-				var pause_timer = setInterval(function(){
-					$('html,body').animate({scrollTop: $("#Input_place").offset().top - 75},1200);
-					clearInterval(pause_timer);
-				},800);
 				var pause1 = setInterval(function(){
 					$(".lab_qrcode").animate({
 						margin: '0 0'  
@@ -865,10 +858,6 @@
 				},2000);
 			}
 			else{
-				var pause_timer = setInterval(function(){
-					$('html,body').animate({scrollTop: ($("#Input_place").offset().top - 150)},1200);
-					clearInterval(pause_timer);
-				},800);
 				var pause1 = setInterval(function(){
 					$("#input").popup({
 						content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
@@ -942,25 +931,13 @@
 		});
 
 		$("#NO").click(function(){
-			/*$("#tutor_panel").slideUp(700);
-			$("#hide_push").height(50);
-			$("#hide_br").html("<br><br>");*/
 			generate_prompt_btn();
-
 			if ($("#prompt_flat").is(":hidden")){
-				var pause_timer = setInterval(function(){
-					$('html,body').animate({scrollTop: $("#Input_place").offset().top - 75},1500);
-					clearInterval(pause_timer);
-				},800);
-				$("#input").focus();
+				
 			}
 			else{
-				var pause_timer = setInterval(function(){
-					$('html,body').animate({scrollTop: ($("#Input_place").offset().top - 150)},1500);
-					clearInterval(pause_timer);
-				},800);
-				$("#input").focus();
 			}
+			$("#input").focus();
 		});
 											
 		for(var i = 0; i < nav_arr.length; i++){
@@ -3145,12 +3122,13 @@
 		});
 
 		$('#fullpage').fullpage({
-			anchors:['firstPage', 'secondPage', 'thirdPage']
+			anchors:['about', 'pinyin_IME', 'tutorial', 'contact'],
+			menu: '#menu',
+			navigation: true,
+			navigationPosition: 'right',
+			navigationTooltips: ['關於輸入法', '輸入頁面', '拼音教學', '聯絡我們']
 		});
 
-		$("#nav_contact").click(function(){
-			$("#message_board").modal('show');
-		});
 		$("#my_qrcode").click(function(){
 			$(this).transition('tada');
 		});

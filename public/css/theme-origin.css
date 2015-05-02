@@ -1,13 +1,18 @@
 body {
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+}
+
+#section1, #section2, #section3, #section4 {
 	/*origin*/
-	background: url(origin_back.jpg) no-repeat center center fixed;
+	background: url(origin_back.jpg);
 	/*common*/
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
  	background-size: cover;
-	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+	background-attachment: fixed;
 }
+
 
 #push { height: 50px; }
 
@@ -52,6 +57,11 @@ body {
 	-webkit-box-shadow: inset 0px -8px 25px 8px rgba(37, 37, 37, 1); 
 	-moz-box-shadow: inset 0px -8px 25px 8px rgba(37, 37, 37, 1);
 	/*common*/
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 60px;
+	display: block;
 }
 
 #search_pinyin {
