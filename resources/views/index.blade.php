@@ -40,27 +40,17 @@
 			.thumbnail_img { width: 60%; }
 
 			#google_btn {
-				width: 76px;
-				height: 24px;
-				padding-top: 5px;
-				padding-bottom: 0px;
-				padding-left: 6px;
-				padding-right: 3px;
+				width: 72px;
+				height: 26px;
 				margin-top: 12px;
-				margin-left: -32px;
-				font-size: 11px;
+				margin-left: -28px;
 			}
 
 			#google_btn_flat {
-				width: 76px;
+				width: 68px;
 				height: 24px;
-				padding-top: 5px;
-				padding-bottom: 0px;
-				padding-left: 11px;
-				padding-right: 4px;
 				margin: auto;
-				margin-top: 6px;
-				font-size: 9px;
+				margin-top: 7px;
 			}
 
 			#input {
@@ -317,10 +307,12 @@
 										<span style="font-size: 14px; color: #000">智能模式</span>
 									</div>												
 								</div>
-								<span id="google_btn_flat" class="ui blue button visible-xs" onclick="google();">google&nbsp;<i class="small search icon"></i></span>			
+								<!--<span id="google_btn_flat" class="ui blue button visible-xs" onclick="google();">google&nbsp;<i class="small search icon"></i></span>-->
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat"></a>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2">		
-								<span id="google_btn" class="ui icon blue button hidden-xs" onclick="google();">google<i class="small search icon"></i></span>								
+								<!--<span id="google_btn" class="ui icon blue button hidden-xs" onclick="google();">google<i class="small search icon"></i></span>-->
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>
 							</div>
 							<br>
 							<div class="ui input">
@@ -443,7 +435,7 @@
 				</div>	
 				<footer id="footer">
 					<div class="container">
-						<div align="center" class="panel-body">
+						<div class="row" align="center" class="panel-body">
 							<p>
 								<span class='st_facebook_hcount' displayText='Facebook'></span>
 								<span class='st_twitter_hcount' displayText='Tweet'></span>

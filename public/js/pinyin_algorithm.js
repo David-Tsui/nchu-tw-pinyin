@@ -152,6 +152,40 @@
 				if ((keyin == 109 || keyin == 189)) return false;
 			}       
 
+			if (keyin == 13 && sel_mode == 0){
+				if ((mode == 0 && associated_search_flag == false) || mode == 2){
+					var textbox = $("#input");
+					var html = textbox.html();
+					var check = html.search('<span class="in_pinyin_window">');
+					if (check >= 0){
+						var text = remove_tags(html);
+						input_word = text;
+						textbox.html(input_word);
+						pinyin_record = [];
+						var word_length = input_word.length;
+						var obj = new pinyin_obj("",input_word,0,word_length,2);
+						$.ajaxSettings.async = false;
+						addRecord(obj,0);
+						$.ajaxSettings.async = true;
+						input_loc = word_length;
+						textbox.setCursorPosition(word_length);
+					}
+					else{
+						var text = "此區無法換行!";
+						prompt_txtbox.val(text);
+						prompt_flat_txtbox.val(text);
+						caption_effect();
+					}
+				}
+				else{
+					var text = "現在不能按Enter!";
+					prompt_txtbox.val(text);
+					prompt_flat_txtbox.val(text);
+					caption_effect();
+				}
+				return false;
+			}
+
 			if (keyin == 13 && sel_mode == 1){                          // 智能模式的自動選詞時，按下enter結束自動選詞
 				var text = textbox.html();
 				if (mode == 2){
@@ -168,7 +202,7 @@
 					input_len = input_word.length;
 					textbox.html(input_word);
 					mode = 0;
-					textbox.focus().setCursorPosition(input_loc);
+					textbox.setCursorPosition(input_loc);
 					return false;
 				}
 			}
@@ -2473,8 +2507,12 @@
 		try{
 			var sel = window.getSelection();
 			var which_word = get_Which_Word(pos,"tail");
+			console.log("which_word: " + which_word);
+			//console.log("pinyin_record_len: " + pinyin_record.length);
 			var loc = pos - pinyin_record[which_word].start_loc;
+			console.log("loc: " + loc);
 			element = element.childNodes[which_word];
+			console.log("element.childNodes[0]: " + element.childNodes[0]);
 			range.setStart(element.childNodes[0], loc);                          
 			/*if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
 				throw "set in span";
@@ -3124,8 +3162,9 @@
 		}
 		else{
 			str = "https://www.google.com.tw/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=" + str;
-			var replaced=str.replace(" ","+");
-			window.location.replace(replaced);
+			var replaced_url = str.replace(" ","+");
+			//window.location.replace(replaced);
+			window.open(replaced_url);
 		}
 	}
 
