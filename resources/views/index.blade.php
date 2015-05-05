@@ -259,19 +259,25 @@
 									您當前的身分是:
 									<?php
 										$url = "./auth/login";
-										$exp = "訪客";
+										$name = "訪客";
 										if (Auth::user()){
 											$url = "./auth/logout";
-											$exp = Auth::user()->name; 
+											$name = Auth::user()->name; 
+											$string = '<a class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $name . '</a>';
+											echo $string;
+											$control_btn = '<div class="ui buttons" style="font-size: 14px">';
+											$control_btn .= '<div class="ui black basic button">更新資料</div>';
+											$control_btn .=	'<a href="./user/' . $name . '" class="ui black basic button">管理辭庫</a>';
+											$control_btn .= '</div>';
+											echo $control_btn;
 										}
-										$string = '<a class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $exp . '</a>';
-										echo $string;
+										else{
+											$string = '<a class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $name . '</a>';
+											echo $string;
+										}
 									?>   
 								</p>
-								<div class="ui buttons" style="font-size: 14px">
-									<div class="ui black basic button">更新資料</div>
-									<div class="ui black basic button">管理辭庫</div>
-								</div>
+								
 								<br><br>
 							</div>
 							<div class="ui icon input">

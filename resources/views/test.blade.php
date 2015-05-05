@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('/semantic/css/semantic.css') }}" rel="stylesheet">
+        <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/theme-origin.css') }}" rel="stylesheet" id="CSS1" disabled="disabled">
         <link href="{{ asset('/css/theme-pink.css') }}" rel="stylesheet" id="CSS2" disabled="disabled">
@@ -143,6 +143,6 @@
 		<!-- Scripts -->
 		<script src="{{ asset('/jquery-ui-1.11.2/jquery-ui.js') }}"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('/semantic/js/semantic.js') }}"></script>
+        <script src="{{ asset('/semantic/semantic.js') }}"></script>
 	</body>
 </html>
