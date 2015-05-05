@@ -13,7 +13,7 @@ function MakeTable (member)
 	$.getJSON(file ,function(result) {
 		console.log("result: " + result);
 	}).fail(function(){
-		alert("NO such file!");
+		//alert("NO such file!");
 		CreateJson(member);
 	}).success(function(){
 		$.getJSON(file ,function(result) {
