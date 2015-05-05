@@ -112,7 +112,8 @@ html.fp-enabled,
     opacity: 1;
 }
 .fp-slidesNav.bottom {
-    bottom: 17px;
+    /*bottom: 17px;*/
+    bottom: 42px;
 }
 .fp-slidesNav.top {
     top: 17px;

@@ -26,3 +26,11 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 
 ]);
+
+Route::get('user/{id}', function($id)
+{
+	if (Auth::user())
+		return view("memberdict");
+	else
+		return 'Not Login!';
+});

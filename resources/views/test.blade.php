@@ -15,8 +15,7 @@
         <script src="{{ asset('/js/jquery-1.11.1.js') }}"></script>
         <script>
         	var style = ["origin","pink","blue","xmas"];
-        	var nav_arr = ["#nav_log","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];    // navbar的元素
-            var nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];                    // 初始navbar的顏色
+        	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];    // navbar的元素
         	$(document).ready(function(){
 				var theme = get_theme();
 				change_theme(theme);
@@ -51,30 +50,15 @@
 
         	function nav_assign_color(theme){
                 if (theme == 0){
-                    nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];
-                    for(var i = 0; i < nav_arr.length; i++){
+                    nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
+                    var arr_len = nav_arr.length;
+                    for(var i = 0; i < arr_len; i++){
                         $(nav_arr[i]).css('color',nav_color[i]);
+                        $(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
+                        (function(i){
+                            $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
+                        })(i);
                     }
-
-                    for(var i = 0; i < nav_arr.length; i++){
-                        $(nav_arr[i]).mouseenter(function(){$(this).css('color',"white");});
-                    }
-                                
-                    $("body").on('mouseleave',nav_arr[0],function(){
-                        $(nav_arr[0]).css('color',nav_color[0]);
-                    });
-                    $("body").on('mouseleave',nav_arr[1],function(){
-                        $(nav_arr[1]).css('color',nav_color[1]);
-                    });
-                    $("body").on('mouseleave',nav_arr[2],function(){
-                        $(nav_arr[2]).css('color',nav_color[2]);
-                    });
-                    $("body").on('mouseleave',nav_arr[3],function(){
-                        $(nav_arr[3]).css('color',nav_color[3]);
-                    });
-                    $("body").on('mouseleave',nav_arr[4],function(){
-                        $(nav_arr[4]).css('color',nav_color[4]);
-                    }); 
                 }
                 else if (theme == 1){
                     nav_color = "#FFF";
@@ -122,21 +106,30 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" id="prefix_title" href="#">興大台語輸入法</a>
+                    <a class="navbar-brand visible-xs" id="prefix_title" href="#">興大無聲調台語輸入法</a>
                 </div>
                 <div id="navbarCollapse" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" id="menu">
+                        <li data-menuanchor="home"><a href="{{ url('/#home') }}" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
                         @if (Auth::user())
-                            <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span>會員登出</a></li>
+                            <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
                         @else
-                            <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span>會員登入/註冊</a></li>                 
+                            <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
                         @endif
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right" id="menu">
-                        <li data-menuanchor="about"><a href="#about" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
-                        <li data-menuanchor="pinyin_IME"><a href="#pinyin_IME" id="nav_input"><span class="glyphicon glyphicon-home"></span> 輸入頁面</a></li>
-                        <li data-menuanchor="tutorial"><a href="#tutorial" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
-                        <li data-menuanchor="contact"><a href="#contact" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>        
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+                        <li class="hidden-xs">&emsp;</li>                    
+                        <li data-menuanchor="pinyin_IME"><a href="{{ url('/#pinyin_IME') }}" id="nav_input"><span class="glyphicon glyphicon-pencil"></span> 輸入頁面</a></li>
+                        <li data-menuanchor="about"><a href="{{ url('/#about') }}" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
+                        <li data-menuanchor="tutorial"><a href="{{ url('/#tutorial') }}" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
+                        <li data-menuanchor="contact"><a href="{{ url('/#contact') }}" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
                     </ul>
                 </div>
             </div>

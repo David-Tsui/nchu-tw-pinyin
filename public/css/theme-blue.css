@@ -10,15 +10,6 @@ body {
 				 sans-serif;
 }
 
-#push { height: 50px; }
-
-.navbar { min-height: 50px; }
-
-.navbar-nav > li > a {
-	font-size: 14px;
-	font-weight: bold;
-}
-
 .navbar-inverse {
 	/*blue*/
 	background: rgba(89, 117, 255, 0.75);
@@ -29,18 +20,9 @@ body {
 	/*common*/
 }
 
-.navbar-inverse .navbar-brand {
-	font-size: 24px;
-	font-weight: bold;
-	color: #F6D5D5;
-}
-
-.nav > li > a {
-	padding-left: 18px;
-	color: #E92428;
-}
-
 .navbar-collapse .navbar-nav > li > a { color: #FFFFFF;	}
+
+.navbar-toggle { background-color: rgba(253, 253, 253, 0.25); }
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus { background-color: rgba(1, 33, 255, 0.65); }
 
@@ -59,7 +41,20 @@ body {
   	display: block;
 }
 
-#search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }
+#footer_flat {
+	/*blue*/
+	background-color: rgba(89, 117, 255, 0.75);
+	box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-webkit-box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9); 
+	-moz-box-shadow: inset 0px -8px 25px 8px rgba(24, 63, 255, 0.9);
+	/*common*/
+	position: absolute;
+  	padding-top: 10px;
+  	bottom: 22px;
+  	width: 100%;
+  	height: 70px;
+  	display: block;
+}
 
 #public_message {
 	/*blue*/

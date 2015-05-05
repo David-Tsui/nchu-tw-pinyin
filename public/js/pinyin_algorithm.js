@@ -1,8 +1,7 @@
 	/***********************************************興大台語拼音輸入法演算法*********************************************/
 	/*********************************************Mainly coded by David Tsui*******************************************/
 	/******************************************************************************************************************/
-	var nav_arr = ["#nav_log","#nav_about","#nav_input","#nav_tutorial","#nav_contact"];  // navbar的元素
-	var nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];                    // 初始navbar的顏色
+	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
 	var customJqte = "";                                                                    // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
 	var click_count = 0;
@@ -64,6 +63,16 @@
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
 		set_default();                                                  // 設定初始狀態
+
+		$('.trigger').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveSectionDown();
+		});
+
+		$('.chage_theme_btn').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveTo(2, 1);
+		});
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 
@@ -912,66 +921,58 @@
 					clearInterval(pause1);
 					var pause2 = setInterval(function(){
 						$("#input").popup('hide');
-						$("#select_mode_flat").popup({
-							content: '這是選擇不同輸入模式的滑動選單',
-							position: 'left center'
+						$("#prompt_flat").popup({
+							content: '這是簡易提示欄，成功或失敗操作時會有提示',
+							position: 'right center'
 						}).popup('show');
 						clearInterval(pause2);
 						var pause3 = setInterval(function(){
-							$("#select_mode_flat").popup('hide');
-							$("#prompt_flat").popup({
-								content: '這是簡易提示欄，成功或失敗操作時會有提示',
-								position: 'right center'
+							$("#prompt_flat").popup('hide');
+							$("#copy_flat").popup({
+								content: '這是複製按鈕，將輸入的文字複製到剪貼簿',
+								position: 'top center'
 							}).popup('show');
 							clearInterval(pause3);
 							var pause4 = setInterval(function(){
-								$("#prompt_flat").popup('hide');
-								$("#copy_flat").popup({
-									content: '這是複製按鈕，將輸入的文字複製到剪貼簿',
-									position: 'top center'
+								$("#copy_flat").popup('hide');
+								$("#undo_flat").popup({
+									content: '這是復原按鈕，按下後將還原至上一步',
+									position: 'bottom center'
 								}).popup('show');
 								clearInterval(pause4);
 								var pause5 = setInterval(function(){
-									$("#copy_flat").popup('hide');
-									$("#undo_flat").popup({
-										content: '這是復原按鈕，按下後將還原至上一步',
-										position: 'bottom center'
+									$("#undo_flat").popup('hide');
+									$("#cut_flat").popup({
+										content: '這是剪下按鈕，將輸入的文字剪下到剪貼簿',
+										position: 'top center'
 									}).popup('show');
 									clearInterval(pause5);
 									var pause6 = setInterval(function(){
-										$("#undo_flat").popup('hide');
-										$("#cut_flat").popup({
-											content: '這是剪下按鈕，將輸入的文字剪下到剪貼簿',
+										$("#cut_flat").popup('hide');
+										$("#show_flat").popup({
+											content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
 											position: 'top center'
 										}).popup('show');
 										clearInterval(pause6);
 										var pause7 = setInterval(function(){
-											$("#cut_flat").popup('hide');
-											$("#show_flat").popup({
-												content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
-												position: 'top center'
-											}).popup('show');
+											$("#show_flat").popup('hide');
+											customJqte_flat.popup({
+												content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
+												position: 'top center',
+											}).popup('show');  
 											clearInterval(pause7);
 											var pause8 = setInterval(function(){
-												$("#show_flat").popup('hide');
-												customJqte_flat.popup({
-													content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
-													position: 'top center',
-												}).popup('show');                                                           
+												customJqte_flat.popup('hide');
+												$("#search_pinyin").popup({
+													content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+													position: 'right center'
+												}).popup('show');          	                                               
 												clearInterval(pause8);
 												var pause9 = setInterval(function(){
-													customJqte_flat.popup('hide');
-													$("#search_pinyin").popup({
-														content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
-														position: 'right center'
-													}).popup('show');											
+													$("#search_pinyin").popup('hide');
+													generate_prompt_btn();
+													$("#input").focus();											
 													clearInterval(pause9);
-													var pause10 = setInterval(function(){
-														$("#search_pinyin").popup('hide');
-														generate_prompt_btn();
-														$("#input").focus();
-														clearInterval(pause10);
-													},3000);
 												},3000);
 											},3000);
 										},3000);
@@ -993,28 +994,8 @@
 			});
 			$("#input").focus();
 		});
-											
-		for(var i = 0; i < nav_arr.length; i++){
-			$(nav_arr[i]).mouseenter(function(){$(this).css('color',"white");});
-		}
-					
-		$("body").on('mouseleave',nav_arr[0],function(){
-			$(nav_arr[0]).css('color',nav_color[0]);
-		});
-		$("body").on('mouseleave',nav_arr[1],function(){
-			$(nav_arr[1]).css('color',nav_color[1]);
-		});
-		$("body").on('mouseleave',nav_arr[2],function(){
-			$(nav_arr[2]).css('color',nav_color[2]);
-		});
-		$("body").on('mouseleave',nav_arr[3],function(){
-			$(nav_arr[3]).css('color',nav_color[3]);
-		});
-		$("body").on('mouseleave',nav_arr[4],function(){
-			$(nav_arr[4]).css('color',nav_color[4]);
-		});
 
-		$(function(){                                               // 調整contenteditable的placeholder的bug
+		$(function(){                                               // 調整contenteditable div的placeholder的bug
 			$("#input").focusout(function(){
 				var element = $(this);        
 				if (!element.text().replace(" ", "").length) {
@@ -2820,35 +2801,21 @@
 				document.getElementById("CSS" + i).disabled = false;
 			else
 				document.getElementById("CSS" + i).disabled = true;
-		}
+		}	
 	}
 
 	function nav_assign_color(theme){
 		if (theme == "origin"){
-			nav_color = ["#F87284","#F0A01C","#F1EE8F","#8AE194","#5B81E9"];
-			for(var i = 0; i < nav_arr.length; i++){
+			var nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
+			var arr_len = nav_arr.length;
+			for(var i = 0; i < arr_len; i++){
 				$(nav_arr[i]).css('color',nav_color[i]);
+				$(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
+				(function(i){
+			        $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
+			    })(i);
 			}
 			//nav_to_white();
-			for(var i = 0; i < nav_arr.length; i++){
-				$(nav_arr[i]).mouseenter(function(){$(this).css('color',"white");});
-			}
-						
-			$("body").on('mouseleave',nav_arr[0],function(){
-				$(nav_arr[0]).css('color',nav_color[0]);
-			});
-			$("body").on('mouseleave',nav_arr[1],function(){
-				$(nav_arr[1]).css('color',nav_color[1]);
-			});
-			$("body").on('mouseleave',nav_arr[2],function(){
-				$(nav_arr[2]).css('color',nav_color[2]);
-			});
-			$("body").on('mouseleave',nav_arr[3],function(){
-				$(nav_arr[3]).css('color',nav_color[3]);
-			});
-			$("body").on('mouseleave',nav_arr[4],function(){
-				$(nav_arr[4]).css('color',nav_color[4]);
-			}); 
 		}
 		else if (theme == "pink"){
 			nav_color = "#FFF";
@@ -2941,11 +2908,6 @@
 					content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
 					position: 'top center'
 				}).popup('hide');
-				
-				$("#select_mode_flat").popup({
-					content: '這是選擇不同輸入模式的滑動選單',
-					position: 'left center'
-				}).popup('hide');
 								
 				$("#prompt_flat").popup({
 					content: '這是簡易提示欄，成功或失敗操作時會有提示',
@@ -2992,7 +2954,7 @@
 		$("#close_prompt").click(function(){
 			//if ($("#prompt_flat").is(":hidden")){
 			$("#input").popup('hide');
-			$("#select_mode, #select_mode_flat").popup('hide');
+			$("#select_mode").popup('hide');
 			$("#prompt, #prompt_flat").popup('hide');
 			$("#copy, #copy_flat").popup('hide');
 			$("#undo, #undo_flat").popup('hide');
@@ -3005,7 +2967,7 @@
 			var pause_timer = setInterval(function(){
 
 				$("#input").popup('destroy');
-				$("#select_mode, #select_mode_flat").popup('destroy');
+				$("#select_mode").popup('destroy');
 				$("#prompt, #prompt_flat").popup('destroy');
 				$("#copy, #copy_flat").popup('destroy');
 				$("#undo, #undo_flat").popup('destroy');
@@ -3044,7 +3006,7 @@
 	}
 
 	function ispopup_flat_hidden(){                                    // 判斷手機畫面上是否還有存在的popup
-		var pop_arr = ["#input","#select_mode_flat","#prompt_flat","#copy_flat","#undo_flat","#cut_flat","#show_flat","#search_pinyin"];
+		var pop_arr = ["#input","#prompt_flat","#copy_flat","#undo_flat","#cut_flat","#show_flat","#search_pinyin"];
 		var check = false;
 		for(var i = 0; i < pop_arr.length; i++){
 			if ($(pop_arr[i]).popup('is hidden'))
@@ -3184,13 +3146,15 @@
 		$('<audio id="chatAudio"><source src="error.mp3" type="audio/mpeg"></audio>').appendTo('body');  
 
 		$('#fullpage').fullpage({
-			anchors:['about', 'pinyin_IME', 'tutorial', 'contact'],
+			anchors:['home', 'pinyin_IME', 'about', 'tutorial', 'contact'],
 			menu: '#menu',
 			keyboardScrolling: false,
 			navigation: true,
 			navigationPosition: 'right',
-			navigationTooltips: ['關於輸入法', '輸入頁面', '拼音教學', '聯絡我們'],
+			navigationTooltips: ['HOME','輸入頁面','關於輸入法','拼音教學','聯絡我們'],
+			slidesNavigation: true,
 			scrollOverflow: true
+			//continuousVertical: true
 		});
 
 		$("#my_qrcode").click(function(){
