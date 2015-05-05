@@ -1,0 +1,20 @@
+input[type='checkbox']
+{
+	float: right;
+	width:  22px; 
+	height: 22px;  
+}
+th
+{
+	display: table-cell;
+	vertical-align: inherit;
+	font-weight: bold;
+	text-align: center;
+	font-size:18px;
+}
+td
+{
+	display: table-cell;
+	vertical-align: inherit;
+	font-size:18px;
+}
