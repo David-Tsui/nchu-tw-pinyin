@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="./ico/briefcase.ico" rel="shortcut icon">
+        <link href="{{ asset('/ico/briefcase.ico') }}" rel="shortcut icon">
         <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
