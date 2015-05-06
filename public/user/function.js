@@ -12,9 +12,14 @@ function MakeTable (member)
 	var file = "./dict/" + member + ".json";
 	$.getJSON(file ,function(result) {
 		console.log("result: " + result);
+<<<<<<< HEAD
 	})
 	.fail(function(){
 		console.log("NO such file!");
+=======
+	}).fail(function(){
+		//alert("NO such file!");
+>>>>>>> 9a28abbaf7eb30a1039ae1fe3d0636eef5604f2f
 		CreateJson(member);
 	})
 	.success(function(){
