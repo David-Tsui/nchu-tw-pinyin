@@ -44,15 +44,16 @@
 			<div class="col-xs-12 col-sm-6 col-md-6">
 				<div style="width: 96%">
 					<div class="input-group">
-						<input type="text" class="form-control search" placeholder="尋找已有詞彙">
+						<input type="text" class="form-control search" placeholder="尋找已有詞彙，可以輸入拼音或中文為關鍵字" id="keyword">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">開始尋找!</button>
+							<button class="btn btn-default" type="button" 
+							 onclick="FindWord('<?php echo $id;?>')">開始尋找!</button>
 						</span>
 					</div>
 					<br>
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="請輸入台語拼音" id="sound">
-						<input type="text" class="form-control" placeholder="請輸入中文辭義" id="characters">
+						<input type="text" class="form-control" placeholder="請輸入中文詞義，勿含空格及標點符號" id="characters">
 						<span class="input-group-btn">
 							<button type="button" class="btn btn-default" 
 							 onclick="AddWord('<?php echo $id;?>')">增加新詞彙</button>
