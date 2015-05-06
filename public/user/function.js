@@ -12,10 +12,12 @@ function MakeTable (member)
 	var file = "./dict/" + member + ".json";
 	$.getJSON(file ,function(result) {
 		console.log("result: " + result);
-	}).fail(function(){
-		alert("NO such file!");
+	})
+	.fail(function(){
+		console.log("NO such file!");
 		CreateJson(member);
-	}).success(function(){
+	})
+	.success(function(){
 		$.getJSON(file ,function(result) {
 			var length = Object.keys(result).length;
 			var exp = "";
@@ -30,19 +32,6 @@ function MakeTable (member)
 			$('#json_table').html(exp);
 		});
 	});
-
-	/*$.ajax({
-		url: file,
-		type:'HEAD',
-		error: function()
-		{
-			CreateJson (member);
-    	},
-	    success: function()
-	    {
-	        
-	    }
-	});*/
 }
 
 function AddWord (member)

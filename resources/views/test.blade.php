@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ asset('/ico/briefcase.ico') }}" rel="shortcut icon">
+        <link href="{{ asset('/jquery-ui-1.11.2/jquery-ui.css') }}" rel="stylesheet">
         <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
@@ -20,6 +22,9 @@
 				var theme = get_theme();
 				change_theme(theme);
 				nav_assign_color(theme);
+                $("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
+                    source: '{{ asset("search_pinyin.php") }}'
+                }); 
         	});      
         	function get_theme(){
         		var theme = "origin";

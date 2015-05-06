@@ -55,12 +55,6 @@
 				margin-top: 7px;
 			}
 
-			.navbar-inverse .navbar-brand {
-				font-size: 18px;
-				font-weight: bold;
-				color: #F6D5D5;
-			}
-
 			#input {
 				border: ridge rgba(157, 157, 157, 0.5); 
 				border-width: 1px;
@@ -191,8 +185,12 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6" id="left" style="text-align: center">
-							<p class="visible-xs"><br><br></p>
 							<p class="text">
+								<div class="hidden-xs">
+									<br>
+									<br>
+								</div>
+								<br>
 						    	<span class="hidden-xs underline" style="font-size: 80px">興大</span>
 						    	<span class="hidden-xs underline" style="font-size: 80px">無聲調</span>						    	
 							    <span class="visible-xs underline" style="font-size: 68px; margin-left: 69px; padding-right: 85px;">興大</span>

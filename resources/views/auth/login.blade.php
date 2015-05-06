@@ -37,16 +37,6 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> 記住我
-									</label>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">登入</button>
 								<a class="btn btn-link" href="{{ url('/password/email') }}">忘記密碼</a>
 							</div>
