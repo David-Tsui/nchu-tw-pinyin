@@ -1,41 +1,18 @@
-function CreateJson (member)
-{
-    $.ajax({ 
-    	url: "./createjson.php",
-    	method: "POST",
-    	data: {name: member}
-	});
-}
-
 function MakeTable (member)
 {
 	var file = "./dict/" + member + ".json";
 	$.getJSON(file ,function(result) {
-		console.log("result: " + result);
-<<<<<<< HEAD
-	})
-	.fail(function(){
-		console.log("NO such file!");
-=======
-	}).fail(function(){
-		//alert("NO such file!");
->>>>>>> 9a28abbaf7eb30a1039ae1fe3d0636eef5604f2f
-		CreateJson(member);
-	})
-	.success(function(){
-		$.getJSON(file ,function(result) {
-			var length = Object.keys(result).length;
-			var exp = "";
-			for(var i = length - 1; i >= 0; i--)
-			{
-				exp += "<tr id=" + "'" + (i) + "'>";
-				exp += "<td><div class='checkbox'><label><input type='checkbox' name='selected[]'></label></div></td>";
-				exp += "<td>" + result[i].sound + "</td>";
-				exp += "<td>" + result[i].characters + "</td>";
-				exp += "</tr>";
-			}
-			$('#json_table').html(exp);
-		});
+		var length = Object.keys(result).length;
+		var exp = "";
+		for(var i = length - 1; i >= 0; i--)
+		{
+			exp += "<tr id=" + "'" + (i) + "'>";
+			exp += "<td><div class='checkbox'><label><input type='checkbox' name='selected[]'></label></div></td>";
+			exp += "<td>" + result[i].sound + "</td>";
+			exp += "<td>" + result[i].characters + "</td>";
+			exp += "</tr>";
+		}
+		$('#json_table').html(exp);
 	});
 }
 

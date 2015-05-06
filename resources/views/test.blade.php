@@ -6,10 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{ asset('/ico/briefcase.ico') }}" rel="shortcut icon">
-<<<<<<< HEAD
         <link href="{{ asset('/jquery-ui-1.11.2/jquery-ui.css') }}" rel="stylesheet">
-=======
->>>>>>> 9a28abbaf7eb30a1039ae1fe3d0636eef5604f2f
         <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
