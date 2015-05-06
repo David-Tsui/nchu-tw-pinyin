@@ -169,15 +169,18 @@
 					if (check >= 0){
 						var text = remove_tags(html);
 						input_word = text;
-						textbox.html(input_word);
-						pinyin_record = [];
+						console.log("input_word: " + input_word);
 						var word_length = input_word.length;
+						pinyin_record = [];
 						var obj = new pinyin_obj("",input_word,0,word_length,2);
 						$.ajaxSettings.async = false;
 						addRecord(obj,0);
 						$.ajaxSettings.async = true;
 						input_loc = word_length;
-						textbox.setCursorPosition(word_length);
+						textbox.html(input_word);
+						console.log("input_loc: " + input_loc);
+						textbox.setCursorPosition(input_loc);
+						
 					}
 					else{
 						var text = "此區無法換行!";
@@ -2485,16 +2488,17 @@
 	$.fn.setCursorPosition = function(pos){                         // 控制游標顯示位置   
 		var element = document.getElementById("input");
 		var range = document.createRange();          
+		var sel = window.getSelection();
+		var which_word = get_Which_Word(pos,"tail");
+		var loc = pos - pinyin_record[which_word].start_loc;
 		try{
-			var sel = window.getSelection();
-			var which_word = get_Which_Word(pos,"tail");
-			console.log("which_word: " + which_word);
-			//console.log("pinyin_record_len: " + pinyin_record.length);
-			var loc = pos - pinyin_record[which_word].start_loc;
+			console.log("element: " + element);
 			console.log("loc: " + loc);
 			element = element.childNodes[which_word];
-			console.log("element.childNodes[0]: " + element.childNodes[0]);
-			range.setStart(element.childNodes[0], loc);                          
+			console.log("element: " + element);
+			element = element.childNodes[0]
+			range.setStart(element, loc);                          
+			console.log("element.childNodes: " + element.childNodes);
 			/*if (typeof(check_child_node) == "undefined" && sel_mode == 1 && mode == 2){ // 只要是智能模式通通進給我進catch拉!
 				throw "set in span";
 			}
@@ -2502,10 +2506,14 @@
 				range.setStart(element.childNodes[0], pos);
 			}*/
 		}
-		catch (err){                                                // 此區塊直接針對各span設定其游標位置
+		catch (err){                                                  // 自選模式，去除底線後的設定游標位置，此區塊直接針對各span設定其游標位置
 			console.log("err_msg: " + err);
-			console.log("pos: " + pos);  
-			var node;
+			if (sel_mode == 0){
+				element = document.getElementById("input");
+				element = element.childNodes[0];
+				range.setStart(element, loc); 
+			}  
+			/*var node;
 			for(var i = 0; i < 3; i++){
 				console.log("word_record_loc[" + i + "] = " + word_record_loc[i]);
 			}
@@ -2525,12 +2533,14 @@
 				 console.log("third");
 			}
 			range.setStart(node.childNodes[0], pos);
-			var sel = window.getSelection();
+			var sel = window.getSelection();*/
+
 		}
 		range.collapse(true);
 		sel.removeAllRanges();
 		sel.addRange(range);
-		element.focus();          
+		//element.focus();
+		$("#input").focus();          
 	};
 
 	function getCaretCharacterOffsetWithin(element) {               // 得到文字游標位置（即便是html tag裡
