@@ -7,7 +7,7 @@ function MakeTable (member)
 		for(var i = length - 1; i >= 0; i--)
 		{
 			exp += "<tr id=" + "'" + (i) + "'>";
-			exp += "<td><div class='checkbox'><label><input type='checkbox' name='selected[]'></label></div></td>";
+			exp += "<td><div class='checkbox'><label><input type='checkbox'></label></div></td>";
 			exp += "<td>" + result[i].sound + "</td>";
 			exp += "<td>" + result[i].characters + "</td>";
 			exp += "</tr>";
@@ -91,4 +91,9 @@ function UpdateJson (filename, result)
 	    	}
 		});
 	});
+}
+
+function SearchWord (keyword)
+{
+	
 }
