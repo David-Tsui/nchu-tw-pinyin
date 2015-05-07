@@ -52,8 +52,8 @@ html, body{
 	margin: 0 auto;
 	margin-top: -20px;
 	transition: all 0.4s ease;
-	border-bottom: ridge #BEFFC9;
-	border-right: ridge #BEFFC9;
+	border-bottom: ridge #FDEC70;
+	border-right: ridge #FDEC70;
 	border-width: 8px;
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
