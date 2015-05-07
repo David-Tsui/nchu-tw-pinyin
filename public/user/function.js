@@ -6,6 +6,7 @@ function MakeTable (member)
 		var exp = "";
 		for(var i = length - 1; i >= 0; i--)
 		{
+
 			exp += "<tr id=" + "'" + (i) + "'>";
 			exp += "<td><div class='checkbox'><label><input type='checkbox'></label></div></td>";
 			exp += "<td>" + result[i].sound + "</td>";
@@ -31,7 +32,6 @@ function AddWord (member)
 	{
 		alert ("您輸入的格式有誤，請照提示輸入");
 	}
-
 	else
 	{
 		var file = "./dict/" + member + ".json";
@@ -47,7 +47,8 @@ function AddWord (member)
 				else
 				{
 					var length = Object.keys(result).length;
-					var exp = "<tr id=" + "'" + (length) + "'>";
+					var exp = "";
+					exp += "<tr id=" + "'" + (length) + "'>";
 					exp += "<td><div class='checkbox'><label><input type='checkbox'></label></div></td>";
 					exp += "<td>" + sd + "</td>";
 					exp += "<td>" + ch + "</td>";
@@ -68,29 +69,28 @@ function AddWord (member)
 	}
 }
 
-function FindWord (member)
+/*function FindWord (member)
 {
 	var file = "./dict/" + member + ".json";
-
 	var key = document.getElementById("keyword").value;
+
 	$.getJSON(file ,function(result){
 		{
-			var result = FindWordIndex (key, result);
-			console.log(result);
-
-			
-
-
-			
+			var ret = FindWordIndex (key, result);
+			var retlen = ret.length;
+			console.log(ret);
+			for (i=retlen-1; i>=0; i--)
+			{
+				console.log(result[ret[i]]);
+			}
 		}
 	});
-
-}
+}*/
 
 function FindWordIndex (input, result)
 {
 	var ret = [-1];	//沒找到初始化為-1
-	console.log(JSON.stringify(input));
+	//console.log(JSON.stringify(input));
 	if (typeof input == "object")
 	{
 		for (var i=0; i<result.length; i++)
@@ -113,8 +113,7 @@ function FindWordIndex (input, result)
 			}
 		}
 	}
-	
-	console.log("ret=" + ret);
+	//console.log("ret=" + ret);
 	return ret;
 }
 
@@ -223,4 +222,8 @@ function CheckChars (chars)
 		//console.log("true\n\n");
 		return chars;
 	}
+}
+
+function EditValue () {
+	console.log("hello world");
 }

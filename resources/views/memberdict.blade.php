@@ -43,13 +43,13 @@
 
 			<div class="col-xs-12 col-sm-6 col-md-6">
 				<div style="width: 96%">
-					<div class="input-group">
+					<!--<div class="input-group">
 						<input type="text" class="form-control search" placeholder="尋找已有詞彙，可以輸入拼音或中文為關鍵字" id="keyword">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button" 
 							 onclick="FindWord('<?php echo $id;?>')">開始尋找!</button>
 						</span>
-					</div>
+					</div>-->
 					<br>
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="請輸入台語拼音" id="sound">
@@ -71,9 +71,9 @@
 							<button type="button" class="btn btn-default"
 							 onclick="DeleteAllWord('<?php echo $id;?>')">全部刪除</button>
 						</div>
-						<div class="btn-group" role="group">
+						<!--<div class="btn-group" role="group">
 							<button type="button" class="btn btn-default" onclick="test()">TEST~</button>
-						</div>
+						</div>-->
 					</div>
 					<br>
 					<div class="panel panel-default">
