@@ -2105,10 +2105,11 @@
 					console.log("word_right: " + word_right);
 
 					var j = 0;
+					var key_syllable = getSyllable(former_pinyin);
 					for(var i = 0; i < former_pinyin.length; i++){
 						if (former_pinyin[i] == " ") 
 							j++;
-						if (j == word_len){         
+						if (j == (key_syllable - word_len)){         
 							var split_loc = i;          
 							pinyin_left = former_pinyin.substring(0,split_loc);
 							pinyin_right = former_pinyin.substring(split_loc + 1,former_pinyin.length);
@@ -2127,45 +2128,46 @@
 					rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
 					$.ajaxSettings.async = true;
 				}
+				else{
+					var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
+					var syllables = getSyllable(key);
+					start_loc = pinyin_record[which_word].start_loc;
+					var temp_loc = loc - start_loc;
 
-				var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
-				var syllables = getSyllable(key);
-				start_loc = pinyin_record[which_word].start_loc;
-				var temp_loc = loc - start_loc;
-
-				if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
-					if (temp_loc > syllables){                   // 字詞的位置超過拼音
-						pinyin_left = key;
-					}
-					else{
-						var j = 0;
-						for(var i = 0; i < key.length; i++){
-							if (key[i] == " ") 
-								j++;
-							if (j == temp_loc){         
-								var split_loc = i;          
-								pinyin_left = key.substring(0,split_loc);
-								pinyin_right = key.substring(split_loc + 1,key.length);
-								pinyin_left = pinyin_left.trim();
-								pinyin_right = pinyin_right.trim();
-								break;
+					if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
+						if (temp_loc > syllables){                   // 字詞的位置超過拼音
+							pinyin_left = key;
+						}
+						else{
+							var j = 0;
+							for(var i = 0; i < key.length; i++){
+								if (key[i] == " ") 
+									j++;
+								if (j == temp_loc){         
+									var split_loc = i;          
+									pinyin_left = key.substring(0,split_loc);
+									pinyin_right = key.substring(split_loc + 1,key.length);
+									pinyin_left = pinyin_left.trim();
+									pinyin_right = pinyin_right.trim();
+									break;
+								}
 							}
 						}
 					}
+
+					console.log("pinyin_left: " + pinyin_left);
+					console.log("pinyin_right: " + pinyin_right);
+					console.log("word_left: " + word_left);
+					console.log("word_right: " + word_right);
+
+					$.ajaxSettings.async = false;
+					rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
+					$.ajaxSettings.async = true;
+					pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
+					$.ajaxSettings.async = false;
+					rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
+					$.ajaxSettings.async = true;
 				}
-
-				console.log("pinyin_left: " + pinyin_left);
-				console.log("pinyin_right: " + pinyin_right);
-				console.log("word_left: " + word_left);
-				console.log("word_right: " + word_right);
-
-				$.ajaxSettings.async = false;
-				rearrange_objs(pinyin_left, word_left, which_word, 1, 0);
-				$.ajaxSettings.async = true;
-				pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
-				$.ajaxSettings.async = false;
-				rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
-				$.ajaxSettings.async = true;
 			}   
 		}
 		
