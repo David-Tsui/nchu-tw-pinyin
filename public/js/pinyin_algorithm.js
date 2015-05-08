@@ -1831,7 +1831,7 @@
 					auto_static_word = input_word;
 					input_len = input_word.length;                          // 調整記錄輸入成功的中文字數
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox); // 得到下一次的輸入位置   
-					auto_start = get_auto_start();
+					//auto_start = get_auto_start();
 					var delete_word_flag = true;
 
 					if (temp_input_len == 0){                               // 原本就沒字
@@ -1934,21 +1934,70 @@
 				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);         // 得到下一次的輸入位置
 			}*/
 
-			if (search_key != "" && (getCaretCharacterOffsetWithin(DOM_textbox) < input_loc)){ // 在拼音時，移動到左邊界並刪除中文字時的狀態
+			/*if (search_key != "" && (getCaretCharacterOffsetWithin(DOM_textbox) < input_loc)){ // 在拼音時，移動到左邊界並刪除中文字時的狀態
 				var left = text.substring(0,getCaretCharacterOffsetWithin(DOM_textbox));
 				var right = text.substring(getCaretCharacterOffsetWithin(DOM_textbox) + search_key.length,text.length);
 				input_word = left + right;                          
 				input_len = input_word.length;                              // 調整記錄輸入成功的中文字數
 				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);     // 得到下一次的輸入位置
-			}
+			}*/
 			return;
 		}
 		if (keyCode == 46){                                                 // delete
-			if (mode == 0 && search_key == ""){                             // 單純選字成功後的階段，直接複製記錄按下backspace後的textbox各狀態
-				var text = textbox.html();
-				text = remove_tags(text);
-				input_word = text;   
-				input_len = input_word.length;                              // 調整記錄輸入成功的中文字數
+			if (mode == 0 && search_key == ""){                             // 單純選字成功後的階段
+				if (tow_check == false){                                    // 如果是一字一字刪除
+					var text = textbox.html();
+					var temp_input_len = input_len;
+					text = remove_tags(text);
+					input_word = text;                                      // 下一次輸入框中的字將由當前textbox之值接續
+					//auto_static_word = input_word;
+					input_len = input_word.length;                          // 調整記錄輸入成功的中文字數
+					input_loc = getCaretCharacterOffsetWithin(DOM_textbox); // 得到下一次的輸入位置   
+					// auto_start = get_auto_start();
+					var delete_word_flag = true;
+
+					if (temp_input_len == 0){                               // 原本就沒字
+						return;
+					}
+					else if (input_len == temp_input_len)                   // 刪除後字數沒變動，代表只是拼音被刪除
+						delete_word_flag = false;
+					else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
+						pinyin_record = [];
+					}   
+					else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
+						var which_word = get_Which_Word(input_loc,"head");      // 先抓到是哪個字被刪
+						var key = pinyin_record[which_word].pinyin;
+						var word = pinyin_record[which_word].word;
+						if (word.length != 1){
+							var temp_loc = input_loc - pinyin_record[which_word].start_loc;
+							var left = word.substring(0,temp_loc)
+							var right = word.substring(temp_loc + 1,word.length);
+							temp_loc = pinyin_record[which_word].start_loc;
+							word = left + right;
+							if (key != ""){     // 有word但沒key的情形屬於關聯詞，略過key的分割
+								key = split_key(key,temp_loc,input_loc);
+							}
+							console.log("word: " + word);
+							$.ajaxSettings.async = false;
+							rearrange_objs(key,word,which_word,1,0);
+							$.ajaxSettings.async = true;
+						}
+						else{
+							$.ajaxSettings.async = false;
+							rearrange_objs("","",which_word,0,0);
+							$.ajaxSettings.async = true;
+						}   
+						var text = "";
+						for(var i = 0; i < pinyin_record.length; i++){
+							if (pinyin_record[i].modifiable == 2)
+								text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
+							else
+								text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+						}
+						textbox.html(text);
+						textbox.setCursorPosition(input_loc);
+					}      				                  
+				}
 			}
 			if (sel_mode == 1 && mode == 2 && search_key == ""){
 				var text = textbox.html();
@@ -1962,14 +2011,15 @@
 				search_key = "";                                    // 遇到此情形，直接將search_key刪除
 				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);         // 得到下一次的輸入位置
 			}*/
-			if (sel_mode == 0 && search_key != "" && (getCaretCharacterOffsetWithin(DOM_textbox) > input_loc)){ // 在拼音時，移動到右邊界並刪除中文字時的狀態
+			/*if (sel_mode == 0 && search_key != "" && (getCaretCharacterOffsetWithin(DOM_textbox) > input_loc)){ // 在拼音時，移動到右邊界並刪除中文字時的狀態
 				var left = text.substring(0,input_loc);
 				var right = text.substring(input_loc + search_key.length,text.length);
 				input_word = left + right;                          
 				input_len = input_word.length;                              // 調整記錄輸入成功的中文字數
-			}
+			}*/
 			return;
 		}
+		
 		if (keyCode >= 65 && keyCode <= 90){                                // 反白並且用輸入英文來取代時的情形
 			var text = textbox.html();
 			text = remove_tags(text);
