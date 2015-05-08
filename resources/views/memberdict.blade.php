@@ -10,7 +10,8 @@
 ?>
 
 <!-- soruce required -->
-<script src="{{ asset('/user/function.js') }}"></script>
+<!--<script src="{{ asset('/user/JsonFunction.js') }}"></script>-->
+<script src="{{ asset('/user/DbFunction.js') }}"></script>
 <link href="./checkbox_modify.css" rel="stylesheet">
 
 <body onload="MakeTable('<?php echo $id;?>')"></body>

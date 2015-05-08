@@ -69,11 +69,10 @@ function AddWord (member)
 	}
 }
 
-/*function FindWord (member)
+function FindWord (member)
 {
 	var file = "./dict/" + member + ".json";
 	var key = document.getElementById("keyword").value;
-
 	$.getJSON(file ,function(result){
 		{
 			var ret = FindWordIndex (key, result);
@@ -85,7 +84,7 @@ function AddWord (member)
 			}
 		}
 	});
-}*/
+}
 
 function FindWordIndex (input, result)
 {
@@ -131,6 +130,11 @@ function DeleteAllWord (member)
 	$('#json_table').html(exp);
 }
 
+//先刪兩側再刪中間有BUG
+//ex. {1, 2, 3, 4, 5}
+//delete 2 , 4
+//delete 3
+//    {1,    3}
 function DeleteChosenWord (member)
 {
 	var file = "./dict/" + member + ".json";
@@ -153,7 +157,7 @@ function UpdateJson (filename, result)
 {
 	$(document).ready(function() {
 	    $.ajax({ 
-	    	url: "./updatejson.php",
+	    	url: "./UpdateJsonTable.php",
 	    	method: "POST",
 	    	data: { 
 	    		file: filename,
@@ -165,15 +169,16 @@ function UpdateJson (filename, result)
 
 function CheckAndReplaceSound (oldsound)
 {
-	var regexp = /^.[A-Za-z \t]{1,}$/;
-	if (!regexp.test(oldsound))	//判斷是否為 英文"Aa" 或 空格" " 或 縮排"\t"
+	var temp = (oldsound.toLowerCase()).trim();
+	var regexp = /[A-Za-z \t]+/;
+	//console.log("temp: '" + temp + "'");
+	if (!regexp.test(temp))	//判斷是否為 英文"Aa" 或 空格" " 或 縮排"\t"
 	{
 		//console.log ("false\n");
 		return false;
 	}
 	else 
 	{
-		var temp = (oldsound.toLowerCase()).trim();
 		var templen = temp.length;
 		var isspace = false;
 		var ret = "";
@@ -209,12 +214,13 @@ function CheckEng (ch)
 
 function CheckChars (chars)
 {
-	//console.log ("Ch:" + chars);
+	chars = chars.trim();
+	//console.log ("Ch:'" + chars + "'");
 	//只含中文
 	var regexp = /^[\u4e00-\u9fa5]{1,}$/;
 	if (!regexp.test(chars))
 	{
-		//console.log ("false\n\n");
+		//console.log ("false");
 		return false;
 	}
 	else
@@ -224,6 +230,7 @@ function CheckChars (chars)
 	}
 }
 
-function EditValue () {
+function EditValue ()
+{
 	console.log("hello world");
 }
