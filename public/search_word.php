@@ -3,9 +3,9 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		//$key = "Dinner";
+		//$key = "hing dai hak";
 		$mode = $_POST['MODE'];
-		//$mode = 0;
+		//$mode = 2;
 		$key_super = $key . " %";
 		$arr = array();
 
@@ -232,7 +232,10 @@
 					  	}while ($row = $stmt->fetch());
 					  	if ($has_word){
 					  		$arr[2][$j] = $key;
-		  					$arr[3][$j] = $count + $arr[3][$j - 1];
+		  					if ($j != 0)
+		  						$arr[3][$j] = $count + $arr[3][$j - 1];
+		  					else
+		  						$arr[3][$j] = $count;
 					  		$j++;
 					  	}
 					}
