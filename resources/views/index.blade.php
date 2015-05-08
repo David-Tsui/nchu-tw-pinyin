@@ -259,8 +259,9 @@
 										$url = "./auth/login";
 										$name = "訪客";
 										if (Auth::user()){
-											include('./user/createjson.php');
-											createjson();
+											include('./user/CreateTable.php');
+											//CreateJson();
+											CreateDBTable();
 											$url = "./auth/logout";
 											$name = Auth::user()->name; 
 											$string = '<a class="login_right_span ui red horizontal label" style="margin-top: -3px" href=' . $url . ' id="login_person">' . $name . '</a>';
