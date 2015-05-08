@@ -1458,7 +1458,7 @@
 
 	function modify_obj_loc(index,all_del,after_flag){      // 刪字，補字時會修正各pinyin_obj的首尾位置
 		console.log("從" + index + "開始修正");
-		console.log("after_flag: " + after_flag);
+		//console.log("after_flag: " + after_flag);
 		var temp_index = index;
 		if (all_del == 0){                                  // 如果字區內還有字
 			for(var i = 0; i < pinyin_record.length; i++){
@@ -1522,6 +1522,7 @@
 					break;
 			}   
 		}
+		console.log("");
 	}
 
 	function get_auto_start(){                                  // 取得自動選詞的起點，每一次預設取第一個span的位置
@@ -2027,6 +2028,7 @@
 			}
 			else
 				pinyin_record.unshift(pinyin_obj);
+
 			$.ajaxSettings.async = false;
 			modify_obj_loc(0, 0, 0);
 			$.ajaxSettings.async = true;
@@ -2054,12 +2056,9 @@
 						var pinyin_right = "";
 						var word_left = former_word.substring(0,split_loc);
 						var word_right = former_word.substring(split_loc,former_word.length);
-						console.log("split_loc: " + split_loc);
-						console.log("word_left: " + word_left);
-						console.log("word_right: " + word_right);
 
 						var j = 0;
-						if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(new_pinyin) == 1))
+						if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(former_pinyin) == 1))
 							pinyin_record.splice(which_word,1,pinyin_obj);
 						else{
 							for(var i = 0; i < former_pinyin.length; i++){
@@ -2084,6 +2083,7 @@
 				}
 				else
 					pinyin_record.splice(which_word,0,pinyin_obj);
+
 				$.ajaxSettings.async = false;
 				modify_obj_loc(which_word, 0, 0);
 				$.ajaxSettings.async = true;
@@ -2094,9 +2094,6 @@
 				var key_syllable = getSyllable(new_pinyin);
 				var word_left = former_word.substring(0,start_loc);
 				var word_right = former_word.substring(start_loc,end_loc);
-				
-				console.log("word_left: " + word_left);
-				console.log("word_right: " + word_right);
 				var pinyin_left = "";
 				var pinyin_right = "";
 
@@ -2108,6 +2105,7 @@
 					word_right = former_word.substring(start_loc + key_syllable,end_loc);
 					former_word = word_left + word_right;
 
+					console.log("start_loc: " + start_loc);
 					var j = 0;
 					for(var i = 0; i < former_pinyin.length; i++){
 						if (former_pinyin[i] == " ") 
@@ -2122,6 +2120,7 @@
 							if (getSyllable(former_pinyin) == 1){
 								pinyin_left = former_pinyin;
 								pinyin_right = "";
+								break;
 							}
 							else{
 								j = 0;
@@ -2167,12 +2166,12 @@
 					modify_obj_loc(which_word, 0, 0);
 				}
 				else{
-					var syllables = getSyllable(former_pinyin);
+					var syllable = getSyllable(former_pinyin);
 					start_loc = pinyin_record[which_word].start_loc;
 					var temp_loc = loc - start_loc;
 
 					if (former_pinyin != ""){                       // 沒有拼音的字詞則略過拼音分割
-						if (temp_loc > syllables){                  // 字詞的位置超過拼音
+						if (temp_loc > syllable){                  // 字詞的位置超過拼音
 							pinyin_left = former_pinyin;
 						}
 						else{
