@@ -44,8 +44,9 @@
 			#google_btn {
 				width: 72px;
 				height: 26px;
+				margin: auto;
 				margin-top: 12px;
-				margin-left: -28px;
+				/*margin-left: -28px;*/
 			}
 
 			#google_btn_flat {
@@ -193,8 +194,8 @@
 								<br>
 						    	<span class="hidden-xs underline" style="font-size: 80px">興大</span>
 						    	<span class="hidden-xs underline" style="font-size: 80px">無聲調</span>						    	
-							    <span class="visible-xs underline" style="font-size: 68px; margin-left: 69px; padding-right: 85px;">興大</span>
-							    <span class="visible-xs underline" style="font-size: 68px; margin-left: 34px; padding-right: 52px;">無聲調</span>
+							    <span class="visible-xs" style="font-size: 68px; margin-left: 69px; padding-right: 85px;">興大</span>
+							    <span class="visible-xs" style="font-size: 68px; margin-left: 34px; padding-right: 52px;">無聲調</span>
 							    <br>
 							    <div class="hidden-xs" style="font-size: 38px">
 							    	<span class="underline">台語</span>
@@ -202,9 +203,9 @@
 									<span class="underline">輸入法</span>
 							    </div>
 								<div class="visible-xs" style="font-size: 30px; margin-top: -12px">
-							    	<span class="underline">台語</span>
-									<span class="underline">拼音</span>
-									<span class="underline">輸入法</span>
+							    	<span>台語</span>
+									<span>拼音</span>
+									<span>輸入法</span>
 							    </div>
 							</p>
 							<div id="push" class="hidden-xs"></div>
@@ -293,7 +294,7 @@
 							<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
 							<div class="col-xs-12 col-sm-2 col-md-2"></div>
 							<div class="col-xs-12 col-sm-8 col-md-8">
-								<div class="ui input hidden-xs">
+								<!--<div class="ui input hidden-xs">
 									<div style="margin-top: 5px">
 										<span style="font-size: 14px; color: #000">自選模式&nbsp;&nbsp;</span>
 										<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
@@ -302,13 +303,12 @@
 										</div>
 										<span style="font-size: 14px; color: #000">智能模式</span>
 									</div>												
-								</div>
-								<!--<span id="google_btn_flat" class="ui blue button visible-xs" onclick="google();">google&nbsp;<i class="small search icon"></i></span>-->
+								</div>-->
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn">
 								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat"></a>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2">		
-								<!--<span id="google_btn" class="ui icon blue button hidden-xs" onclick="google();">google<i class="small search icon"></i></span>-->
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>
+								<!--<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>-->
 							</div>
 							<br>
 							<div class="ui input">
@@ -326,7 +326,7 @@
 									<i class="large cut icon" style="color: #000; margin-top: -3px"></i>
 								</div>
 							</div>
-							<div class="buttons visible-xs" id="middle_btn_flat" style="margin-left: 8px; margin-top: 0px; margin-bottom: 5px">
+							<!--<div class="buttons visible-xs" id="middle_btn_flat" style="margin-left: 8px; margin-top: 0px; margin-bottom: 5px">
 								<div class="circular ui button" id="copy_flat" style="background-color: #7DFD8C">
 									<i class="copy icon" style="padding-left: 4px; color: #000"></i>
 								</div>
@@ -339,7 +339,7 @@
 									<i class="cut icon" style="padding-left: 4px; color: #000"></i>
 								</div>
 								<br>
-							</div>
+							</div>-->
 							<div class="field hidden-xs">
 								<textarea id="show" data-variation="large" onclick="false" readonly></textarea>  
 							</div>
@@ -374,18 +374,22 @@
 				<div class="slide" data-anchor="slide1">
 					<div class="container">
 						<div class="row">
-							<div id="push"></div>
-							<div class="col-sm-3 col-md-3 col-lg-3">															
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs">
+								<div style="height: 400px; text-align: center">
+									<br>
+									<img src="./images/pinyin_panel.png" style="height: 100%" alt="">	
+								</div>														
 							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6">
-								<div class="jumbotron" id="public_intro">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<br><br>
+								<div class="jumbotron" id="public_intro" style="float: left">
 									<div style="font-size: 16px">
 										<p style="line-height: 1.8;">
 											&emsp;&emsp;&nbsp;此網頁版輸入法是無需考慮聲調的多功能台語拼音輸入法。
 											主體為台語拼音，兼容縮寫、音首以及英文輸入，是個比想像中還要__的輸入法。
 										</p>
 										<p style="line-height: 1.8;">
-											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」
+											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」（尚未完成）
 											。前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
 										</p>
 										<p style="line-height: 1.8;">
@@ -394,8 +398,6 @@
 									</div>						
 								</div>				
 							</div>
-							<div class="col-sm-3 col-md-3 col-lg-3"></div>
-							<div id="push"></div>
 						</div>
 					</div>
 				</div>
