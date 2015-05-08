@@ -337,10 +337,10 @@
 						var start_loc = pinyin_record[which_word].start_loc;
 						var end_loc = pinyin_record[which_word].end_loc;
 						if (input_loc == start_loc){
-							search_key = key;							
+							search_key = key;	
 							mode = 3;
 							$.ajaxSettings.async = false;
-							search_char(0.5);				
+							search_char(0);				
 							$.ajaxSettings.async = true;
 						}
 						else{
@@ -1979,40 +1979,39 @@
 		else if (loc == 0){     // 最前端操作
 			if (mode == 3){
 				var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
-				if (pinyin_obj.word.length == pinyin_record[which_word].word.length && getSyllable(pinyin_obj.pinyin) == getSyllable(pinyin_record[which_word].pinyin))
+				var former_word = pinyin_record[which_word].word;
+				var former_pinyin = pinyin_record[which_word].pinyin;
+				var new_word = pinyin_obj.word;
+				var new_pinyin = pinyin_obj.pinyin;
+				if (new_word.length == former_word.length && getSyllable(new_pinyin) == getSyllable(former_pinyin))
 					pinyin_record.splice(0,1,pinyin_obj);
 				else{
-					var key_syllable = getSyllable(pinyin_obj.pinyin);
-					var former_word_len = 0;
-					var former_word = pinyin_record[which_word].word;
-					
-					if (pinyin_record[which_word].modifiable == 1)
-						former_word_len = pinyin_record[which_word].word.length;
+					var key_syllable = getSyllable(new_pinyin);
 					var split_loc = 0;
-					if (former_word_len >= key_syllable)
-						split_loc = former_word_len;
+					if (pinyin_record[which_word].modifiable == 1)
+						split_loc = former_word.length;
 					else
 						split_loc = key_syllable;
+
 					var pinyin_left = "";
 					var pinyin_right = "";
 					var word_left = former_word.substring(0,split_loc);
 					var word_right = former_word.substring(split_loc,former_word.length);
 
 					var j = 0;
-					var key = pinyin_record[which_word].pinyin;
-					if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(key) == 1)){
-						pinyin_left = pinyin_obj.pinyin;
+					if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(former_pinyin) == 1)){
+						pinyin_left = new_pinyin;
 						pinyin_obj.pinyin = pinyin_left;
 						pinyin_record.splice(which_word,1,pinyin_obj);
 					}
 					else{
-						for(var i = 0; i < key.length; i++){
-							if (key[i] == " ") 
+						for(var i = 0; i < former_pinyin.length; i++){
+							if (former_pinyin[i] == " ") 
 								j++;
 							if (j == key_syllable){         
 								var temp_loc = i;        
-								pinyin_left = key.substring(0,temp_loc);
-								pinyin_right = key.substring(temp_loc + 1,key.length);
+								pinyin_left = former_pinyin.substring(0,temp_loc);
+								pinyin_right = former_pinyin.substring(temp_loc + 1,former_pinyin.length);
 								pinyin_left = pinyin_left.trim();
 								pinyin_right = pinyin_right.trim();
 								break;
@@ -2036,32 +2035,32 @@
 			var which_word = get_Which_Word(loc,"head");        // 先找到loc是在第幾個字區
 			var former_word = pinyin_record[which_word].word;
 			var former_pinyin = pinyin_record[which_word].pinyin;
+			var new_word = pinyin_obj.word;
+			var new_pinyin = pinyin_obj.pinyin;
 			if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
 				if (mode == 3){
-					if (pinyin_obj.word.length == former_word.length && getSyllable(pinyin_obj.pinyin) == getSyllable(former_pinyin))
+					if (new_word.length == former_word.length && getSyllable(new_pinyin) == getSyllable(former_pinyin))
 						pinyin_record.splice(which_word,1,pinyin_obj);
 					else{
-						var key_syllable = getSyllable(pinyin_obj.pinyin);
-						var former_word_len = 0;
+						var key_syllable = getSyllable(new_pinyin);
 						
-						if (pinyin_record[which_word].modifiable == 1)
-							former_word_len = former_word.length;
 						var split_loc = 0;
-						if (former_word_len >= key_syllable)
-							split_loc = former_word_len;
+						if (pinyin_record[which_word].modifiable == 1)
+							split_loc = former_word.length;
 						else
 							split_loc = key_syllable;
+
 						var pinyin_left = "";
 						var pinyin_right = "";
 						var word_left = former_word.substring(0,split_loc);
 						var word_right = former_word.substring(split_loc,former_word.length);
+						console.log("split_loc: " + split_loc);
+						console.log("word_left: " + word_left);
+						console.log("word_right: " + word_right);
 
 						var j = 0;
-						if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(former_pinyin) == 1)){
-							pinyin_left = pinyin_obj.pinyin;
-							pinyin_obj.pinyin = pinyin_left;
+						if (pinyin_record[which_word].modifiable == 1 || (pinyin_record[which_word].modifiable == 0 && getSyllable(new_pinyin) == 1))
 							pinyin_record.splice(which_word,1,pinyin_obj);
-						}
 						else{
 							for(var i = 0; i < former_pinyin.length; i++){
 								if (former_pinyin[i] == " ") 
@@ -2091,62 +2090,100 @@
 			}
 			else if (loc < pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間			
 				var start_loc = loc - pinyin_record[which_word].start_loc;
+				var end_loc = pinyin_record[which_word].end_loc - pinyin_record[which_word].start_loc;
+				var key_syllable = getSyllable(new_pinyin);
 				var word_left = former_word.substring(0,start_loc);
-				var word_right = former_word.substring(start_loc,pinyin_record[which_word].word.length);
+				var word_right = former_word.substring(start_loc,end_loc);
+				
 				console.log("word_left: " + word_left);
 				console.log("word_right: " + word_right);
 				var pinyin_left = "";
 				var pinyin_right = "";
+
 				if (mode == 3){
-					var word_len = pinyin_obj.word.length;
-					var word_left = former_word.substring(0,word_len);
-					var word_right = former_word.substring(word_len,former_word.length);
-					console.log("word_left: " + word_left);
-					console.log("word_right: " + word_right);
+					var pre_pinyin = "";
+					var pre_word = former_word.substring(0,start_loc);
+					console.log("pre_word: " + pre_word);
+					word_left = former_word.substring(start_loc,start_loc + key_syllable);
+					word_right = former_word.substring(start_loc + key_syllable,end_loc);
+					former_word = word_left + word_right;
 
 					var j = 0;
-					var key_syllable = getSyllable(former_pinyin);
 					for(var i = 0; i < former_pinyin.length; i++){
 						if (former_pinyin[i] == " ") 
 							j++;
-						if (j == (key_syllable - word_len)){         
-							var split_loc = i;          
-							pinyin_left = former_pinyin.substring(0,split_loc);
-							pinyin_right = former_pinyin.substring(split_loc + 1,former_pinyin.length);
-							pinyin_left = pinyin_left.trim();
-							pinyin_right = pinyin_right.trim();
-							break;
-						}
-					}
+						if (j == start_loc){   
+							var temp_loc = i;      
+							pre_pinyin = former_pinyin.substring(0,temp_loc);
+							former_pinyin = former_pinyin.substring(temp_loc + 1,former_pinyin.length);
+							pre_pinyin = pre_pinyin.trim();
+							former_pinyin = former_pinyin.trim();
+							console.log("former_pinyin: " + former_pinyin);
+							if (getSyllable(former_pinyin) == 1){
+								pinyin_left = former_pinyin;
+								pinyin_right = "";
+							}
+							else{
+								j = 0;
+								for(var k = 0; k < former_pinyin.length; k++){
+									if (former_pinyin[k] == " ") 
+										j++;
+									if (j == key_syllable){   
+										var temp_loc = k;      
+										pinyin_left = former_pinyin.substring(0,temp_loc);
+										pinyin_right = former_pinyin.substring(temp_loc + 1,former_pinyin.length);
+										pinyin_left = pinyin_left.trim();
+										pinyin_right = pinyin_right.trim();
+										break;
+									}       							
+								}
+								break;
+							}
+						}       							
+					}				
+
+					console.log("pre_pinyin: " + pre_pinyin);
 					console.log("pinyin_left: " + pinyin_left);
 					console.log("pinyin_right: " + pinyin_right);
+					console.log("");
+ 
+					
+					console.log("pre_word: " + pre_word);
+					console.log("word_left: " + word_left);
 					console.log("word_right: " + word_right);
+
+					
 					pinyin_obj.pinyin = pinyin_left;
 					console.log("which_word: " + which_word);
-					pinyin_record.splice(which_word,1,pinyin_obj);
 					$.ajaxSettings.async = false;
-					rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
+					rearrange_objs(pre_pinyin, pre_word, which_word, 1, 0);
 					$.ajaxSettings.async = true;
+					pinyin_record.splice(record_last_index + 1, 0, pinyin_obj);
+					if (word_right != ""){
+						$.ajaxSettings.async = false;
+						rearrange_objs(pinyin_right, word_right, record_last_index + 2, 0, 1);
+						$.ajaxSettings.async = true;
+					}
+					modify_obj_loc(which_word, 0, 0);
 				}
 				else{
-					var key = pinyin_record[which_word].pinyin;     // 把該字區的拼音抓出來
-					var syllables = getSyllable(key);
+					var syllables = getSyllable(former_pinyin);
 					start_loc = pinyin_record[which_word].start_loc;
 					var temp_loc = loc - start_loc;
 
-					if (key != ""){                                 // 沒有拼音的字詞則略過拼音分割
-						if (temp_loc > syllables){                   // 字詞的位置超過拼音
-							pinyin_left = key;
+					if (former_pinyin != ""){                       // 沒有拼音的字詞則略過拼音分割
+						if (temp_loc > syllables){                  // 字詞的位置超過拼音
+							pinyin_left = former_pinyin;
 						}
 						else{
 							var j = 0;
-							for(var i = 0; i < key.length; i++){
-								if (key[i] == " ") 
+							for(var i = 0; i < former_pinyin.length; i++){
+								if (former_pinyin[i] == " ") 
 									j++;
 								if (j == temp_loc){         
 									var split_loc = i;          
-									pinyin_left = key.substring(0,split_loc);
-									pinyin_right = key.substring(split_loc + 1,key.length);
+									pinyin_left = former_pinyin.substring(0,split_loc);
+									pinyin_right = former_pinyin.substring(split_loc + 1,former_pinyin.length);
 									pinyin_left = pinyin_left.trim();
 									pinyin_right = pinyin_right.trim();
 									break;
@@ -2976,7 +3013,8 @@
 			navigationPosition: 'right',
 			navigationTooltips: ['HOME','輸入頁面','關於輸入法','拼音教學','聯絡我們'],
 			slidesNavigation: true,
-			scrollOverflow: true
+			scrollOverflow: true,
+			css3: true
 			//continuousVertical: true
 		});
 

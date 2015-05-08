@@ -44,8 +44,9 @@
 			#google_btn {
 				width: 72px;
 				height: 26px;
+				margin: auto;
 				margin-top: 12px;
-				margin-left: -28px;
+				/*margin-left: -28px;*/
 			}
 
 			#google_btn_flat {
@@ -292,7 +293,7 @@
 							<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
 							<div class="col-xs-12 col-sm-2 col-md-2"></div>
 							<div class="col-xs-12 col-sm-8 col-md-8">
-								<div class="ui input hidden-xs">
+								<!--<div class="ui input hidden-xs">
 									<div style="margin-top: 5px">
 										<span style="font-size: 14px; color: #000">自選模式&nbsp;&nbsp;</span>
 										<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
@@ -301,13 +302,12 @@
 										</div>
 										<span style="font-size: 14px; color: #000">智能模式</span>
 									</div>												
-								</div>
-								<!--<span id="google_btn_flat" class="ui blue button visible-xs" onclick="google();">google&nbsp;<i class="small search icon"></i></span>-->
+								</div>-->
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn">
 								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat"></a>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2">		
-								<!--<span id="google_btn" class="ui icon blue button hidden-xs" onclick="google();">google<i class="small search icon"></i></span>-->
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>
+								<!--<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>-->
 							</div>
 							<br>
 							<div class="ui input">
@@ -373,8 +373,9 @@
 				<div class="slide" data-anchor="slide1">
 					<div class="container">
 						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<div style="height: 450px; text-align: center">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs">
+								<div style="height: 400px; text-align: center">
+									<br>
 									<img src="./images/pinyin_panel.png" style="height: 100%" alt="">	
 								</div>														
 							</div>
@@ -387,7 +388,7 @@
 											主體為台語拼音，兼容縮寫、音首以及英文輸入，是個比想像中還要__的輸入法。
 										</p>
 										<p style="line-height: 1.8;">
-											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」
+											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」（尚未完成）
 											。前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
 										</p>
 										<p style="line-height: 1.8;">
