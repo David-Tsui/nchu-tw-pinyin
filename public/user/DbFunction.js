@@ -32,7 +32,6 @@ function AddWord (member)
 {
 	var sd = document.getElementById("sound").value;
 	var ch = document.getElementById("characters").value;
-	var check = true;
 	sd = CheckAndReplaceSound(sd);
 	ch = CheckChars(ch);
 
@@ -60,29 +59,29 @@ function AddWord (member)
         		//console.log(result);
 				if (result.length != 0)			//有找到
 				{
-					alert ("您不可以加重複的詞。");
-					check = false;
+					alert ("您不可以新增重複的詞。");
+				}
+				else
+				{
+					$.ajax({ 
+				    	url: "./DbOperations.php",
+				    	method: "POST",
+				    	data: {
+				    		func: "AddWord",
+				    		name: member,
+				    		sd: sd,
+				    		ch: ch
+				    	},
+				    	success: function(res) {
+			        		MakeTable (member);
+							document.getElementById("sound").value = "";
+							document.getElementById("characters").value = "";
+			        	}
+				    });
 				}
 			}
 		});
-		if (check)
-		{
-			$.ajax({ 
-		    	url: "./DbOperations.php",
-		    	method: "POST",
-		    	data: {
-		    		func: "AddWord",
-		    		name: member,
-		    		sd: sd,
-		    		ch: ch
-		    	},
-		    	success: function(res) {
-	        		MakeTable (member);
-	        	}
-		    });
-		}
-		document.getElementById("sound").value = "";
-		document.getElementById("characters").value = "";
+		
 	}
 }
 
