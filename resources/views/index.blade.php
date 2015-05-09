@@ -326,35 +326,11 @@
 									<i class="large cut icon" style="color: #000; margin-top: -3px"></i>
 								</div>
 							</div>
-							<!--<div class="buttons visible-xs" id="middle_btn_flat" style="margin-left: 8px; margin-top: 0px; margin-bottom: 5px">
-								<div class="circular ui button" id="copy_flat" style="background-color: #7DFD8C">
-									<i class="copy icon" style="padding-left: 4px; color: #000"></i>
-								</div>
-								&nbsp;&nbsp;&nbsp;
-								<div class="circular ui button" id="undo_flat" style="background-color: #97F0FF">
-									<i class="undo icon" style="padding-left: 4px; color: #000"></i>
-								</div>
-								&nbsp;&nbsp;&nbsp;
-								<div class="circular ui button" id="cut_flat" style="background-color: #FCF783">
-									<i class="cut icon" style="padding-left: 4px; color: #000"></i>
-								</div>
-								<br>
-							</div>-->
 							<div class="field hidden-xs">
 								<textarea id="show" data-variation="large" onclick="false" readonly></textarea>  
 							</div>
 							<div class="fluid visible-xs">
 								<textarea id="show_flat" data-variation="small" readonly></textarea>
-								<br>
-								<!--<div style="margin-left: 4px">
-									<div class="ui left attached button" id="btn_previous" style="font-size: 10px; margin-bottom: 10px; padding-right: 15px; border-radius: 5px;">
-										<i class="small arrow sign left icon"></i>上一頁
-									</div>
-									<div class="ui button" id="btn_initial" style="font-size: 10px; margin-bottom: 10px; border-radius: 5px;">首頁</div>
-									<div class="right attached ui button" id="btn_next" style="font-size: 10px; margin-bottom: 10px; padding-left: 15px; border-radius: 5px;">
-										下一頁<i class="small arrow sign right icon"></i>
-									</div>
-								</div>-->
 							</div>
 							<br>
 						</div>
