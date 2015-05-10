@@ -49,9 +49,7 @@
 			$temp_key = $split_key;
 			$copy = "";
 			for($i = 0; $i < count($Hplace); $i++){
-				//echo "solution[$i] = $solution[$i], ";
 				if ($solution[$i]){
-					//echo "$Hplace[$i] plus 'H'<br>";
 					$temp_key[$Hplace[$i]] .= "h";
 				}
 			}
@@ -69,10 +67,6 @@
 		}
 		backtrack(0);
 
-		/*for($i = 0; $i < count($ans_key); $i++){
-			echo "$ans_key[$i]<br>";
-		}*/
-
 		$arr = array();
 
 		if (strtoupper($key[0]) == ($key[0])){
@@ -80,8 +74,8 @@
 				$key_super = $key . "%";
 				$mode = 4;
 				$sql = "SELECT DISTINCT `cht` FROM `eng_abbr` 
-					    WHERE `abbr` = :key OR `abbr` LIKE :key_super
-					    ORDER BY char_length(`cht`) ASC, `score` DESC";
+					      WHERE `abbr` = :key OR `abbr` LIKE :key_super
+					      ORDER BY char_length(`cht`) ASC, `score` DESC";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam(':key',$key);
 				$stmt->bindParam(':key_super', $key_super);
@@ -100,8 +94,8 @@
 			  	if (strlen($key) == 1){
 			  		$mode = 3;
 					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-						    WHERE `abbr` = :key
-						    ORDER BY char_length(`characters`) ASC, `score` DESC";
+						      WHERE `abbr` = :key
+						      ORDER BY char_length(`characters`) ASC, `score` DESC";
 					$stmt = $db->prepare($sql);
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
@@ -119,8 +113,8 @@
 				  	$key = strtolower($key);
 					$mode = 5;
 					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
-						    WHERE `eng` = :key
-						    ORDER BY char_length(`cht`) ASC, `score` DESC";
+						      WHERE `eng` = :key
+						      ORDER BY char_length(`cht`) ASC, `score` DESC";
 					$stmt = $db->prepare($sql);
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
@@ -138,8 +132,8 @@
 			else{									// 第一個字大寫->台語縮寫MODE=3
 				$mode = 3;
 				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-					    WHERE `abbr` = :key
-					    ORDER BY char_length(`characters`) ASC, `score` DESC";
+					      WHERE `abbr` = :key
+					      ORDER BY char_length(`characters`) ASC, `score` DESC";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam(':key',$key);
 				$stmt->execute();
@@ -159,8 +153,8 @@
 					$key = strtolower($key);
 					$mode = 5;
 					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
-						    WHERE `eng` = :key
-						    ORDER BY char_length(`cht`) ASC, `score` DESC";
+						      WHERE `eng` = :key
+						      ORDER BY char_length(`cht`) ASC, `score` DESC";
 					$stmt = $db->prepare($sql);
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
@@ -178,8 +172,8 @@
 				  	if (count($arr) == 0){
 				  		$key_super = $key . "%";
 						$sql = "SELECT DISTINCT `eng` FROM `eng_formal` 
-						    WHERE `eng` LIKE :key_super
-						    ORDER BY char_length(`eng`) ASC, `score` DESC";
+						    	  WHERE `eng` LIKE :key_super
+						        ORDER BY char_length(`eng`) ASC, `score` DESC";
 						$stmt = $db->prepare($sql);
 						$stmt->bindParam(':key_super',$key_super);
 						$stmt->execute();
@@ -208,8 +202,8 @@
 			$j = 0;
 			for($i = 0; $i < count($ans_key); $i++){
 				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-						WHERE `sound` = :key OR `sound` LIKE :key_super 
-				    	ORDER BY char_length(`characters`) ASC, `score` DESC";
+						    WHERE `sound` = :key OR `sound` LIKE :key_super 
+				    	  ORDER BY char_length(`characters`) ASC, `score` DESC";
 				$temp_key = trim($ans_key[$i]);
 				$temp_key_super = $temp_key . " %";
 				$stmt = $db->prepare($sql);
@@ -229,9 +223,9 @@
 		}
 		else if ($mode == 1){	// 如果是智能模式，抓第一個字
 		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-		    		WHERE `sound` = :key 
-		    		ORDER BY char_length(`characters`) ASC, `score` DESC 
-		    		LIMIT 0,1";
+		    		    WHERE `sound` = :key 
+		    		    ORDER BY char_length(`characters`) ASC, `score` DESC 
+		    		    LIMIT 0,1";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':key',$key);
 			$stmt->execute();
@@ -243,8 +237,8 @@
 		else if ($mode == 2){	// 如果是修改模式，先找整個拼音，再找其他音節
 			$arr[0] = "modify letter";
 		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-				    WHERE `sound` = :key OR `sound`
-				    ORDER BY char_length(`characters`) ASC, `score` DESC";
+				        WHERE `sound` = :key OR `sound`
+				        ORDER BY char_length(`characters`) ASC, `score` DESC";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':key',$key);
 			$stmt->execute();
@@ -279,8 +273,8 @@
 					if ($pos != false){
 						$key = substr($key,0,$pos);
 						$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-							    WHERE `sound` = :key 
-							    ORDER BY char_length(`characters`) DESC, `score` DESC";
+							      WHERE `sound` = :key 
+							      ORDER BY char_length(`characters`) DESC, `score` DESC";
 						$stmt = $db->prepare($sql);
 						$stmt->bindParam(':key',$key);
 						$stmt->execute();
@@ -324,8 +318,8 @@
 			$key = strtolower($key);
 			$key_super = $key . "%";
 			$sql = "SELECT SUBSTRING_INDEX(`sound`,' ',$temp) FROM `pinyin_formal` 
-					WHERE `sound` LIKE :key_super 
-					GROUP BY SUBSTRING_INDEX(`sound`,' ',$temp)";
+						  WHERE `sound` LIKE :key_super 
+					  	GROUP BY SUBSTRING_INDEX(`sound`,' ',$temp)";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':key_super',$key_super);
 			$stmt->execute();
