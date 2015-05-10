@@ -2816,34 +2816,47 @@
 	}
 
 	function nav_assign_color(theme){
+		var nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
 		if (theme == "origin"){
-			var nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
 			var arr_len = nav_arr.length;
+			static_color = "white";
 			for(var i = 0; i < arr_len; i++){
 				$(nav_arr[i]).css('color',nav_color[i]);
-				$(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
+				$(nav_arr[i]).on('mouseenter',function(){$(this).css('color',static_color);});
 				(function(i){
-			        $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
-			    })(i);
+			    $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
+			  })(i);
 			}
 			//nav_to_white();
 		}
 		else if (theme == "pink"){
-			nav_color = "#FFF";
+			static_color = "white";
 			for(var i = 0; i < nav_arr.length; i++){
-				$(nav_arr[i]).css('color',nav_color);
+				$(nav_arr[i]).css('color',static_color);
+				(function(i){
+			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+			  })(i);
+			  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});  
 			}
 		}
 		else if (theme == "blue"){
-			nav_color = "#FFF";
+			static_color = "#FFF";
 			for(var i = 0; i < nav_arr.length; i++){
-				$(nav_arr[i]).css('color',nav_color);
+				$(nav_arr[i]).css('color',static_color);
+				(function(i){
+			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+			  })(i);
+			  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
 			}
 		}
 		else if (theme == "xmas"){
-			nav_color = "#FFF";
+			color = "#FFF";
 			for(var i = 0; i < nav_arr.length; i++){
-				$(nav_arr[i]).css('color',nav_color);
+				$(nav_arr[i]).css('color',static_color);
+				(function(i){
+			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+			  })(i);
+			  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
 			}
 		} 
 	}

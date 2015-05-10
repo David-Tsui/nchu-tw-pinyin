@@ -524,8 +524,8 @@
 		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.js"></script>
 		<script src="./js/jquery.zclip.js"></script>
 		<script src="./js/buttons.js"></script>
-		<!--<script src="./js/jsnow.js"></script>-->
 		<script src="./js/checkmessage.js"></script>
+		<!--<script src="./js/jsnow.js"></script>-->
 		<script src="./underlineJS/js/classie.js"></script>
 		<script src="./underlineJS/js/baseline-ratio.js"></script>
 		<script src="./underlineJS/js/underline.js"></script>
