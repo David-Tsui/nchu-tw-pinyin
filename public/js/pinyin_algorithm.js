@@ -2948,7 +2948,6 @@
 
 	function generate_close(){                                          // 讓"關閉提示"的button有其功能
 		$("#close_prompt").click(function(){
-			//if ($("#prompt_flat").is(":hidden")){
 			$("#input").popup('hide');
 			$("#select_mode").popup('hide');
 			$("#prompt, #prompt_flat").popup('hide');
@@ -2959,7 +2958,6 @@
 			customJqte.popup('hide');
 			customJqte_flat.popup('hide');
 			$("#search_pinyin").popup('hide');
-			//$(".lab_qrcode").animate({margin: '0 28%'});
 			var pause_timer = setInterval(function(){
 
 				$("#input").popup('destroy');
