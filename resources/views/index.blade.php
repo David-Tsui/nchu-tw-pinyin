@@ -350,15 +350,16 @@
 				<div class="slide" data-anchor="slide1">
 					<div class="container">
 						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs">
+							<!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs">
 								<div style="height: 400px; text-align: center">
 									<br>
 									<img src="./images/pinyin_panel.png" style="height: 100%" alt="">	
 								</div>														
-							</div>
+							</div>-->
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<br><br>
-								<div class="jumbotron" id="public_intro" style="float: left">
+								<div class="jumbotron" id="public_intro">
 									<div style="font-size: 16px">
 										<p style="line-height: 1.8;">
 											&emsp;&emsp;&nbsp;此網頁版輸入法是無需考慮聲調的多功能台語拼音輸入法。
@@ -374,6 +375,7 @@
 									</div>						
 								</div>				
 							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
 						</div>
 					</div>
 				</div>
@@ -438,7 +440,15 @@
 			<div class="section" id="section3">
 				<div class="container">
 					<div class="row">
-						<p>拼音教學</p>
+						<p>子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m ,n ,n ,g ,p ,q, r, s, t, x, z</p>
+
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-md-4">
+					
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-4"></div>
+						<div class="col-xs-12 col-sm-4 col-md-4"></div>
 					</div>
 				</div>
 			</div>
