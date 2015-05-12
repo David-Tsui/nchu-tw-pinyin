@@ -9,8 +9,10 @@
 		$sql = "CREATE TABLE IF NOT EXISTS `";
 		$sql .= $id;
 		$sql .= "` (
+				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				`sound` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				`characters` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+				`characters` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;";
 		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
