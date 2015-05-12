@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -101,9 +104,6 @@
 				margin-right: 8%;	
 			}
 		</style>
-		<?php
-			session_start();
-		?>
 	</head>
 
 	<body>
@@ -499,6 +499,7 @@
 		<script src="./js/jquery.zclip.js"></script>
 		<script src="./js/buttons.js"></script>
 		<script src="./js/checkmessage.js"></script>
+		<script src="./js/keypress.js"></script>
 		<!--<script src="./js/jsnow.js"></script>-->
 		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>

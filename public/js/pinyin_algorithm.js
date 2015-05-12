@@ -77,6 +77,8 @@
 	var correspond_flag = false;                                        // 用來判斷音與字是否對應
 	var interval = "\t\t";                                              // textarea中的小標題間距
 
+	var check_keyin = 0;
+
 	$(document).ready(function(){
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
@@ -148,7 +150,7 @@
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			keyin = e.which;
-			//console.log("keyin: " + keyin);
+			console.log("keyin: " + keyin);
 			//if (e.ctrlKey) return false;                                // 暫時先擋住ctrl
 			forbid_mousemove = true;
 			if (keyin == 229){                                          // 擋住中文輸入法
@@ -719,6 +721,7 @@
 			}                                               
 		}).keyup(function(e){                                           // 接續的keyup事件，為了讓上下左右鍵有影響
 			keyin = e.which;
+			console.log("keyin: " + keyin);
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			if (sel_mode == 0){ 
@@ -1861,7 +1864,9 @@
 						pinyin_record = [];
 					}   
 					else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
+						console.log("input_loc: " + input_loc);
 						var which_word = get_Which_Word(input_loc + 1,"tail");      // 先抓到是哪個字被刪
+						console.log("which_word: " + which_word);
 						var key = pinyin_record[which_word].pinyin;
 						var word = pinyin_record[which_word].word;
 						if (word.length != 1){
@@ -1892,6 +1897,7 @@
 						}
 						textbox.html(text);
 						textbox.setCursorPosition(input_loc);
+						modify_obj_loc(which_word,0,0);
 					}      				                  
 				}
 			} 
