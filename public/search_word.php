@@ -4,7 +4,6 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
-		$ori_key = $key;
 		//$key = "gun bba";
 		$mode = $_POST['MODE'];
 		//$mode = 0;
@@ -78,9 +77,18 @@
 			{
 				$mode = 6;
 				include ("mysql_memdict_connect.inc.php");
-				$sql = "SELECT DISTINCT `characters` FROM `" . $myid . "`" . 
+				if (stripos($key,' ') >= 0)
+				{
+					$sql = "SELECT DISTINCT `characters` FROM `" . $myid . "`" . 
+						" WHERE `sound` LIKE '" . $key . "%'" . 
+					    " ORDER BY char_length(`characters`) ASC";
+				}
+				else
+				{
+					$sql = "SELECT DISTINCT `characters` FROM `" . $myid . "`" . 
 						" WHERE `sound` = '" . $key . "'" . 
 					    " ORDER BY char_length(`characters`) ASC";
+				}
 				$stmt = $memdb->prepare($sql);
 				$stmt->execute();
 				$stmt->setFetchMode(PDO::FETCH_NUM);
