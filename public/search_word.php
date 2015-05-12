@@ -1,7 +1,7 @@
 <?php
-	session_start();
 	if (isset($_POST['search_KEY']) && isset($_POST['MODE'])){
 		include("mysql_connect.inc.php");
+		session_start();
 
 		$key = trim($_POST['search_KEY']);
 		//$key = "gun bba";
@@ -69,10 +69,8 @@
 		$arr = array();
 
 		if (strtoupper($key[0]) == ($key[0])){
-
 			//先查詢自建詞庫
 			$myid = getUserID();
-			//echo $myid . "abc\n";
 			if (!is_null($myid))
 			{
 				$mode = 6;

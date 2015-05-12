@@ -221,6 +221,10 @@
 						input_len = input_word.length;
 						textbox.html(input_word);
 						textbox.setCursorPosition(input_loc);
+						mode = 0;
+						search_key = "";
+						$("#show").html("");
+						$("#show_flat").html("");
 					}
 					else{
 						var text = "此區無法換行!";
@@ -2497,6 +2501,7 @@
 			'</span>',
 			'</u>',
 			'<u>',
+			'<br>'
 		];
 		var after_text = text;
 		if (after_text.search("<br>") == 0){
@@ -2830,7 +2835,7 @@
 				jqte_text = $(this).html();
 				localStorage.setItem("text", jqte_text); 
 			});
-		} 
+		}
 		for(var i = 1; i <= 4; i++){
 			if (i == css_num)
 				document.getElementById("CSS" + i).disabled = false;
@@ -3077,6 +3082,26 @@
 		}
 	}
 
+	function getTutorial(){
+		$.getJSON('tutorial.json',function(data){
+			var json_len = data.length;
+			console.log("json_len: " + json_len);
+			var html = "";
+			for(var i = 0; i < json_len; i++){
+				var consonant = data[i].consonant;
+				var vowel_arr = data[i].vowel;
+				var vowel_arr_len = vowel_arr.length;
+				var element = "<tr>";
+				for(var j = 0; j < vowel_arr_len; j++){
+					var the_vowel = vowel_arr[j].sound;
+					var words = vowel_arr[j].word;
+					
+				}
+
+			}
+		});
+	}
+
 	function google(){
 		var str = remove_tags($('#input').html());
 		if (str == ""){
@@ -3156,5 +3181,6 @@
 		customJqte = $("." + initial_style);
 		customJqte_flat = $("." + flat_initial_style);   
 		change_theme(theme);
-		/*********************************設定主題背景相關********************************/     
+		/*********************************設定主題背景相關********************************/  
+		getTutorial();		// 產生教學頁面
 	}

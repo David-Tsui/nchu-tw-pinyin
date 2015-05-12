@@ -167,23 +167,21 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6" id="left" style="text-align: center">
-							<p class="text">
-								<div class="hidden-xs">
-									<br>
-									<br>
-								</div>
+							<div class="hidden-xs">
 								<br>
-						    	<span class="hidden-xs" style="font-size: 80px">興大無聲調</span>			    	
-							    <span class="visible-xs" style="font-size: 68px">興大</span>
-							    <span class="visible-xs" style="font-size: 68px">無聲調</span>
-							    <br>
-							    <div class="hidden-xs" style="font-size: 38px">
-							    	<span class="underline">台語拼音輸入法</span>
-							    </div>
-								<div class="visible-xs" style="font-size: 30px">
-							    <span>台語拼音輸入法</span>
-							  </div>
-							</p>
+								<br>
+							</div>
+							<br>
+				    	<span class="hidden-xs" style="font-size: 80px">興大無聲調</span>			    	
+					    <span class="visible-xs" style="font-size: 68px">興大</span>
+					    <span class="visible-xs" style="font-size: 68px">無聲調</span>
+					    <br>
+					    <div class="hidden-xs" style="font-size: 38px">
+					    	<span class="underline">台語拼音輸入法</span>
+					    </div>
+							<div class="visible-xs" style="font-size: 30px">
+						    <span>台語拼音輸入法</span>
+						  </div>
 							<div id="push" class="hidden-xs"></div>
 							<div id="push" class="hidden-xs"></div>
 							<div class="trigger"></div>
@@ -233,7 +231,7 @@
 											echo $string;
 											$name = preg_replace('/\s+/', '_', $name);
 											$control_btn = '<div class="ui buttons" style="font-size: 14px">';
-											$control_btn .= '<div class="ui black basic button">更新資料</div>';
+											//$control_btn .= '<div class="ui black basic button">更新資料</div>';
 											$control_btn .=	'<a href="./user/' . $name . '" class="ui black basic button">管理辭庫</a>';
 											$control_btn .= '</div>';
 											echo $control_btn;
@@ -268,7 +266,7 @@
 										<span style="font-size: 14px; color: #000">智能模式</span>
 									</div>												
 								</div>-->
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn">
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>
 								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat"></a>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2">		
@@ -403,16 +401,25 @@
 
 			<div class="section" id="section3">
 				<div class="container">
-					<div class="row">
+					<!--<div class="row" id="test_block">
 						<p>子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m ,n ,n ,g ,p ,q, r, s, t, x, z</p>
-
-					</div>
+					</div>-->
 					<div class="row">
-						<div class="col-xs-12 col-sm-4 col-md-4">
-					
+						<div class="panel panel-default">
+							<div class="table-responsive" style="width: 95%">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>子音</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+										</tr>
+									</thead>
+									<tbody id="json_table">
+									</tbody>
+								</table>
+							</div>
 						</div>
-						<div class="col-xs-12 col-sm-4 col-md-4"></div>
-						<div class="col-xs-12 col-sm-4 col-md-4"></div>
 					</div>
 				</div>
 			</div>
