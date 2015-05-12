@@ -19,13 +19,31 @@
 	var auto_end = 0;                                                   // 記錄自動選字的終點位置
 	var auto_letter = [];                                               // 陣列-記錄回傳的智慧選詞
 	var pinyin_record = [];                                             // 記錄輸入框中所有字詞，以物件格式記錄
-	/*  pinyin_record = [
-		pinyin: "",
-		word: "",
-		start_loc: 0,
-		end_loc: 0,
-		modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:無法修改)
-	];*/
+	/*  
+	pinyin_record = [
+		{
+			pinyin: "",
+			word: "",
+			start_loc: 0,
+			end_loc: 0,
+			modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:無法修改)
+		},
+		{
+			pinyin: "",
+			word: "",
+			start_loc: 0,
+			end_loc: 0,
+			modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:無法修改)
+		},
+		{
+			pinyin: "",
+			word: "",
+			start_loc: 0,
+			end_loc: 0,
+			modifiable: 0/1/2 (0:可修改，1:可在最前方修改，2:無法修改)
+		}
+	];
+	*/
 	var record_last_index = 0;
 	var auto_static_word = "";                                          // 記錄因超出三詞範圍，以及經由選定而無法再自動變動的字詞
 

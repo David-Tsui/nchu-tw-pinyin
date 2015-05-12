@@ -10,7 +10,6 @@
 		$key_super = $key . " %";
 
 		$string = $key;
-
 		$token = strtok($string," ");		// 把拼音用空白切開
 		$split_key = array();				// 宣告存各音節的陣列
 
@@ -27,7 +26,6 @@
 			$split_key[$counter] = $token;
 		}
 
-		
 		$Hplace = array();
 		$counter = 0;
 		for($i = 0; $i < count($split_key); $i++){
