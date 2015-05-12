@@ -4,6 +4,7 @@
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
+		$ori_key = $key;
 		//$key = "gun bba";
 		$mode = $_POST['MODE'];
 		//$mode = 0;
