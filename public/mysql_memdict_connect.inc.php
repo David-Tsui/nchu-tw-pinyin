@@ -1,7 +1,7 @@
 <?php
 	$dsn = 'mysql:host=localhost; dbname=pinyin-member-db; charset=utf8';
-	$user = 'st880221';
-	$password = 'david620';
+	//$user = 'st880221';
+	//$password = 'david620';
 	$user = 'root';
 	$password = 'speechlab723';
 
