@@ -7,8 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
-		<!--<link href="./css/bootstrap-modal-bs3patch.css" rel="stylesheet">
-		<link href="./css/bootstrap-modal.css" rel="stylesheet">-->
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
@@ -16,15 +14,7 @@
 		<link href="./css/theme-pink.css" rel="stylesheet" id="CSS2" disabled="disabled">
 		<link href="./css/theme-blue.css" rel="stylesheet" id="CSS3" disabled="disabled">
 		<link href="./css/theme-xmas.css" rel="stylesheet" id="CSS4" disabled="disabled">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-origin.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-blue.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-pink.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-xmas.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-origin-flat.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-blue-flat.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-pink-flat.1.4.0.css" rel="stylesheet">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-xmas-flat.1.4.0.css" rel="stylesheet">
-		<link href="./underlineJS/css/underline.css" rel="stylesheet">
+		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 
 		<style>
@@ -117,28 +107,6 @@
 	</head>
 
 	<body>
-		<div class="audio">
-		    <audio id="audio00" src="./underlineJS/audio/cello_00.mp3" preload="auto"></audio>
-		    <audio id="audio01" src="./underlineJS/audio/cello_01.mp3" preload="auto"></audio>
-		    <audio id="audio02" src="./underlineJS/audio/cello_02.mp3" preload="auto"></audio>
-		    <audio id="audio03" src="./underlineJS/audio/cello_03.mp3" preload="auto"></audio>
-		    <audio id="audio04" src="./underlineJS/audio/cello_04.mp3" preload="auto"></audio>
-		    <audio id="audio05" src="./underlineJS/audio/cello_05.mp3" preload="auto"></audio>
-		    <audio id="audio06" src="./underlineJS/audio/cello_06.mp3" preload="auto"></audio>
-		    <audio id="audio07" src="./underlineJS/audio/cello_07.mp3" preload="auto"></audio>
-		    <audio id="audio08" src="./underlineJS/audio/cello_08.mp3" preload="auto"></audio>
-		    <audio id="audio09" src="./underlineJS/audio/cello_09.mp3" preload="auto"></audio>
-		    <audio id="audio10" src="./underlineJS/audio/cello_10.mp3" preload="auto"></audio>
-		    <audio id="audio11" src="./underlineJS/audio/cello_11.mp3" preload="auto"></audio>
-		    <audio id="audio12" src="./underlineJS/audio/cello_12.mp3" preload="auto"></audio>
-		    <audio id="audio13" src="./underlineJS/audio/cello_13.mp3" preload="auto"></audio>
-		    <audio id="audio14" src="./underlineJS/audio/cello_14.mp3" preload="auto"></audio>
-		    <audio id="audio15" src="./underlineJS/audio/cello_15.mp3" preload="auto"></audio>
-		    <audio id="audio16" src="./underlineJS/audio/cello_16.mp3" preload="auto"></audio>
-		    <audio id="audio17" src="./underlineJS/audio/cello_17.mp3" preload="auto"></audio>
-		    <audio id="audio18" src="./underlineJS/audio/cello_18.mp3" preload="auto"></audio>
-		    <audio id="audio19" src="./underlineJS/audio/cello_19.mp3" preload="auto"></audio>
-		</div>
 		<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -152,38 +120,38 @@
 				</div>
 				<div id="navbarCollapse" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav" id="menu">
-                        <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
-                        @if (Auth::user())
-                        <?php 
-                    		$myname =  Auth::user()->name; 
-							$dbexp = "select `id` from `users` where `name` = '" . $myname . "'";
-							$result = DB::select($dbexp);
-							$myid = $result[0]->id;
-                    		$_SESSION['myid'] = $myid;
-                        ?>
-                            <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
-                        @else
-                        <?php
-                        	session_unset();
-                        	session_destroy();
-                        ?>
-                            <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
-                        @endif
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>        
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-                        <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-                        <li class="hidden-xs">&emsp;</li>                   
+            <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
+            @if (Auth::user())
+              <?php 
+          			$myname =  Auth::user()->name; 
+								$dbexp = "select `id` from `users` where `name` = '" . $myname . "'";
+								$result = DB::select($dbexp);
+								$myid = $result[0]->id;
+          			$_SESSION['myid'] = $myid;
+              ?>
+            <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
+            @else
+            <?php
+            	session_unset();
+            	session_destroy();
+            ?>
+            <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
+            @endif
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>        
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
+            <li class="hidden-xs">&emsp;</li>                   
 						<li data-menuanchor="pinyin_IME"><a href="#pinyin_IME" id="nav_input"><span class="glyphicon glyphicon-pencil"></span> 輸入頁面</a></li>
 						<li data-menuanchor="about"><a href="#about" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
 						<li data-menuanchor="tutorial"><a href="#tutorial" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
 						<li data-menuanchor="contact"><a href="#contact" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
-                    </ul>
+          </ul>
 				</div>
 			</div>
 		</nav>
@@ -205,39 +173,22 @@
 									<br>
 								</div>
 								<br>
-						    	<span class="hidden-xs underline" style="font-size: 80px">興大</span>
-						    	<span class="hidden-xs underline" style="font-size: 80px">無聲調</span>						    	
-							    <span class="visible-xs" style="font-size: 68px; margin-left: 69px; padding-right: 85px;">興大</span>
-							    <span class="visible-xs" style="font-size: 68px; margin-left: 34px; padding-right: 52px;">無聲調</span>
+						    	<span class="hidden-xs" style="font-size: 80px">興大無聲調</span>			    	
+							    <span class="visible-xs" style="font-size: 68px">興大</span>
+							    <span class="visible-xs" style="font-size: 68px">無聲調</span>
 							    <br>
 							    <div class="hidden-xs" style="font-size: 38px">
-							    	<span class="underline">台語</span>
-									<span class="underline">拼音</span>
-									<span class="underline">輸入法</span>
+							    	<span class="underline">台語拼音輸入法</span>
 							    </div>
-								<div class="visible-xs" style="font-size: 30px; margin-top: -12px">
-							    	<span>台語</span>
-									<span>拼音</span>
-									<span>輸入法</span>
-							    </div>
+								<div class="visible-xs" style="font-size: 30px">
+							    <span>台語拼音輸入法</span>
+							  </div>
 							</p>
 							<div id="push" class="hidden-xs"></div>
 							<div id="push" class="hidden-xs"></div>
 							<div class="trigger"></div>
 						</div>
-						<div class="col-xs-12 col-sm-3 col-md-3">
-							<!--<div class="jumbotron" id="public_message">
-								<h3>系統公告</h3>
-								<p style="text-align: right; font-size: 12px">4/15.2015</p>
-								<div style="text-align: left">
-									<div style="font-size: 14px">
-										<p>● 智能模式開發中!</p>
-										<p>● 手機介面請使用自選模式</p>
-										<p>● 會員、聯絡系統已上線!</p>
-									</div>
-								</div>										
-							</div>-->
-						</div>
+						<div class="col-xs-12 col-sm-3 col-md-3"></div>
 					</div>
 				</div>
 			</div>

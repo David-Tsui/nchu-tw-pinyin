@@ -1,6 +1,6 @@
 <?php
+	session_start();
 	if (isset($_POST['search_KEY']) && isset($_POST['MODE'])){
-		session_start();
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
