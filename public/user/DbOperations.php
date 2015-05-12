@@ -45,17 +45,17 @@
 
 	function GetArray ($name)
 	{
-		global $db;
+		global $memdb;
 		$retarr = array();
 		$i = 0;
-		$sql = "SELECT * FROM `" . $name . "`";
-		$stmt = $db->prepare($sql);
+		$sql = "SELECT * FROM `" . $name . "`" . "ORDER BY `id` ASC";
+		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
 		$stmt->setFetchMode(PDO::FETCH_NUM);
 		$row = $stmt->fetch();
 		do{
 	    	if ($row != ""){
-	    		$obj = (object) array('sound' => $row[0], 'characters' => $row[1]);
+	    		$obj = (object) array('sound' => $row[1], 'characters' => $row[2]);
 				array_push($retarr, $obj);
 	    	}
 			else
@@ -68,12 +68,12 @@
 
 	function SearchWordExist ($name, $tar)
 	{
-		global $db;
+		global $memdb;
 		$retarr = array();
 		$i = 0;
 		$sql = "SELECT * FROM `" . $name . "`" . "WHERE `sound` = '". $tar->sound . 
 			   "' AND `characters` = '" . $tar->characters . "'";
-		$stmt = $db->prepare($sql);
+		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
 		$stmt->setFetchMode(PDO::FETCH_NUM);
 		$row = $stmt->fetch();
@@ -92,34 +92,32 @@
 
 	function AddWord ($name, $tar)
 	{
-		global $db;
+		global $memdb;
 		$retarr = array();
-		$i = 0;
 		$sql = "INSERT INTO `" . $name . "`" . "(sound, characters)
 				VALUES ('" . $tar->sound . "'" . ",'" . $tar->characters . "')";
-		$stmt = $db->prepare($sql);
+		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
 	}
 
 	function DeleteAllWord ($name)
 	{
-		global $db;
+		global $memdb;
 		$retarr = array();
-		$i = 0;
 		$sql = "TRUNCATE TABLE `" . $name . "`";
-		$stmt = $db->prepare($sql);
+		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
 	}
 
 	function DeleteChosenWord ($name, $tararr)
 	{
-		global $db;
+		global $memdb;
 		for ($i=0; $i<count($tararr); $i++)
 		{
 			$sql = "DELETE FROM `" . $name . "`" . "WHERE `sound` = '". $tararr[$i]->sound . 
 			       "' AND `characters` = '" . $tararr[$i]->characters . "'";
 			//print_r($sql);
-			$stmt = $db->prepare($sql);
+			$stmt = $memdb->prepare($sql);
 			$stmt->execute();
 		}
 	}

@@ -12,7 +12,7 @@
 				`sound` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 				`characters` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;";
-		$stmt = $db->prepare($sql);
+		$stmt = $memdb->prepare($sql);
 		$stmt->execute();
 	}
 

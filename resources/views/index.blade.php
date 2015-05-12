@@ -112,6 +112,9 @@
 				margin-right: 8%;	
 			}
 		</style>
+		<?php
+			session_start();
+		?>
 	</head>
 
 	<body>
@@ -152,8 +155,19 @@
 					<ul class="nav navbar-nav" id="menu">
                         <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
                         @if (Auth::user())
+                        <?php 
+                    		$myname =  Auth::user()->name; 
+							$dbexp = "select `id` from `users` where `name` = '" . $myname . "'";
+							$result = DB::select($dbexp);
+							$myid = $result[0]->id;
+                    		$_SESSION['myid'] = $myid;
+                        ?>
                             <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
                         @else
+                        <?php
+                        	session_unset();
+                        	session_destroy();
+                        ?>
                             <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
                         @endif
                         <li class="hidden-xs">&emsp;&emsp;&emsp;</li>

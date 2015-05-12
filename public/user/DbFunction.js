@@ -103,11 +103,6 @@ function DeleteAllWord (member)
 	});
 }
 
-//先刪兩側再刪中間有BUG
-//ex. {1, 2, 3, 4, 5}
-//delete 2 , 4
-//delete 3
-//    {1,    3}
 function DeleteChosenWord (member)
 {
 	var index = 0;

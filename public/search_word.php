@@ -1,5 +1,6 @@
 <?php
 	if (isset($_POST['search_KEY']) && isset($_POST['MODE'])){
+		session_start();
 		include("mysql_connect.inc.php");
 
 		$key = trim($_POST['search_KEY']);
@@ -70,6 +71,31 @@
 		$arr = array();
 
 		if (strtoupper($key[0]) == ($key[0])){
+
+			//先查詢自建詞庫
+			$myid = getUserID();
+			//echo $myid . "abc\n";
+			if (!is_null($myid))
+			{
+				$mode = 6;
+				include ("mysql_memdict_connect.inc.php");
+				$sql = "SELECT DISTINCT `characters` FROM `" . $myid . "`" . 
+						" WHERE `sound` = '" . $key . "'" . 
+					    " ORDER BY char_length(`characters`) ASC";
+				$stmt = $memdb->prepare($sql);
+				$stmt->execute();
+				$stmt->setFetchMode(PDO::FETCH_NUM);
+				$i = 0;
+				$row = $stmt->fetch();
+			  	do{
+			    	if ($row != "")						
+						$arr[$i] = $row[0];
+					else
+						break;
+					$i++;
+			  	}while ($row = $stmt->fetch());
+			}
+
 			if (strtoupper($key) == ($key)){		// 全大寫->英文縮寫MODE=4
 				$key_super = $key . "%";
 				$mode = 4;
@@ -81,7 +107,8 @@
 				$stmt->bindParam(':key_super', $key_super);
 				$stmt->execute();
 				$stmt->setFetchMode(PDO::FETCH_NUM);
-				$i = 0;
+				//$i = 0;
+				$i = count($arr);
 				$row = $stmt->fetch();
 			  	do{
 			    	if ($row != "")						
@@ -139,7 +166,8 @@
 				$stmt->execute();
 				$stmt->setFetchMode(PDO::FETCH_NUM);
 
-				$i = 0;
+				//$i = 0;
+				$i = count($arr);
 				$row = $stmt->fetch();
 			  	do{
 			    	if ($row != "")						
@@ -159,7 +187,8 @@
 					$stmt->bindParam(':key',$key);
 					$stmt->execute();
 					$stmt->setFetchMode(PDO::FETCH_NUM);
-					$i = 0;
+					//$i = 0;
+					$i = count($arr);
 					$row = $stmt->fetch();
 				  	do{
 				    	if ($row != "")						
@@ -180,7 +209,9 @@
 						$stmt->setFetchMode(PDO::FETCH_NUM);
 						$row = $stmt->fetch();
 
-						$i = 1;
+						//$i = 1;
+						//$i = 0;
+						$i = count($arr)+1;
 						if ($row[0] == ""){
 						}
 						else{			
@@ -360,5 +391,19 @@
 		}
 		$syllable = $blanks + 1;
 		return $syllable;
+	}
+
+	function getUserID()
+	{
+		if (isset($_SESSION["myid"]))
+		{
+			$myid = $_SESSION["myid"];
+			return $myid;
+		}
+		else
+		{
+			$myid = NULL;
+			return $myid;
+		}
 	}
 ?>
