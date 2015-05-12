@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>興大無聲調台語拼音輸入法</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{{ asset('/ico/briefcase.ico') }}" rel="shortcut icon">
-        <link href="{{ asset('/jquery-ui-1.11.2/jquery-ui.css') }}" rel="stylesheet">
-        <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/theme-origin.css') }}" rel="stylesheet" id="CSS1" disabled="disabled">
-        <link href="{{ asset('/css/theme-pink.css') }}" rel="stylesheet" id="CSS2" disabled="disabled">
-        <link href="{{ asset('/css/theme-blue.css') }}" rel="stylesheet" id="CSS3" disabled="disabled">
-        <link href="{{ asset('/css/theme-xmas.css') }}" rel="stylesheet" id="CSS4" disabled="disabled">
-        <script src="{{ asset('/js/jquery-1.11.1.js') }}"></script>
-        <script>
-        	var style = ["origin","pink","blue","xmas"];
-        	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];    // navbar的元素
-        	$(document).ready(function(){
+  <head>
+    <title>興大無聲調台語拼音輸入法</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ asset('/ico/briefcase.ico') }}" rel="shortcut icon">
+    <link href="{{ asset('/jquery-ui-1.11.2/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/theme-origin.css') }}" rel="stylesheet" id="CSS1" disabled="disabled">
+    <link href="{{ asset('/css/theme-pink.css') }}" rel="stylesheet" id="CSS2" disabled="disabled">
+    <link href="{{ asset('/css/theme-blue.css') }}" rel="stylesheet" id="CSS3" disabled="disabled">
+    <link href="{{ asset('/css/theme-xmas.css') }}" rel="stylesheet" id="CSS4" disabled="disabled">
+    <script src="{{ asset('/js/jquery-1.11.1.js') }}"></script>
+    <script>
+    	var style = ["origin","pink","blue","xmas"];
+    	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];    // navbar的元素
+    	$(document).ready(function(){
 				var theme = get_theme();
 				change_theme(theme);
 				nav_assign_color(theme);
-                $("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
-                    source: '{{ asset("search_pinyin.php") }}'
-                }); 
-        	});      
-        	function get_theme(){
-        		var theme = "origin";
-                var valid_css_num = 0;
+        $("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
+          source: '{{ asset("search_pinyin.php") }}'
+        }); 
+    	});      
+      
+      function get_theme(){
+        var theme = "origin";
+        var valid_css_num = 0;
 
-	            if (typeof(Storage) != "undefined") {           				// 先從localStorage取theme資料
+	      if (typeof(Storage) != "undefined") {           				// 先從localStorage取theme資料
 					var data = localStorage.getItem("theme");
 					if (data != null){											// 如果storage中有資料
 						theme = data;											// 則更改主題，若無則為預設的origin
@@ -42,48 +43,48 @@
 						}
 					}
 				}
-        	}
+      }
 
-        	function change_theme(css_num){
-        		for(var i = 1; i <= style.length; i++){
-                    if (i == (css_num + 1))
-                        document.getElementById("CSS" + i).disabled = false;
-                    else
-                        document.getElementById("CSS" + i).disabled = true;
-                }
-        	}
+    	function change_theme(css_num){
+    		for(var i = 1; i <= style.length; i++){
+          if (i == (css_num + 1))
+            document.getElementById("CSS" + i).disabled = false;
+          else
+            document.getElementById("CSS" + i).disabled = true;
+        }
+    	}
 
-        	function nav_assign_color(theme){
-                if (theme == 0){
-                    nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
-                    var arr_len = nav_arr.length;
-                    for(var i = 0; i < arr_len; i++){
-                        $(nav_arr[i]).css('color',nav_color[i]);
-                        $(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
-                        (function(i){
-                            $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
-                        })(i);
-                    }
-                }
-                else if (theme == 1){
-                    nav_color = "#FFF";
-                    for(var i = 0; i < nav_arr.length; i++){
-                        $(nav_arr[i]).css('color',nav_color);
-                    }
-                }
-                else if (theme == 2){
-                    nav_color = "#FFF";
-                    for(var i = 0; i < nav_arr.length; i++){
-                        $(nav_arr[i]).css('color',nav_color);
-                    }
-                }
-                else if (theme == 3){
-                    nav_color = "#FFF";
-                    for(var i = 0; i < nav_arr.length; i++){
-                        $(nav_arr[i]).css('color',nav_color);
-                    }
-                } 
-            }
+      function nav_assign_color(theme){
+        if (theme == 0){
+          nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
+          var arr_len = nav_arr.length;
+          for(var i = 0; i < arr_len; i++){
+              $(nav_arr[i]).css('color',nav_color[i]);
+              $(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
+              (function(i){
+                  $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
+              })(i);
+          }
+        }
+        else if (theme == 1){
+          nav_color = "#FFF";
+          for(var i = 0; i < nav_arr.length; i++){
+              $(nav_arr[i]).css('color',nav_color);
+          }
+        }
+        else if (theme == 2){
+          nav_color = "#FFF";
+          for(var i = 0; i < nav_arr.length; i++){
+              $(nav_arr[i]).css('color',nav_color);
+          }
+        }
+        else if (theme == 3){
+          nav_color = "#FFF";
+          for(var i = 0; i < nav_arr.length; i++){
+              $(nav_arr[i]).css('color',nav_color);
+        }
+      } 
+    }
         </script>
 
         <style>

@@ -26,7 +26,6 @@
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-xmas-flat.1.4.0.css" rel="stylesheet">
 		<link href="./underlineJS/css/underline.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
-		<script src="https://code.createjs.com/soundjs-0.6.0.min.js"></script>
 
 		<style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
@@ -550,12 +549,6 @@
 		<script src="./js/buttons.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<!--<script src="./js/jsnow.js"></script>-->
-		<script src="./underlineJS/js/classie.js"></script>
-		<script src="./underlineJS/js/baseline-ratio.js"></script>
-		<script src="./underlineJS/js/underline.js"></script>
-		<script src="./underlineJS/js/guitar-string.js"></script>
-		<script src="./underlineJS/js/single-underline.js"></script>
-		<script src="./underlineJS/js/multiple-underline.js"></script>
 		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>
 			var switchTo5x=true;
