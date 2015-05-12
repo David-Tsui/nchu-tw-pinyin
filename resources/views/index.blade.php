@@ -19,8 +19,8 @@
 
 		<style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
-				min-height: 380px;
-				max-height: 380px;
+				min-height: 365px;
+				max-height: 365px;
 			}
 
 			.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
