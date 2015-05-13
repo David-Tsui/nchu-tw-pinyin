@@ -6,7 +6,7 @@
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
 	var click_count = 0;
 
-	var mode = 0;                                                       // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
+	var mode = 0;                     // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
 																		// 智能模式 0: 拼音模式; 1: 空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式
 
 	var search_key = "";                                                // 查詢中文字的英文拼音Key(自選及智能皆使用)
@@ -150,7 +150,7 @@
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			keyin = e.which;
-			console.log("keyin: " + keyin);
+			//console.log("keyin: " + keyin);
 			//if (e.ctrlKey) return false;                                // 暫時先擋住ctrl
 			forbid_mousemove = true;
 			if (keyin == 229){                                          // 擋住中文輸入法
@@ -725,7 +725,7 @@
 			}                                               
 		}).keyup(function(e){                                           // 接續的keyup事件，為了讓上下左右鍵有影響
 			keyin = e.which;
-			console.log("keyin: " + keyin);
+			//console.log("keyin: " + keyin);
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			if (sel_mode == 0){ 
@@ -834,6 +834,7 @@
 				$("#prompt_flat").val('沒有內容可複製!');
 				caption_effect();
 			}
+			$("#input").setCursorPosition(input_loc);
 		});
 
 		$("#cut").zclip({
@@ -843,12 +844,14 @@
 			var text = $("#input").html();
 			text = remove_tags(text);
 			if (text != ""){
-				$("#input").html("");
 				$("#prompt").val('已剪下到剪貼簿!');
 				$("#prompt_flat").val('已剪下到剪貼簿!');
 				input_word = "";
 				pinyin_record = [];
 				mode = 0;
+				input_loc = 0;
+				search_key = "";
+				$("#input").html("");
 				$("#show").html("");
 				$("#show_flat").html("");
 				caption_effect();   
@@ -858,6 +861,7 @@
 				$("#prompt_flat").val('沒有內容可剪下!');
 				caption_effect();       
 			}
+			$("#input").focus();
 		});
 						
 		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件  
@@ -2402,8 +2406,8 @@
 		var now_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 		var text = textbox.html();
 		text = remove_tags(text);
+		input_len = input_word.length;
 		var temp_key_len = text.length - input_len;
-		console.log("temp_key_len: " + temp_key_len);
 		
 		if (keyCode == 8){
 			if (search_key.length == 1 && (now_loc == input_loc)){          // 當拼音只有一個，且游標正好在其右方
@@ -2417,15 +2421,12 @@
 			}
 
 			if ((input_loc + search_key.length) == now_loc){                // 從當前拼音結尾往前刪除
-				console.log("A");
 				search_key = search_key.substr(0,temp_key_len);
 			}
 			else if ((input_loc + search_key.length) > now_loc){            // 從當前拼音非結尾處往前刪除
-				console.log("B");
 				search_key = text.substr(input_loc,temp_key_len);
 			}
 			else if (sel_mode == 0 && (now_loc < input_loc)){               // 拼音時，移動到左邊界並刪除中文字
-				console.log("C");
 				deleteWord(keyCode);
 			}
 		}
@@ -2823,19 +2824,20 @@
 		}
 		if (typeof(Storage) != "undefined"){                   
 			localStorage.setItem("theme", theme); 
-			var text = localStorage.getItem("text", text);
+			var text = localStorage.getItem("text", text);						// 先把在localStorage中的text抓出來
 			$(".jqte_" + theme + "_editor").html(text);
 			$(".jqte_" + theme + "_flat_editor").html(text);
-			var jqte_text = "";
-			$(".jqte_" + theme + "_editor").keyup(function(){
-				jqte_text = $(this).html();
-				localStorage.setItem("text", jqte_text); 
-			});
-			$(".jqte_" + theme + "_flat_editor").keyup(function(){
-				jqte_text = $(this).html();
-				localStorage.setItem("text", jqte_text); 
-			});
 		}
+
+		$(".jqte_" + theme + "_editor").change(function(){
+			var jqte_text = $(this).html();
+			localStorage.setItem("text", jqte_text); 
+		});
+		$(".jqte_" + theme + "_flat_editor").change(function(){
+			var jqte_text = $(this).html();
+			localStorage.setItem("text", jqte_text); 
+		});
+
 		for(var i = 1; i <= 4; i++){
 			if (i == css_num)
 				document.getElementById("CSS" + i).disabled = false;

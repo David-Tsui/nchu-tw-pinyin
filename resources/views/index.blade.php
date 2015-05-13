@@ -93,9 +93,9 @@
 			}
 
 			#mes_comment {
-				min-height: 100px; 
+				min-height: 120px; 
 				min-width: 100%; 
-				max-height: 100px;
+				max-height: 120px;
 				max-width: 100%;
 				border-radius: 5px;
 			}
@@ -224,7 +224,6 @@
 											echo $string;
 											$name = preg_replace('/\s+/', '_', $name);
 											$control_btn = '<div class="ui buttons" style="font-size: 14px">';
-											//$control_btn .= '<div class="ui black basic button">更新資料</div>';
 											$control_btn .=	'<a href="./user/' . $name . '" class="ui black basic button">管理辭庫</a>';
 											$control_btn .= '</div>';
 											echo $control_btn;
@@ -235,8 +234,7 @@
 										}
 									?>   
 								</p>
-								
-								<br><br>
+								<br>
 							</div>
 							<div class="ui icon input">
 								<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
@@ -315,18 +313,19 @@
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<br><br>
 								<div class="jumbotron" id="public_intro">
+									<h2 style="text-align: center; font-family: '微軟正黑體'">興大無聲調台語拼音輸入法</h2>
 									<div style="font-size: 16px">
-										<p style="line-height: 1.8;">
-											&emsp;&emsp;&nbsp;此網頁版輸入法是無需考慮聲調的多功能台語拼音輸入法。
-											主體為台語拼音，兼容縮寫、音首以及英文輸入，是個比想像中還要__的輸入法。
+										<p style="line-height: 1.8; margin-left: 20%">
+											<i class="green check circle icon"></i>無需考慮聲調
+											<br>
+											<i class="green check circle icon"></i>縮寫、音首以及英文多功能輸入
+											<br>
+											<i class="green check circle icon"></i>支援改字。
+											<br>
+											<i class="green check circle icon"></i>多種配色主題。
+											<br>
+											<i class="green check circle icon"></i>是個比想像中還要__的輸入法。
 										</p>
-										<p style="line-height: 1.8;">
-											本輸入法分為兩種模式 ── 「自選模式」及「智能模式」（尚未完成）
-											。前者類似常見的「ㄅ半輸入法」，後者則類似「新注音輸入法」，兩種模式皆支援改字。
-										</p>
-										<p style="line-height: 1.8;">
-											頁面主題有多種配色主題可更換，讓您可以在賞心悅目的色彩中進行打字，點擊兩側箭頭即可瀏覽主題。
-										</p>							
 									</div>						
 								</div>				
 							</div>
@@ -341,7 +340,7 @@
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/origin.jpg" alt="img not found!">
 								<div class="caption">
-									<h3>簡約黑白</h3>
+									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
 									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('origin')">套用</button></p>
 								</div>
 							</div>
@@ -355,7 +354,7 @@
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
-									<h3>甜蜜粉紅</h3>
+									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
 									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('pink')">套用</button></p>
 								</div>
 							</div>
@@ -369,7 +368,7 @@
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
-									<h3>飄逸水藍</h3>
+									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
 									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('blue')">套用</button></p>
 								</div>
 							</div>
@@ -383,7 +382,7 @@
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
-									<h3>耶誕佳節</h3>
+									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
 									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('xmas')">套用</button></p>
 								</div>
 							</div>
@@ -396,32 +395,30 @@
 				<div class="container">
 					<div class="row" id="test_block">
 						<div class="push"></div>
-						<h3>本輸入法所使用的台語子音共有20個，母音則有74個</h3>
-						<h3>子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m , n, ng, p, q, r, s, t, x, z</h3>
+							<h3 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h3>
+							<h3 style="font-family: '微軟正黑體'">子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m, n, ng, p, q, r, s, t, x, z</h3>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<br>
-							<div class="panel panel-default" style="max-width: 90%; margin: auto">
-								<div class="table-responsive">
-									<table class="table table-bordered" id="tutor_table" data-show-columns="true" data-toggle="table" data-height="450">
-										<thead>
-											<tr>
-												<th>子音</th>
-												<th>母音</th>
-												<th>範例字詞</th>
-												<th>母音</th>
-												<th>範例字詞</th>
-												<th>母音</th>
-												<th>範例字詞</th>
-												<th>母音</th>
-												<th>範例字詞</th>
-											</tr>						
-										</thead>
-										<tbody id="json_table">
-										</tbody>
-									</table>
-								</div>
+							<div class="panel panel-default" style="margin: auto">
+								<table class="table table-bordered" id="tutor_table" data-show-columns="true" data-toggle="table" data-height="300">
+									<thead>
+										<tr>
+											<th>子音</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+										</tr>						
+									</thead>
+									<tbody id="json_table">
+									</tbody>
+								</table>
 							</div>
 							<br><br><br>
 						</div>
@@ -442,28 +439,30 @@
 											<div class="field">
 												<label><i class="smile icon"></i>姓名</label>
 												<input type="text" class="form-control" name="mes_name" id="mes_name" onchange="CheckName()"
-												placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>">
+												placeholder="請輸入您的暱稱，方便我們回信，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->name; ?>" 
+												style="font-family: '微軟正黑體'">
 												<span id="name_check_mes"></span>
 											</div>
 											<div style="margin-top: 8px">
 												<div class="field">
 													<label><i class="mail icon"></i>電子郵件</label>
 													<input type="text" class="form-control" name="mes_email" id="mes_email" onchange="CheckEmail()"
-													placeholder="請輸入您的常用信箱，回信將會寄往該信箱，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->email; ?>">
+													placeholder="請輸入您的常用信箱，回信將會寄往該信箱，謝謝。" value="<?php if (Auth::user()) echo Auth::user()->email; ?>"
+													style="font-family: '微軟正黑體'">
 													<span id="email_check_mes"></span>
 												</div>
 											</div>
 											<div style="margin-top: 8px">
 												<div class="field">
 													<label><i class="glyphicon glyphicon-leaf"></i> 主旨</label>
-													<input type="text" class="form-control" name="mes_title" id="mes_title" onchange="CheckTitle()">
+													<input type="text" class="form-control" name="mes_title" id="mes_title" onchange="CheckTitle()" style="font-family: '微軟正黑體'">
 													<span id="title_check_mes"></span>
 												</div>
 											</div>
 											<div style="margin-top: 8px">
 												<div class="field">
 													<label><i class="glyphicon glyphicon-comment"></i> 內容</label>
-													<textarea id="mes_comment" name="mes_comment" aria-required="true" onchange="CheckComment()"></textarea>
+													<textarea id="mes_comment" name="mes_comment" aria-required="true" onchange="CheckComment()" style="font-family: '微軟正黑體'"></textarea>
 													<span id="comment_check_mes"></span>
 												</div>
 											</div>

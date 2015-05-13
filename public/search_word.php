@@ -238,8 +238,8 @@
 			$j = 0;
 			for($i = 0; $i < count($ans_key); $i++){
 				$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-						    WHERE `sound` = :key OR `sound` LIKE :key_super 
-				    	  ORDER BY char_length(`characters`) ASC, `score` DESC";
+								WHERE `sound` = :key OR `sound` LIKE :key_super 
+				    		ORDER BY char_length(`characters`) ASC, `score` DESC";
 				$temp_key = trim($ans_key[$i]);
 				$temp_key_super = $temp_key . " %";
 				$stmt = $db->prepare($sql);
@@ -248,20 +248,20 @@
 				$stmt->execute();
 				$stmt->setFetchMode(PDO::FETCH_NUM);
 				$row = $stmt->fetch();
-			  	do{
-			    	if ($row != "")						
-						$arr[$j] = $row[0];
-					else
-						break;
-					$j++;
-			  	}while ($row = $stmt->fetch());
+		  	do{
+		    	if ($row != "")						
+					$arr[$j] = $row[0];
+				else
+					break;
+				$j++;
+		  	}while ($row = $stmt->fetch());
 			}
 		}
 		else if ($mode == 1){	// 如果是智能模式，抓第一個字
-		    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
-		    		    WHERE `sound` = :key 
-		    		    ORDER BY char_length(`characters`) ASC, `score` DESC 
-		    		    LIMIT 0,1";
+	    $sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
+	    		    WHERE `sound` = :key 
+	    		    ORDER BY char_length(`characters`) ASC, `score` DESC 
+	    		    LIMIT 0,1";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':key',$key);
 			$stmt->execute();

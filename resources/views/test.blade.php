@@ -132,9 +132,9 @@
                 </div>
             </div>
         </nav>
-        <div id="push"></div>
-		<div id="push"></div>
-		<div id="push"></div>
+        <div class="push"></div>
+		<div class="push"></div>
+		<div class="push"></div>
 		
 		@yield('content')
 
