@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
-		<link href="./bootstrap-table/src/bootstrap-table.css" rel="stylesheet">
+		<link href="./bootstrap-table/src/bootstrap-table.css" rel="stylesheet" id="bootstrap_table">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
@@ -160,11 +160,7 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6" id="left" style="text-align: center">
-							<div class="hidden-xs">
-								<br>
-								<br>
-							</div>
-							<br>
+							<div class="push"></div>
 				    	<span class="hidden-xs" style="font-size: 80px">興大無聲調</span>			    	
 					    <span class="visible-xs" style="font-size: 68px">興大</span>
 					    <span class="visible-xs" style="font-size: 68px">無聲調</span>
@@ -175,8 +171,8 @@
 							<div class="visible-xs" style="font-size: 30px">
 						    <span>台語拼音輸入法</span>
 						  </div>
-							<div class="push" class="hidden-xs"></div>
-							<div class="push" class="hidden-xs"></div>
+							<div class="push hidden-xs"></div>
+							<div class="push hidden-xs"></div>
 							<div class="trigger"></div>
 						</div>
 						<div class="col-xs-12 col-sm-3 col-md-3"></div>
@@ -303,26 +299,20 @@
 				<div class="slide" data-anchor="slide1">
 					<div class="container">
 						<div class="row">
-							<!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs">
-								<div style="height: 400px; text-align: center">
-									<br>
-									<img src="./images/pinyin_panel.png" style="height: 100%" alt="">	
-								</div>														
-							</div>-->
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<br><br>
 								<div class="jumbotron" id="public_intro">
 									<h2 style="text-align: center; font-family: '微軟正黑體'">興大無聲調台語拼音輸入法</h2>
 									<div style="font-size: 16px">
-										<p style="line-height: 1.8; margin-left: 20%">
+										<p style="line-height: 1.8; margin-left: 15%">
 											<i class="green check circle icon"></i>無需考慮聲調
 											<br>
 											<i class="green check circle icon"></i>縮寫、音首以及英文多功能輸入
 											<br>
 											<i class="green check circle icon"></i>支援改字。
 											<br>
-											<i class="green check circle icon"></i>多種配色主題。
+											<i class="green check circle icon"></i>多種配色主題(。
 											<br>
 											<i class="green check circle icon"></i>是個比想像中還要__的輸入法。
 										</p>
@@ -395,14 +385,16 @@
 				<div class="container">
 					<div class="row" id="test_block">
 						<div class="push"></div>
+						<div class="col-xs-12">
 							<h3 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h3>
 							<h3 style="font-family: '微軟正黑體'">子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m, n, ng, p, q, r, s, t, x, z</h3>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<br>
 							<div class="panel panel-default" style="margin: auto">
-								<table class="table table-bordered" id="tutor_table" data-show-columns="true" data-toggle="table" data-height="300">
+								<table class="table table-bordered" id="tutor_table" data-toggle="table" data-show-columns="true" data-height="680">
 									<thead>
 										<tr>
 											<th>子音</th>
@@ -420,15 +412,17 @@
 									</tbody>
 								</table>
 							</div>
-							<br><br><br>
 						</div>
 					</div>
+					<div class="push"></div>
+					<div class="push"></div>
 				</div>
 			</div>
 
 			<div class="section" id="section4">
 				<div class="container">
 					<div class="row" style="margin-bottom: -12px">
+						<div class="push"></div>
 						<div class="col-xs-12 col-sm-3 col-md-3"></div>
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div id="message_board">
@@ -481,9 +475,10 @@
 					<div class="row">
 						<div class="push"></div>
 						<div class="push"></div>
+						<br>
+						<!--<div class="push"></div>-->
 					</div>
 				</div>	
-				
 				<div id="footer" style="text-align: center">
 					<p>
 						<span class='st_facebook_hcount' displayText='Facebook'></span>

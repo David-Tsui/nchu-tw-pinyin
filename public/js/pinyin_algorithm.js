@@ -1098,12 +1098,7 @@
 					else
 						var obj = new modify_record_obj(data[2][i],data[3][i - 1],data[3][i]);
 					mod_pinyin_record[i] = obj;
-				}   
-
-				console.log("修正模式的object↓↓ ")
-				for(var i = 0; i < mod_pinyin_record.length; i++)
-					console.log("第" + (i + 1) + "個拼音: " + mod_pinyin_record[i].pinyin + "，位置為" + mod_pinyin_record[i].start_index + "~" + 
-						mod_pinyin_record[i].end_index);	
+				}
 
 				if (totalpage == 1){
 					var temp_text = "";
@@ -3098,7 +3093,13 @@
 					var the_vowel = vowel_arr[j].sound;
 					var word_arr = vowel_arr[j].word;
 					var word_arr_len = word_arr.length;
-					exp += "<td>" + the_vowel + "</td>";
+					var the_sound = consonant.toUpperCase() + the_vowel.toUpperCase();
+					if (the_vowel == "－")
+						the_sound = consonant.toUpperCase();
+					console.log("the_sound: " + the_sound);
+					$('<audio id="sound_' + the_sound + '"><source src="./tutorial_sound/' + the_sound + '-MingShingYu-20060622.wav" type="audio/wav"></audio>').appendTo('body');
+					//the_sound = '\"' + the_sound + '\"';
+					exp += '<td>' + the_vowel + '<a href="javascript: play_sound(\'' + the_sound + '\');"><i class="large volume down icon" style="float: right"></i></a></td>';
 					exp += "<td>";
 					for(var k = 0; k < word_arr_len; k++){
 						if (k == (word_arr_len - 1))
@@ -3107,12 +3108,23 @@
 							exp += word_arr[k] + ", ";
 					}
 					exp += "</td>";
+
 				}
 				exp += "</tr>";
 				content += exp;
 			}
 			$("#json_table").html(content);
+			/*$("#tutor_table").attr({
+				"data-show-columns": true,
+				"data-toggle": "table",
+				"data-height": 300
+			});*/
 		});
+	}
+
+	function play_sound(sound){
+		console.log("sound: " + sound);
+		$("#sound_" + sound)[0].play();
 	}
 
 	function google(){
