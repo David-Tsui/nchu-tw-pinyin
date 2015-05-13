@@ -2845,7 +2845,7 @@
 	}
 
 	function nav_assign_color(theme){
-		var nav_color = ["#F87284","rgb(240, 160, 28)","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
+		var nav_color = ["rgb(240, 160, 28)","#F87284","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
 		if (theme == "origin"){
 			var arr_len = nav_arr.length;
 			static_color = "white";
@@ -3085,20 +3085,31 @@
 	function getTutorial(){
 		$.getJSON('tutorial.json',function(data){
 			var json_len = data.length;
-			console.log("json_len: " + json_len);
-			var html = "";
+			var content = "";
 			for(var i = 0; i < json_len; i++){
 				var consonant = data[i].consonant;
 				var vowel_arr = data[i].vowel;
 				var vowel_arr_len = vowel_arr.length;
-				var element = "<tr>";
+				var exp = "<tr>";
+				exp += "<td>" + consonant + "</td>";
 				for(var j = 0; j < vowel_arr_len; j++){
 					var the_vowel = vowel_arr[j].sound;
-					var words = vowel_arr[j].word;
-					
+					var word_arr = vowel_arr[j].word;
+					var word_arr_len = word_arr.length;
+					exp += "<td>" + the_vowel + "</td>";
+					exp += "<td>";
+					for(var k = 0; k < word_arr_len; k++){
+						if (k == (word_arr_len - 1))
+							exp += word_arr[k];
+						else
+							exp += word_arr[k] + ", ";
+					}
+					exp += "</td>";
 				}
-
+				exp += "</tr>";
+				content += exp;
 			}
+			$("#json_table").html(content);
 		});
 	}
 

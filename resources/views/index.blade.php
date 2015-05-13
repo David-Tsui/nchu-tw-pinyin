@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="./bootstrap-table/src/bootstrap-table.css" rel="stylesheet">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
@@ -119,8 +120,7 @@
 					<a class="navbar-brand visible-xs" id="prefix_title" href="#">興大無聲調台語輸入法</a>
 				</div>
 				<div id="navbarCollapse" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav" id="menu">
-            <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
+					<ul class="nav navbar-nav">
             @if (Auth::user())
               <?php 
           			$myname =  Auth::user()->name; 
@@ -137,16 +137,9 @@
             ?>
             <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
             @endif
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>        
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li>   
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-            <li class="hidden-xs">&emsp;&emsp;&emsp;</li> 
-            <li class="hidden-xs">&emsp;</li>                   
+          </ul>
+          <ul class="nav navbar-nav navbar-right" id="menu">        	      
+            <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
 						<li data-menuanchor="pinyin_IME"><a href="#pinyin_IME" id="nav_input"><span class="glyphicon glyphicon-pencil"></span> 輸入頁面</a></li>
 						<li data-menuanchor="about"><a href="#about" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
 						<li data-menuanchor="tutorial"><a href="#tutorial" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
@@ -182,8 +175,8 @@
 							<div class="visible-xs" style="font-size: 30px">
 						    <span>台語拼音輸入法</span>
 						  </div>
-							<div id="push" class="hidden-xs"></div>
-							<div id="push" class="hidden-xs"></div>
+							<div class="push" class="hidden-xs"></div>
+							<div class="push" class="hidden-xs"></div>
 							<div class="trigger"></div>
 						</div>
 						<div class="col-xs-12 col-sm-3 col-md-3"></div>
@@ -401,24 +394,36 @@
 
 			<div class="section" id="section3">
 				<div class="container">
-					<!--<div class="row" id="test_block">
-						<p>子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m ,n ,n ,g ,p ,q, r, s, t, x, z</p>
-					</div>-->
+					<div class="row" id="test_block">
+						<div class="push"></div>
+						<h3>本輸入法所使用的台語子音共有20個，母音則有74個</h3>
+						<h3>子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m , n, ng, p, q, r, s, t, x, z</h3>
+					</div>
 					<div class="row">
-						<div class="panel panel-default">
-							<div class="table-responsive" style="width: 95%">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>子音</th>
-											<th>母音</th>
-											<th>範例字詞</th>
-										</tr>
-									</thead>
-									<tbody id="json_table">
-									</tbody>
-								</table>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<br>
+							<div class="panel panel-default" style="max-width: 90%; margin: auto">
+								<div class="table-responsive">
+									<table class="table table-bordered" id="tutor_table" data-show-columns="true" data-toggle="table" data-height="450">
+										<thead>
+											<tr>
+												<th>子音</th>
+												<th>母音</th>
+												<th>範例字詞</th>
+												<th>母音</th>
+												<th>範例字詞</th>
+												<th>母音</th>
+												<th>範例字詞</th>
+												<th>母音</th>
+												<th>範例字詞</th>
+											</tr>						
+										</thead>
+										<tbody id="json_table">
+										</tbody>
+									</table>
+								</div>
 							</div>
+							<br><br><br>
 						</div>
 					</div>
 				</div>
@@ -475,8 +480,8 @@
 						<div class="col-xs-12 col-sm-3 col-md-3"></div>
 					</div>
 					<div class="row">
-						<div id="push"></div>
-						<div id="push"></div>
+						<div class="push"></div>
+						<div class="push"></div>
 					</div>
 				</div>	
 				
@@ -507,6 +512,8 @@
 		<script src="./js/buttons.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
+		<script src="./bootstrap-table/src/bootstrap-table.js"></script>
+		<script src="./bootstrap-table/src/locale/bootstrap-table-zh-TW.js"></script>
 		<!--<script src="./js/jsnow.js"></script>-->
 		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>
