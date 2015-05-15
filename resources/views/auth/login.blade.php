@@ -3,7 +3,8 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 			<div class="panel panel-default" style="background-color: rgba(255, 255, 255, 0.76)">
 				<div class="panel-heading" style="background-color: rgba(231, 231, 231, 0.5)">登入</div>
 				<div class="panel-body">
@@ -59,6 +60,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-2"></div>
 	</div>
 </div>
 @endsection

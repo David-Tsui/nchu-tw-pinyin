@@ -1,11 +1,15 @@
-@extends('app')
+@extends('test')
 
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<div class="push"></div>
+			<br>
+			<br>
 			<div class="panel panel-default">
-				<div class="panel-heading">Reset Password</div>
+				<div class="panel-heading" style="font-size: 18px">重新設定您的密碼</div>
 				<div class="panel-body">
 					@if (session('status'))
 						<div class="alert alert-success">
@@ -23,28 +27,27 @@
 							</ul>
 						</div>
 					@endif
-
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
+						<div style="text-align: center">
+							<p style="margin: auto; font-size: 16px">請填入申請帳號時用的E-mail，新密碼將會送到您的信箱</p>
+							<br>
 						</div>
-
 						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Send Password Reset Link
-								</button>
+							<div class="col-md-3"></div>
+							<div class="col-md-6" style="text-align: center">
+								<label class="control-label" style="float: left;">E-Mail 地址</label>
+								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<br>
+								<button type="submit" class="btn btn-primary" style="margin: auto">發送</button>
 							</div>
+							<div class="col-md-3"></div>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+		<div class="col-md-3"></div>
 	</div>
 </div>
 @endsection

@@ -3088,7 +3088,7 @@
 				var vowel_arr = data[i].vowel;
 				var vowel_arr_len = vowel_arr.length;
 				var exp = "<tr>";
-				exp += "<td>" + consonant + "</td>";
+				exp += '<td style="color: #FD529A; font-weight: bold">' + consonant + '<i class="arrow right icon" style="float: right"></i></td>';
 				for(var j = 0; j < vowel_arr_len; j++){
 					var the_vowel = vowel_arr[j].sound;
 					var word_arr = vowel_arr[j].word;
@@ -3096,9 +3096,7 @@
 					var the_sound = consonant.toUpperCase() + the_vowel.toUpperCase();
 					if (the_vowel == "－")
 						the_sound = consonant.toUpperCase();
-					console.log("the_sound: " + the_sound);
 					$('<audio id="sound_' + the_sound + '"><source src="./tutorial_sound/' + the_sound + '-MingShingYu-20060622.wav" type="audio/wav"></audio>').appendTo('body');
-					//the_sound = '\"' + the_sound + '\"';
 					exp += '<td>' + the_vowel + '<a href="javascript: play_sound(\'' + the_sound + '\');"><i class="large volume down icon" style="float: right"></i></a></td>';
 					exp += "<td>";
 					for(var k = 0; k < word_arr_len; k++){
@@ -3113,17 +3111,11 @@
 				exp += "</tr>";
 				content += exp;
 			}
-			$("#json_table").html(content);
-			/*$("#tutor_table").attr({
-				"data-show-columns": true,
-				"data-toggle": "table",
-				"data-height": 300
-			});*/
+			$("#json_table, #json_table_flat").html(content);
 		});
 	}
 
 	function play_sound(sound){
-		console.log("sound: " + sound);
 		$("#sound_" + sound)[0].play();
 	}
 
@@ -3160,9 +3152,9 @@
 			anchors:['home', 'pinyin_IME', 'about', 'tutorial', 'contact'],
 			menu: '#menu',
 			keyboardScrolling: false,
-			navigation: true,
-			navigationPosition: 'right',
-			navigationTooltips: ['HOME','輸入頁面','關於輸入法','拼音教學','聯絡我們'],
+			//navigation: true,
+			//navigationPosition: 'right',
+			//navigationTooltips: ['HOME','輸入頁面','關於輸入法','拼音教學','聯絡我們'],
 			slidesNavigation: true,
 			scrollOverflow: true,
 			css3: true

@@ -82,65 +82,51 @@
           nav_color = "#FFF";
           for(var i = 0; i < nav_arr.length; i++){
               $(nav_arr[i]).css('color',nav_color);
-        }
-      } 
-    }
-        </script>
-
-        <style>
-			/*#push {
-				height: 40px;
-			}
-			
-			body {
-				background: url("{{ url('/css/origin_back.jpg')}} ") no-repeat center center fixed;
-				-webkit-background-size: cover;
-			  	-moz-background-size: cover;
-			  	-o-background-size: cover;
-			 	background-size: cover;
-				font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-			}*/
-        </style>
+          }
+        } 
+      }
+    </script>
 	</head>
 	<body>
 		<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                        <span class="sr-only"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand visible-xs" id="prefix_title" href="#">興大無聲調台語輸入法</a>
-                </div>
-                <div id="navbarCollapse" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                      @if (Auth::user())
-                        <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
-                      @else
-                        <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
-                      @endif
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right" id="menu">  
-                      <li data-menuanchor="home"><a href="#home" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
-                      <li data-menuanchor="pinyin_IME"><a href="{{ url('/#pinyin_IME') }}" id="nav_input"><span class="glyphicon glyphicon-pencil"></span> 輸入頁面</a></li>
-                      <li data-menuanchor="about"><a href="{{ url('/#about') }}" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
-                      <li data-menuanchor="tutorial"><a href="{{ url('/#tutorial') }}" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
-                      <li data-menuanchor="contact"><a href="{{ url('/#contact') }}" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="push"></div>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand visible-xs" id="prefix_title" href="#">興大無聲調台語輸入法</a>
+        </div>
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            @if (Auth::user())
+              <li><a href="{{ url('/auth/logout') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登出</a></li>
+            @else
+              <li><a href="{{ url('/auth/login') }}" id="nav_log"><span class="glyphicon glyphicon-user"></span> 會員登入/註冊</a></li>                 
+            @endif
+          </ul>
+          <ul class="nav navbar-nav navbar-right" id="menu">  
+            <li data-menuanchor="home"><a href="{{ url('/#home') }}" id="nav_home"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
+            <li data-menuanchor="pinyin_IME"><a href="{{ url('/#pinyin_IME') }}" id="nav_input"><span class="glyphicon glyphicon-pencil"></span> 輸入頁面</a></li>
+            <li data-menuanchor="about"><a href="{{ url('/#about') }}" id="nav_about"><span class="glyphicon glyphicon-info-sign"></span> 關於輸入法</a></li>
+            <li data-menuanchor="tutorial"><a href="{{ url('/#tutorial') }}" id="nav_tutorial"><span class="glyphicon glyphicon-star"></span> 拼音教學</a></li>
+            <li data-menuanchor="contact"><a href="{{ url('/#contact') }}" id="nav_contact"><span class="glyphicon glyphicon-envelope"></span> 聯絡我們</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 		<div class="push"></div>
 		<div class="push"></div>
+    <div class="push"></div>
+    <br>
 		
 		@yield('content')
 
 		<!-- Scripts -->
 		<script src="{{ asset('/jquery-ui-1.11.2/jquery-ui.js') }}"></script>
-        <script src="{{ asset('/bootstrap/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('/semantic/semantic.js') }}"></script>
+    <script src="{{ asset('/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('/semantic/semantic.js') }}"></script>
 	</body>
 </html>

@@ -8,6 +8,8 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="./pace/pace.js"></script>
+  	<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
 		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
 		<link href="./bootstrap-table/src/bootstrap-table.css" rel="stylesheet" id="bootstrap_table">
@@ -103,6 +105,10 @@
 			.myForm_body {
 				margin-left: 8%;
 				margin-right: 8%;	
+			}
+
+			tr, td {
+				min-width: 100px;
 			}
 		</style>
 	</head>
@@ -310,11 +316,15 @@
 											<br>
 											<i class="green check circle icon"></i>縮寫、音首以及英文多功能輸入
 											<br>
-											<i class="green check circle icon"></i>支援改字。
+											&emsp;（以大寫英文字啟用）
 											<br>
-											<i class="green check circle icon"></i>多種配色主題(。
+											<i class="green check circle icon"></i>支援改字
 											<br>
-											<i class="green check circle icon"></i>是個比想像中還要__的輸入法。
+											<i class="green check circle icon"></i>多種配色主題
+											<br>
+											&emsp;(點選左右箭頭即可瀏覽主題）
+											<br>
+											<i class="green check circle icon"></i>是個比想像中還要__的輸入法
 										</p>
 									</div>						
 								</div>				
@@ -388,12 +398,13 @@
 						<div class="col-xs-12">
 							<h3 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h3>
 							<h3 style="font-family: '微軟正黑體'">子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m, n, ng, p, q, r, s, t, x, z</h3>
+							<br>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<br>
-							<div class="panel panel-default" style="margin: auto">
+							<div class="panel panel-default hidden-xs" style="margin: auto">
 								<table class="table table-bordered" id="tutor_table" data-toggle="table" data-show-columns="true" data-height="680">
 									<thead>
 										<tr>
@@ -409,6 +420,25 @@
 										</tr>						
 									</thead>
 									<tbody id="json_table">
+									</tbody>
+								</table>
+							</div>
+							<div class="panel panel-default visible-xs" style="width: 100%; height: 800px; overflow: scroll">
+								<table class="table table-bordered" id="tutor_table_flat">
+									<thead>
+										<tr>
+											<th>子音</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+											<th>母音</th>
+											<th>範例字詞</th>
+										</tr>						
+									</thead>
+									<tbody id="json_table_flat">
 									</tbody>
 								</table>
 							</div>
