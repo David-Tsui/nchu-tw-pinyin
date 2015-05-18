@@ -738,7 +738,7 @@
 				if ((keyin == 37 || keyin == 39) && (mode == 0 || mode == 2 ))       // 非拼音時，左右鍵將會調整輸入位置
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			}
-			push_undo_record();
+			//push_undo_record();
 		}).on('input',function(e){                                  // 同時發生的事件，只控制輸入進textbox的按鍵          
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat"); 
@@ -749,7 +749,7 @@
 					getKey(keyin);
 					var text = textbox.html();
 					input_copy = remove_tags(text);
-					push_undo_record();
+					//push_undo_record();
 				}
 			}
 			/*************************************************智能模式***********************************************/
@@ -759,7 +759,7 @@
 					getKey(keyin);
 					var text = textbox.html();
 					input_copy = remove_tags(text);
-					push_undo_record();
+					//push_undo_record();
 				}
 			}
 			
@@ -775,14 +775,14 @@
 					if (mode == 1 || mode == 2 || mode == 3){
 						//push_before_selected(); 
 						setWord();
-						push_undo_record();                       
+						//push_undo_record();                       
 						textbox.setCursorPosition(input_loc);                          
 						return;
 					}
 				}
 				if (isNumber(keyin)){
 					setWord();
-					push_undo_record();
+					//push_undo_record();
 					textbox.setCursorPosition(input_loc);       
 					thispage = 1;                           // 歸零
 					totalpage = 1;                          // 歸零
@@ -814,8 +814,15 @@
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑與輸入法相關↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-		$("#undo").click(function(){
-			get_record();           
+		$("#clear").click(function(){
+			$("#input").html("");
+			pinyin_record = [];
+			mode = 0;
+			input_word = "";
+			input_loc = 0;   
+			$("#prompt").val('輸入框已清空!');
+			$("#prompt_flat").val('輸入框已清空!');
+			caption_effect();
 		});
 
 		$("#copy").zclip({
@@ -880,13 +887,13 @@
 					clearInterval(pause1);
 					var pause2 = setInterval(function(){
 						$("#input").popup('hide');
-						$("#select_mode").popup({
-							content: '這是選擇不同輸入模式的滑動選單',
+						$("#google_btn").popup({
+							content: '這是用來將所打字詞進行Google搜尋的按鈕',
 							position: 'left center'
 						}).popup('show');
 						clearInterval(pause2);
 						var pause3 = setInterval(function(){
-							$("#select_mode").popup('hide');
+							$("#google_btn").popup('hide');
 							$("#prompt").popup({
 								content: '這是簡易提示欄，成功或失敗操作時會有提示',
 								position: 'left center'
@@ -901,13 +908,13 @@
 								clearInterval(pause4);
 								var pause5 = setInterval(function(){
 									$("#copy").popup('hide');
-									$("#undo").popup({
-										content: '這是復原按鈕，按下後將還原至上一步',
+									$("#clear").popup({
+										content: '這是清除按鈕，按下後將把輸入框清空',
 										position: 'bottom center'
 									}).popup('show');
 									clearInterval(pause5);
 									var pause6 = setInterval(function(){
-										$("#undo").popup('hide');
+										$("#clear").popup('hide');
 										$("#cut").popup({
 											content: '這是剪下按鈕，將輸入的文字剪下到剪貼簿',
 											position: 'right center'
@@ -961,37 +968,44 @@
 					clearInterval(pause1);
 					var pause2 = setInterval(function(){
 						$("#input").popup('hide');
-						$("#prompt_flat").popup({
-							content: '這是簡易提示欄，成功或失敗操作時會有提示',
-							position: 'right center'
+						$("#google_btn").popup({
+							content: '這是用來將所打字詞進行Google搜尋的按鈕',
+							position: 'left center'
 						}).popup('show');
 						clearInterval(pause2);
 						var pause3 = setInterval(function(){
-							$("#prompt_flat").popup('hide');
-							$("#show_flat").popup({
-								content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
-								position: 'top center'
+							$("#prompt_flat").popup({
+								content: '這是簡易提示欄，成功或失敗操作時會有提示',
+								position: 'right center'
 							}).popup('show');
-							clearInterval(pause6);
+							clearInterval(pause3);
 							var pause4 = setInterval(function(){
-								$("#show_flat").popup('hide');
-								customJqte_flat.popup({
-									content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
-									position: 'top center',
-								}).popup('show');  
+								$("#prompt_flat").popup('hide');
+								$("#show_flat").popup({
+									content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
+									position: 'top center'
+								}).popup('show');
 								clearInterval(pause4);
 								var pause5 = setInterval(function(){
-									customJqte_flat.popup('hide');
-									$("#search_pinyin").popup({
-										content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
-										position: 'right center'
-									}).popup('show');          	                                               
+									$("#show_flat").popup('hide');
+									customJqte_flat.popup({
+										content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
+										position: 'top center',
+									}).popup('show');  
 									clearInterval(pause5);
 									var pause6 = setInterval(function(){
-										$("#search_pinyin").popup('hide');
-										generate_prompt_btn();
-										$("#input").focus();											
+										customJqte_flat.popup('hide');
+										$("#search_pinyin").popup({
+											content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+											position: 'right center'
+										}).popup('show');          	                                               
 										clearInterval(pause6);
+										var pause7 = setInterval(function(){
+											$("#search_pinyin").popup('hide');
+											generate_prompt_btn();
+											$("#input").focus();											
+											clearInterval(pause7);
+										},3000);
 									},3000);
 								},3000);
 							},3000);
@@ -1358,7 +1372,7 @@
 				try{
 					temp_loc = pinyin_record[index].start_loc;
 				}
-				catch(err){                                     	// 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
+				catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
 					temp_loc = pinyin_record[index - 1].end_loc;
 				}
 				var start_loc = temp_loc;
@@ -1399,16 +1413,14 @@
 						catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
 							temp_loc = pinyin_record[index - 1].end_loc;
 						}
-
 						var temp_index = index;
 						var start_loc = 0;
 						var end_loc = 0;
 						if (key_len > word_num){
 							var word_piece = word;
-							start_loc = pinyin_record[index - 1].end_loc;
+							if (index > 0)
+								start_loc = pinyin_record[index - 1].end_loc;
 							end_loc = start_loc + word_num;
-							console.log("start_loc: " + start_loc);
-							console.log("end_loc: " + end_loc);
 							obj = new pinyin_obj("",word_piece,start_loc,end_loc,2);
 							pinyin_objs.push(obj);                      // 插入到物件陣列裡
 						}
@@ -1509,8 +1521,6 @@
 	}
 
 	function modify_obj_loc(index,all_del,after_flag){      // 刪字，補字時會修正各pinyin_obj的首尾位置
-		console.log("從" + index + "開始修正");
-		//console.log("after_flag: " + after_flag);
 		var temp_index = index;
 		if (all_del == 0){                                  // 如果字區內還有字
 			for(var i = 0; i < pinyin_record.length; i++){
@@ -1845,9 +1855,9 @@
 		var text = textbox.html();
 		text = remove_tags(text);             
 
-		if (keyCode == 8){                                                  // backspace鍵刪除
-			if (mode == 0 && search_key == ""){                             // 單純選字成功後的階段
-				if (tow_check == false){                                    // 如果是一字一字刪除
+		if (keyCode == 8){                                            // backspace鍵刪除
+			if (mode == 0 && search_key == ""){                         // 單純選字成功後的階段
+				if (tow_check == false){                                  // 如果是一字一字刪除
 					var text = textbox.html();
 					var temp_input_len = input_len;
 					text = remove_tags(text);
@@ -2681,7 +2691,7 @@
 		return false;
 	}
 				 
-	function make_undo_record(index,record,mode,word,loc){       // undo_record 物件的建構子
+	/*function make_undo_record(index,record,mode,word,loc){       // undo_record 物件的建構子
 		this.index = index;
 		this.record = record;
 		this.mode = mode;
@@ -2710,6 +2720,14 @@
 			input_word = undo_record.word;
 			pinyin_record = undo_record.record;
 			var text = "";
+			console.log(
+				"undo_record: " + 
+				"\nindex: " + undo_record.index +
+				"\nrecord: " + undo_record.record +
+				"\nmode: " + undo_record.mode +
+				"\nword: " + undo_record.word +
+				"\nloc: " + undo_record.loc
+			);
 			for(var i = 0; i < pinyin_record.length; i++){
 				if (pinyin_record[i].modifiable == 2)
 					text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
@@ -2726,7 +2744,7 @@
 			prompt_flat_txtbox.val("已達復原步驟上限!");
 			caption_effect();
 		}
-	}
+	}*/
 	/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 	/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑與輸入法相關↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 	/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
@@ -2925,8 +2943,8 @@
 						position: 'left center'
 					}).popup('hide');
 											
-					$("#undo").popup({
-						content: '這是復原按鈕，按下後將還原至上一步',
+					$("#clear").popup({
+						content: '這是清除按鈕，按下後將把輸入框清空',
 						position: 'bottom center'
 					}).popup('hide');
 												
@@ -2991,7 +3009,7 @@
 			$("#select_mode").popup('hide');
 			$("#prompt, #prompt_flat").popup('hide');
 			$("#copy").popup('hide');
-			$("#undo").popup('hide');
+			$("#clear").popup('hide');
 			$("#cut").popup('hide');
 			$("#show, #show_flat").popup('hide');
 			customJqte.popup('hide');
@@ -3003,7 +3021,7 @@
 				$("#select_mode").popup('destroy');
 				$("#prompt, #prompt_flat").popup('destroy');
 				$("#copy").popup('destroy');
-				$("#undo").popup('destroy');
+				$("#clear").popup('destroy');
 				$("#cut").popup('destroy');
 				$("#show, #show_flat").popup('destroy');
 				customJqte.popup('destroy');
@@ -3017,7 +3035,7 @@
 	}
 
 	function ispopup_hidden(){                                         // 判斷畫面上是否還有存在的popup
-		var pop_arr = ["#input","#select_mode","#prompt","#copy","#undo","#cut","#show","#search_pinyin"];
+		var pop_arr = ["#input","#select_mode","#prompt","#copy","#clear","#cut","#show","#search_pinyin"];
 		var check = false;
 		var temp = $("#input").popup('is hidden');
 		for(var i = 0; i < pop_arr.length; i++){

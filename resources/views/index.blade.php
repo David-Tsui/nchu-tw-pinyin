@@ -22,6 +22,12 @@
 		<link href="./css/theme-xmas.css" rel="stylesheet" id="CSS4" disabled="disabled">
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 		<style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
@@ -259,8 +265,8 @@
 										<span style="font-size: 14px; color: #000">智能模式</span>
 									</div>												
 								</div>-->
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat"></a>
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn" data-variation="large"></a>
+								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat" data-variation="small"></a>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2">		
 								<!--<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>-->
@@ -272,13 +278,13 @@
 							</div>
 							<div class="buttons hidden-xs" id="middle_btn" style="margin-top: 5px;">
 								<div class="circular ui icon button" id="copy" data-variation="large" style="width: 65px; height: 35px; background-color: #7DFD8C">
-									<i class="large copy icon" style="color: #000; margin-top: -2px"></i>
+									<i class="large copy icon" style="color: #000; margin-top: -3px"></i>
 								</div>							
-								<div class="circular ui icon button" id="undo" data-variation="large" style="width: 65px; height: 35px; background-color: #97F0FF">
-									<i class="large undo icon" style="color: #000; margin-top: -2px"></i>
+								<div class="circular ui icon button" id="clear" data-variation="large" style="width: 65px; height: 35px; background-color: #97F0FF">
+									<i class="large remove icon" style="color: #000; margin-top: -4px"></i>
 								</div>
 								<div class="circular ui icon button" id="cut" data-variation="large" style="width: 65px; height: 35px; background-color: #FCF783">
-									<i class="large cut icon" style="color: #000; margin-top: -3px"></i>
+									<i class="large cut icon" style="color: #000; margin-top: -4px"></i>
 								</div>
 							</div>
 							<div class="field hidden-xs">
