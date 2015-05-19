@@ -542,8 +542,8 @@
 		<script src="./js/buttons.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
-		<script src="./bootstrap-table/src/bootstrap-table.js"></script>
-		<script src="./bootstrap-table/src/locale/bootstrap-table-zh-TW.js"></script>
+		<!--<script src="./bootstrap-table/src/bootstrap-table.js"></script>
+		<script src="./bootstrap-table/src/locale/bootstrap-table-zh-TW.js"></script>-->
 		<!--<script src="./js/jsnow.js"></script>-->
 		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>
