@@ -169,7 +169,7 @@
 			}                           
 
 			if (first_input_flag == true){
-				push_undo_record();
+				//push_undo_record();
 				first_input_flag = false;
 			}   
 						 
@@ -816,6 +816,7 @@
 		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		$("#clear").click(function(){
 			$("#input").html("");
+			$("#input").focus();
 			pinyin_record = [];
 			mode = 0;
 			input_word = "";
@@ -1846,7 +1847,7 @@
 				return;
 			}
 		}
-		push_undo_record();
+		//push_undo_record();
 	}     
 
 	function deleteWord(keyCode){                                           // 處理選字後的刪除事件，不包含search_key的增減
@@ -2072,7 +2073,7 @@
 			}   
 			return;
 		}
-		push_undo_record();
+		//push_undo_record();
 	}       
 
 	function pinyin_obj(pinyin,word,start_loc,end_loc,modify_flag){
