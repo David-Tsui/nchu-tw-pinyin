@@ -12,7 +12,6 @@
   	<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
 		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
-		<link href="./bootstrap-table/src/bootstrap-table.css" rel="stylesheet" id="bootstrap_table">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">

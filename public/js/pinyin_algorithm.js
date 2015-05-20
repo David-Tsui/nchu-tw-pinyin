@@ -4,6 +4,7 @@
 	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
 	var customJqte = "";                                                                    // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
+  var now_theme = "origin";
 	var click_count = 0;
 
 	var mode = 0;                     // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
@@ -835,6 +836,9 @@
 			if (text != ""){
 				$("#prompt").val('已複製到剪貼簿!');
 				$("#prompt_flat").val('已複製到剪貼簿!');
+				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+				console.log("text: " + jqte_text);
+				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
 				caption_effect();
 			}
 			else{
@@ -862,6 +866,8 @@
 				$("#input").html("");
 				$("#show").html("");
 				$("#show_flat").html("");
+				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
 				caption_effect();   
 			}
 			else{
@@ -2895,7 +2901,7 @@
 			}
 		}
 		else if (theme == "xmas"){
-			color = "#FFF";
+			static_color = "#FFF";
 			for(var i = 0; i < nav_arr.length; i++){
 				$(nav_arr[i]).css('color',static_color);
 				(function(i){
@@ -3190,33 +3196,32 @@
 		});                         
 
 		/*********************************設定主題背景相關********************************/
-		var theme = "origin";
 		var valid_css_num = 0;
 		var style = ["origin","pink","blue","xmas"];
 		var text = "";
 		if (typeof(Storage) != "undefined") {                           // 先從localStorage取theme資料
 			var data = localStorage.getItem("theme");
 			text = localStorage.getItem("text");
-			if (data != null){                                          // 如果storage中有資料
-				theme = data;                                           // 則更改主題，若無則為預設的origin
+			if (data != null){                                            // 如果storage中有資料
+				now_theme = data;                                           // 則更改主題，若無則為預設的origin
 				for(var i = 0; i < style.length; i++){
-					if (theme == style[i]){
+					if (now_theme == style[i]){
 						valid_css_num = i;
 						break;
 					}
 				}
 			}
 		}
-		var initial_style = "jqte_" + theme;
+		var initial_style = "jqte_" + now_theme;
 		var flat_initial_style = initial_style + "_flat";
 		$("#jqte").jqte({css: initial_style});
 		$("#jqte_flat").jqte({css: flat_initial_style});
-		$(".jqte_" + theme + "_editor").html(text);
-		$(".jqte_" + theme + "_flat_editor").html(text);
+		$(".jqte_" + now_theme + "_editor").html(text);
+		$(".jqte_" + now_theme + "_flat_editor").html(text);
 
 		customJqte = $("." + initial_style);
 		customJqte_flat = $("." + flat_initial_style);   
-		change_theme(theme);
+		change_theme(now_theme);
 		/*********************************設定主題背景相關********************************/  
 		getTutorial();		// 產生教學頁面
 	}
