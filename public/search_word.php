@@ -95,7 +95,7 @@
 					$i++;
 		  	}while ($row = $stmt->fetch());
 
-		  	if (strlen($key) == 1){
+		  	if (strlen($key) == 1){			// 再來音首
 		  		$mode = 3;
 					$sql = "SELECT DISTINCT `characters` FROM `pinyin_formal` 
 						      WHERE `abbr` = :key
@@ -114,7 +114,7 @@
 						$i++;
 			  	}while ($row = $stmt->fetch());
 
-			  	$key = strtolower($key);
+			  	$key = strtolower($key);	// 最後英文
 					$mode = 5;
 					$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
 						      WHERE `eng` = :key
@@ -153,8 +153,7 @@
 					$i++;
 		  	}while ($row = $stmt->fetch());
 
-			  // 查英文字典 mode=5
-				$key = strtolower($key);
+				$key = strtolower($key); // 找英文字典
 				$mode = 5;
 				$sql = "SELECT DISTINCT `cht` FROM `eng_formal` 
 					      WHERE `eng` = :key
@@ -173,7 +172,7 @@
 					$i++;
 		  	}while ($row = $stmt->fetch());
 
-		  	if (count($arr) == 0){
+		  	if (count($arr) == 0){	// 找不到，列出英文的關聯拼音
 		  		$key_super = $key . "%";
 					$sql = "SELECT DISTINCT `eng` FROM `eng_formal` 
 					    	  WHERE `eng` LIKE :key_super

@@ -346,7 +346,7 @@
 								<img class="thumbnail_img" src="./images/theme/origin.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('origin')">套用</button></p>
+									<p><button class="btn btn-primary" id="change_theme_btn1" role="button" onclick="change_theme('origin')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -360,7 +360,7 @@
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('pink')">套用</button></p>
+									<p><button class="btn btn-primary" id="change_theme_btn2" role="button" onclick="change_theme('pink')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -374,7 +374,7 @@
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('blue')">套用</button></p>
+									<p><button class="btn btn-primary" id="change_theme_btn3" role="button" onclick="change_theme('blue')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -388,7 +388,7 @@
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('xmas')">套用</button></p>
+									<p><button class="btn btn-primary" id="change_theme_btn4" role="button" onclick="change_theme('xmas')">套用</button></p>
 								</div>
 							</div>
 						</div>
