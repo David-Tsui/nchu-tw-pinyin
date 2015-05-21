@@ -54,7 +54,6 @@
 
 	var number_letters = 0;                                             // 記錄該拼音回傳之結果總共有幾個字
 	var keyin = 0;                                                      // 記錄按下鍵盤的Ascii code
-	var input_copy = "";                                                // 記錄鍵盤輸入前的所有文字
 	var input_word = "";                                                // 記錄鍵盤輸入前的中文字
 	var input_len = 0;                                                  // 記錄鍵盤輸入前已選字成功的字串長度
 	var input_loc = 0;                                                  // 記錄鍵盤輸入的位置
@@ -203,8 +202,7 @@
 						temp_text = "候選字" + interval + "(" + thispage + "/" + totalpage + ")\n" + temp_text;
 						if (next_flag == true)
 							temp_text_flat += " +:下頁"; 
-						$("#show").html(temp_text); 
-						$("#show_flat").html(temp_text_flat); 
+						$("#show, #show_flat").html(temp_text); 
 						mode = 1;
 						punctuation_search_flag = true;                                                                         					    				
 					});
@@ -212,12 +210,16 @@
 				return false;
 			}
 
-			if (keyin == 188 || keyin == 190 || keyin == 222){
+			if (keyin == 186 || keyin == 188 || keyin == 190 || keyin == 191 || keyin == 222){
 				if (mode == 0 && show_text == "" || mode == 2 || mode == 3){
-					if (keyin == 188)
+					if (keyin == 186)
+						obj = new pinyin_obj("","；",input_loc,input_loc + 1,2); 
+					else if (keyin == 188)
 						obj = new pinyin_obj("","，",input_loc,input_loc + 1,2); 
 					else if (keyin == 190)
 						obj = new pinyin_obj("","。",input_loc,input_loc + 1,2); 
+					else if (keyin == 191)
+						obj = new pinyin_obj("","？",input_loc,input_loc + 1,2); 
 					else if (keyin == 222)
 						obj = new pinyin_obj("","、",input_loc,input_loc + 1,2); 
 					mode = 0;
@@ -640,7 +642,7 @@
 				}
 			}           
 
-			if (keyin == 107 || keyin == 187){          // +鍵
+			if (keyin == 107 || keyin == 187){        // +鍵
 				thispage++;                             // 刷新頁數
 				var temp_text = "";
 				var temp_text_flat = "";
@@ -731,7 +733,7 @@
 				$("#show_flat").html(temp_text_flat);
 				return false;
 			}
-			if (keyin == 109 || keyin == 189){          // -鍵
+			if (keyin == 109 || keyin == 189){        // -鍵
 				thispage--;                             // 刷新頁數引
 				var temp_text = "";
 				var temp_text_flat = "";
@@ -823,7 +825,6 @@
 			}                                               
 		}).keyup(function(e){                                           // 接續的keyup事件，為了讓上下左右鍵有影響
 			keyin = e.which;
-			//console.log("keyin: " + keyin);
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			if (sel_mode == 0){ 
@@ -832,11 +833,10 @@
 				if (mode == 0 && (keyin == 35 || keyin == 36) && associated_search_flag == false)
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);  
 			}
-			if (sel_mode == 1){
+			/*if (sel_mode == 1){
 				if ((keyin == 37 || keyin == 39) && (mode == 0 || mode == 2 ))       // 非拼音時，左右鍵將會調整輸入位置
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
-			}
-			//push_undo_record();
+			}*/
 		}).on('input',function(e){                                  // 同時發生的事件，只控制輸入進textbox的按鍵          
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat"); 
@@ -846,34 +846,27 @@
 				// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
 					getKey(keyin);
 					var text = textbox.html();
-					input_copy = remove_tags(text);
-					//push_undo_record();
 				}
 			}
 			/*************************************************智能模式***********************************************/
-			if (sel_mode == 1){
+			/*if (sel_mode == 1){
 				if ((keyin >= 65 && keyin <= 90) || keyin == 8 || keyin == 46 || keyin == 37 || keyin == 39){  
 				// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
 					getKey(keyin);
 					var text = textbox.html();
-					input_copy = remove_tags(text);
-					//push_undo_record();
 				}
-			}
-			
+			}*/
 			if (keyin == 8 || keyin == 46 || keyin == 32 || (keyin >= 65 && keyin <= 90)){  
 				// backspace鍵或是delete鍵的刪除，及反白取代字的情形
 				deleteWord(keyin);
 				var text = textbox.html();
-				input_copy = remove_tags(text);
 			}
 			
 			if ((sel_mode == 0 && mode != 0) || (sel_mode == 1 && mode != 0)){
 				if (sel_mode == 1 && keyin == 32){                     // 如果是智能模式，數字跟空白鍵都能用來選字
 					if (mode == 1 || mode == 2 || mode == 3){
-						//push_before_selected(); 
-						setWord();
-						//push_undo_record();                       
+						var temp_input_loc = 0;
+						setWord();                    
 						textbox.setCursorPosition(input_loc);                          
 						return;
 					}
@@ -1874,6 +1867,8 @@
 				textbox.html(text);
 				input_len = input_word.length;                              // 調整成功字數
 				search_key = "";                                            // 清空buffer
+				if (punctuation_search_flag && insert_word.length > 1)
+					input_loc--;
 				punctuation_search_flag = false;
 				mode = 2;
 			}
@@ -1885,7 +1880,7 @@
 			input_loc += word_length;                                       // 調整下一次的輸入位置
 			return;
 		}
-		else if (sel_mode == 1){                                            // 智能模式
+		/*else if (sel_mode == 1){                                            // 智能模式
 			if (mode == 1){
 				var show_letter = "";
 				var characters_count = 0;
@@ -1949,7 +1944,7 @@
 				mode = 2;   
 				return;
 			}
-		}
+		}*/
 		//push_undo_record();
 	}     
 
@@ -2343,20 +2338,8 @@
 							}
 						}       							
 					}				
-
-					console.log("pre_pinyin: " + pre_pinyin);
-					console.log("pinyin_left: " + pinyin_left);
-					console.log("pinyin_right: " + pinyin_right);
-					console.log("");
- 
-					
-					console.log("pre_word: " + pre_word);
-					console.log("word_left: " + word_left);
-					console.log("word_right: " + word_right);
-
 					
 					pinyin_obj.pinyin = pinyin_left;
-					console.log("which_word: " + which_word);
 					$.ajaxSettings.async = false;
 					rearrange_objs(pre_pinyin, pre_word, which_word, 1, 0);
 					$.ajaxSettings.async = true;
@@ -2393,11 +2376,6 @@
 							}
 						}
 					}
-
-					console.log("pinyin_left: " + pinyin_left);
-					console.log("pinyin_right: " + pinyin_right);
-					console.log("word_left: " + word_left);
-					console.log("word_right: " + word_right);
 
 					$.ajaxSettings.async = false;
 					rearrange_objs(pinyin_left, word_left, which_word, 1, 0);

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>興大無聲調台語拼音輸入法</title>
+		<title>興大台語輸入法</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -128,7 +128,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand visible-xs" id="prefix_title" href="#">興大無聲調台語輸入法</a>
+					<a class="navbar-brand visible-xs" id="prefix_title" href="#">興大台語輸入法</a>
 				</div>
 				<div id="navbarCollapse" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
@@ -170,17 +170,17 @@
 								<img src="./images/pinyinQR.png" id="my_qrcode" onclick="change_pic()" width="160px" height="160px" style="margin-top: -13px"/>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-6" id="left" style="text-align: center">
+						<div class="col-xs-12 col-sm-6 col-md-6" style="text-align: center">
 							<div class="push"></div>
-				    	<span class="hidden-xs" style="font-size: 80px">興大無聲調</span>			    	
-					    <span class="visible-xs" style="font-size: 68px">興大</span>
-					    <span class="visible-xs" style="font-size: 68px">無聲調</span>
-					    <br>
-					    <div class="hidden-xs" style="font-size: 38px">
-					    	<span class="underline">台語拼音輸入法</span>
+				    	<span class="hidden-xs" style="font-size: 80px">興大台語</span>			    	
+					    <span class="visible-xs" style="font-size: 72px">興大</span>
+					    <span class="visible-xs" style="font-size: 72px">台語</span>
+					    <div class="hidden-xs"><br></div>
+					    <div class="hidden-xs" style="font-size: 60px">
+					    	<span>輸入法</span>
 					    </div>
 							<div class="visible-xs" style="font-size: 30px">
-						    <span>台語拼音輸入法</span>
+						    <span>輸入法</span>
 						  </div>
 							<div class="push hidden-xs"></div>
 							<div class="push hidden-xs"></div>
