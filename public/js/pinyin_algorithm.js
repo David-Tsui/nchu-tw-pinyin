@@ -146,10 +146,11 @@
 			var DOM_textbox = document.getElementById("input");
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
-			keyin = e.which;
-			//console.log("keyin: " + keyin);
+			keyin = e.keyCode;
+			console.log("keyin: " + keyin);
 			//if (e.ctrlKey) return false;                                // 暫時先擋住ctrl
 			forbid_mousemove = true;
+
 			if (keyin == 229){                                          // 擋住中文輸入法
 				var text = "請切換至英文輸入法!";
 				prompt_txtbox.val(text);
@@ -824,7 +825,7 @@
 				return false;
 			}                                               
 		}).keyup(function(e){                                           // 接續的keyup事件，為了讓上下左右鍵有影響
-			keyin = e.which;
+			keyin = e.keyCode;
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			if (sel_mode == 0){ 
@@ -873,7 +874,6 @@
 				}
 				if (isNumber(keyin)){
 					setWord();
-					//push_undo_record();
 					textbox.setCursorPosition(input_loc);       
 					thispage = 1;                           // 歸零
 					totalpage = 1;                          // 歸零
@@ -1335,6 +1335,7 @@
 
 	function search_associated(){                                           // 以中文當key，找尋關聯詞
 		var key_len = prefix_key.length;
+		if (key_len == 0) return;
 		$.post('search_associated.php',{prefix_KEY:prefix_key},function(data){ 
 			if (data == ""){
 				$("#show").html("");
@@ -1840,6 +1841,7 @@
 				var obj = "";
 				if (punctuation_search_flag){
 					obj = new pinyin_obj("",insert_word,input_loc,input_loc + word_length,2);   // 是則可修改
+					prefix_key = "";
 				}
 				else{
 					if (getSyllable(search_key) == word_length){                // 如果音節數=字數
@@ -1867,10 +1869,15 @@
 				textbox.html(text);
 				input_len = input_word.length;                              // 調整成功字數
 				search_key = "";                                            // 清空buffer
-				if (punctuation_search_flag && insert_word.length > 1)
-					input_loc--;
+				if (!punctuation_search_flag){
+					mode = 2;
+				}
+				else{
+					mode = 0;
+					if (insert_word.length > 1)
+						input_loc--;
+				}
 				punctuation_search_flag = false;
-				mode = 2;
 			}
 			$("#show").html("");    
 			$("#show_flat").html("");
@@ -3151,11 +3158,22 @@
 
 	function google(){
 		var str = remove_tags($('#input').html());
+		
 		if (str == ""){
 			$("#prompt, #prompt_flat").val("搜尋字串不能為空白!");
 			caption_effect();
 		}
 		else{
+			var false_punctutations = ["℃", "℉", "㎏", "㎎", "㎜", "㎝", "㎡", "㏄", "㏎"];
+			var true_punctutaions = ["°C","°F","kg","mg","mm","cm","m^2","cc","km"];
+			var arr_len = false_punctutations.length;
+			for(var i = 0; i < arr_len; i++){
+				var false_punc = false_punctutations[i];
+				var true_punc = true_punctutaions[i];
+				while (str.search(false_punc) >= 0){
+					str = str.replace(false_punc,true_punc);
+				}
+			}
 			str = "https://www.google.com.tw/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=" + str;
 			var replaced_url = str.replace(" ","+");
 			//window.location.replace(replaced);
