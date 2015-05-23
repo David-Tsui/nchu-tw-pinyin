@@ -65,8 +65,7 @@
 	var totalpage = 0;                                                  // 記錄回傳文字的總頁數
 	var thispage = 1;                                                   // 記錄當前的頁數
 
-	var tow_check = false;                                              // 判斷滑鼠有無反白拖曳
-	var forbid_mousemove = false;                                       // 用來避免偶爾keydown觸發mousemove的事件的flag     
+	var tow_check = false;                                              // 判斷滑鼠有無反白拖曳   
 	var input_mouseleave_flag = false;                                  // 用來修正在與下方兩邊快速移動時造成的bug
 	var prompt_mouseleave_flag = false;                                 // 用來修正在與上方兩邊快速移動時造成的bug
 	var associated_search_flag = false;                                 // 用來判斷是否正在關聯拼音
@@ -81,15 +80,6 @@
 		var DOM_textbox = document.getElementById("input");
 		set_default();                                                  // 設定初始狀態
 
-		$('.trigger').click(function(e){
-			e.preventDefault();
-			$.fn.fullpage.moveSectionDown();
-		});
-
-		$('#change_theme_btn1, #change_theme_btn2, #change_theme_btn3, #change_theme_btn4').click(function(e){
-			e.preventDefault();
-			$.fn.fullpage.moveTo(2, 1);
-		});
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 
@@ -98,23 +88,20 @@
 			var DOM_textbox = document.getElementById("input");
 			mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);  // 記錄滑鼠一點下去時的游標位置
 			console.log("mousedown_loc: " + mousedown_loc);
-			forbid_mousemove = false;
 		}).mousemove(function(){
-			/*if (forbid_mousemove == false){
-				var textbox = $("#input");
-				mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);
-				show_text = $("#show").html();
-				if (show_text == ""){                                    // 非選字時點選textbox中的任一位置，或是拖拉反白
-					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+			var textbox = $("#input");
+			mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+			show_text = $("#show").html();
+			if (show_text == ""){                                    // 非選字時點選textbox中的任一位置，或是拖拉反白
+				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+			}
+			else{                               
+				if (getCaretCharacterOffsetWithin(DOM_textbox) == getCaretCharacterOffsetWithin(textbox)){ // 如果在拼音或選字時，將游標點選之後依舊在原始位置
+					tow_check = false;
 				}
-				else{                               
-					if (getCaretCharacterOffsetWithin(DOM_textbox) == getCaretCharacterOffsetWithin(textbox)){ // 如果在拼音或選字時，將游標點選之後依舊在原始位置
-						tow_check = false;
-					}
-					else                                                 // 如果在拼音或選字時反白
-						tow_check = true;
-				}
-			}*/
+				else                                                 // 如果在拼音或選字時反白
+					tow_check = true;
+			}
 		}).mouseup(function(){                                           //調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
 			var DOM_textbox = document.getElementById("input");
 			mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  	// 記錄滑鼠彈起來時的游標位置
@@ -149,7 +136,6 @@
 			keyin = e.keyCode;
 			console.log("keyin: " + keyin);
 			//if (e.ctrlKey) return false;                                // 暫時先擋住ctrl
-			forbid_mousemove = true;
 
 			if (keyin == 229){                                          // 擋住中文輸入法
 				var text = "請切換至英文輸入法!";
@@ -3158,7 +3144,6 @@
 
 	function google(){
 		var str = remove_tags($('#input').html());
-		
 		if (str == ""){
 			$("#prompt, #prompt_flat").val("搜尋字串不能為空白!");
 			caption_effect();
@@ -3247,4 +3232,14 @@
 		change_theme(now_theme);
 		/*********************************設定主題背景相關********************************/  
 		getTutorial();		// 產生教學頁面
+
+		$('.trigger').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveSectionDown();
+		});
+
+		$('#change_theme_btn1, #change_theme_btn2, #change_theme_btn3, #change_theme_btn4').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveTo(2, 1);
+		});
 	}
