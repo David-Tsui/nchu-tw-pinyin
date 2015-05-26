@@ -65,13 +65,6 @@ body {
 	padding-right: 30px;
 }
 
-#public_intro {
-	border-style: ridge;
-	border-width: 15px;
-	border-radius: 5px;
-	border-color: #FFF;
-}
-
 #Input_place {
 	/*blue*/
 	background-color: hsla(0, 100%, 100%, 0.65); 

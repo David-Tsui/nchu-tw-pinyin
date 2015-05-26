@@ -27,8 +27,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-		<style>
+    <style>
 			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
 				min-height: 365px;
 				max-height: 365px;
@@ -38,84 +37,7 @@
 				min-height: 180px;
 				max-height: 180px;
 			}
-
-			.thumbnail_img { width: 60%; }
-
-			#google_btn {
-				width: 72px;
-				height: 26px;
-				margin: auto;
-				margin-top: 12px;
-				/*margin-left: -28px;*/
-			}
-
-			#google_btn_flat {
-				width: 68px;
-				height: 24px;
-				margin: auto;
-				margin-top: 7px;
-			}
-
-			#input {
-				border: ridge rgba(157, 157, 157, 0.5); 
-				border-width: 1px;
-				/*common*/
-				background-color: #FFF;
-				width: 100%;
-				min-height: 32px;
-				text-align: left;
-				font-size: 18px; 
-				padding-left: 5px;
-				padding-top: 4px;
-				-webkit-ime-mode: disabled;
-				font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-			}
-
-			#input[placeholder]:empty:focus:before {
-				content: "";
-			}
-
-			#input[placeholder]:empty:before {
-				content: attr(placeholder);
-				color: #555; 
-			}
-
-			.in_pinyin_window {
-				margin-left: 1.1px; 
-				margin-right: 1.1px; 
-				text-decoration: underline;
-			}
-
-			.cannotMod {
-				margin-left: 0px; 
-				margin-right: 0px; 
-				text-decoration: none;
-			}
-
-			#message_board {
-				background-color: rgba(255, 255, 255, 0.5);
-				border-radius: 15px;
-				padding: 10px;
-				width: 100%;
-			}
-
-			#mes_comment {
-				min-height: 120px; 
-				min-width: 100%; 
-				max-height: 120px;
-				max-width: 100%;
-				border-radius: 5px;
-			}
-
-			.myForm_body {
-				margin-left: 8%;
-				margin-right: 8%;	
-			}
-
-			tr, td {
-				min-width: 100px;
-			}
-		</style>
+    </style>
 	</head>
 
 	<body>
@@ -172,18 +94,20 @@
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6" style="text-align: center">
 							<div class="push"></div>
-				    	<span class="hidden-xs" style="font-size: 80px">興大台語</span>			    	
-					    <span class="visible-xs" style="font-size: 72px">興大</span>
-					    <span class="visible-xs" style="font-size: 72px">台語</span>
-					    <div class="hidden-xs"><br></div>
-					    <div class="hidden-xs" style="font-size: 60px">
-					    	<span>輸入法</span>
-					    </div>
-							<div class="visible-xs" style="font-size: 30px">
-						    <span>輸入法</span>
+							<div id="index_title" class="hidden-xs">
+								<br>
+					    	<span style="font-size: 80px; font-weight: bold">興大台語</span>
+					    	<br>			    	
+						    <span style="font-size: 60px; font-weight: bold">輸入法</span>
+						    <div class="push"></div>
+								<div class="push"></div>
 						  </div>
-							<div class="push hidden-xs"></div>
-							<div class="push hidden-xs"></div>
+							<div id="index_title_flat" class="visible-xs">
+						    <span style="font-size: 68px; font-weight: bold">興大</span>
+						    <span style="font-size: 68px; font-weight: bold">台語</span>
+						    <br>
+								<span style="font-size: 30px; font-weight: bold">輸入法</span>
+							</div>
 							<div class="trigger"></div>
 						</div>
 						<div class="col-xs-12 col-sm-3 col-md-3"></div>
@@ -244,14 +168,14 @@
 								<br>
 							</div>
 							<div class="ui icon input">
-								<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
+								<input class="prompt" type="text" id="search_pinyin" placeholder="請在此輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
 								<i class="search icon"></i>
 							</div>					
 							<br><br>								                                                                                                                                            
 						</div>  
 										
 						<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
-							<div id="input" placeholder="請輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
+							<div id="input" placeholder="請在此輸入半形英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
 							<div class="col-xs-12 col-sm-2 col-md-2"></div>
 							<div class="col-xs-12 col-sm-8 col-md-8">
 								<!--<div class="ui input hidden-xs">
@@ -310,31 +234,51 @@
 				<div class="slide" data-anchor="slide1">
 					<div class="container">
 						<div class="row">
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
+							<div class="push"></div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<br><br>
 								<div class="jumbotron" id="public_intro">
-									<h2 style="text-align: center; font-family: '微軟正黑體'">興大無聲調台語拼音輸入法</h2>
-									<div style="font-size: 16px">
-										<p style="line-height: 1.8; margin-left: 15%">
-											<i class="green check circle icon"></i>無需考慮聲調
-											<br>
-											<i class="green check circle icon"></i>縮寫、音首以及英文多功能輸入
-											<br>
-											&emsp;（以大寫英文字啟用）
-											<br>
-											<i class="green check circle icon"></i>支援改字
-											<br>
-											<i class="green check circle icon"></i>多種配色主題
-											<br>
-											&emsp;(點選左右箭頭即可瀏覽主題）
-											<br>
-											<i class="green check circle icon"></i>是個比想像中還要__的輸入法
-										</p>
+									<h2 style="text-align: center; font-family: '微軟正黑體'">輸入法特色</h2>
+									<div style="font-size: 16px; margin-left: 15%">
+										<p><i class="green check circle icon"></i>無需考慮聲調</p>
+										<p><i class="green check circle icon"></i>兼容縮寫、音首以及英文多功能輸入</p>
+										<p><i class="green check circle icon"></i>支援改字</p>
+										<p><i class="green check circle icon"></i>多種配色主題</p>
+										<p>&emsp;&nbsp;&nbsp;（點選左右箭頭即可瀏覽主題）</p>
+										<p><i class="green check circle icon"></i>可創造屬於自己的詞彙</p>
 									</div>						
 								</div>				
 							</div>
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="jumbotron" id="manual">
+									<h2 style="text-align: center; font-family: '微軟正黑體'">輸入法操作手冊</h2>
+									<div>
+										<p><i class="blue wizard icon"></i>拼音以英文小寫開頭 -> 台語拼音輸入</p>
+										<p><i class="blue wizard icon"></i>拼音以英文大寫開頭 -> 音首輸入 以及 英文輸入</p>
+										<p><i class="blue wizard icon"></i>拼音全為英文大寫   -> 縮寫輸入</p>
+										<p>
+											<i class="blue wizard icon"></i>
+											<span class="keyboard keyboard-4" style="margin-left: -2px"></span>
+											<span class="keyboard keyboard-5"></span>
+											<span class="keyboard keyboard-8"></span>
+											<span class="keyboard keyboard-7"></span>
+											<span class="keyboard keyboard-6"></span>
+											<span class="keyboard keyboard-1"></span>
+											<span class="keyboard keyboard-2"></span>
+											<span>對應</span>
+										</p>
+										<div style="margin-top: -10px">					
+											<span class="punctuation" style="margin-left: 28px">，</span>
+											<span class="punctuation">。</span>
+											<span class="punctuation">、</span>
+											<span class="punctuation">；</span>
+											<span class="punctuation">？</span>
+											<span class="punctuation">「</span>
+											<span class="punctuation">」</span>
+										</div>
+										<p><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>							
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -428,19 +372,11 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="panel panel-default visible-xs" style="width: 100%; height: 800px; overflow: scroll">
-								<table class="table table-bordered" id="tutor_table_flat">
+							<div class="panel panel-default visible-xs" style="width: 100%; height: 700px; overflow: scroll">
+								<table class="ui celled striped table" id="tutor_table_flat">
 									<thead>
 										<tr>
-											<th>子音</th>
-											<th>母音</th>
-											<th>範例字詞</th>
-											<th>母音</th>
-											<th>範例字詞</th>
-											<th>母音</th>
-											<th>範例字詞</th>
-											<th>母音</th>
-											<th>範例字詞</th>
+											<th>子音　　　　母音　　　　範例字詞</th>
 										</tr>						
 									</thead>
 									<tbody id="json_table_flat">

@@ -76,6 +76,10 @@
 	var check_keyin = 0;
 
 	$(document).ready(function(){
+		Pace.on("done", function(){
+			$('#index_title').transition('flash');
+		});
+
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
 		set_default();                                                  // 設定初始狀態
@@ -90,6 +94,7 @@
 			console.log("mousedown_loc: " + mousedown_loc);
 		}).mousemove(function(){
 			var textbox = $("#input");
+			var DOM_textbox = document.getElementById("input");
 			mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			show_text = $("#show").html();
 			if (show_text == ""){                                    // 非選字時點選textbox中的任一位置，或是拖拉反白
@@ -199,16 +204,14 @@
 
 			if (keyin == 186 || keyin == 188 || keyin == 190 || keyin == 191 || keyin == 222){
 				if (mode == 0 && show_text == "" || mode == 2 || mode == 3){
-					if (keyin == 186)
-						obj = new pinyin_obj("","；",input_loc,input_loc + 1,2); 
-					else if (keyin == 188)
-						obj = new pinyin_obj("","，",input_loc,input_loc + 1,2); 
-					else if (keyin == 190)
-						obj = new pinyin_obj("","。",input_loc,input_loc + 1,2); 
-					else if (keyin == 191)
-						obj = new pinyin_obj("","？",input_loc,input_loc + 1,2); 
-					else if (keyin == 222)
-						obj = new pinyin_obj("","、",input_loc,input_loc + 1,2); 
+					var punc = "";
+					if (keyin == 186) punc = "；"; 
+					else if (keyin == 188) punc = "，"; 
+					else if (keyin == 190) punc = "。"; 
+					else if (keyin == 191) punc = "？"; 
+					else if (keyin == 222) punc = "、";
+					obj = new pinyin_obj("",punc,input_loc,input_loc + 1,2); 
+					
 					mode = 0;
 					$.ajaxSettings.async = false;
 					addRecord(obj,input_loc);
@@ -906,53 +909,56 @@
 
 		$("#copy").zclip({
 			path: './js/ZeroClipboard.swf',
-			copy: function(){ return remove_tags($("#input").html()); }
-		}).click(function(){
-			var text = $("#input").html();
-			text = remove_tags(text);
-			if (text != ""){
-				$("#prompt").val('已複製到剪貼簿!');
-				$("#prompt_flat").val('已複製到剪貼簿!');
-				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-				console.log("text: " + jqte_text);
-				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
-				caption_effect();
+			copy: function(){
+				var text = remove_tags($("#input").html()); 
+				if (text != ""){
+					$("#prompt").val('已複製到剪貼簿!');
+					$("#prompt_flat").val('已複製到剪貼簿!');
+					var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+					$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+					caption_effect();
+					$("#input").setCursorPosition(input_loc);
+					return text;
+				}
+				else{
+					$("#prompt").val('沒有內容可複製!');
+					$("#prompt_flat").val('沒有內容可複製!');
+					caption_effect();
+					$("#input").focus();
+					return;
+				}
 			}
-			else{
-				$("#prompt").val('沒有內容可複製!');
-				$("#prompt_flat").val('沒有內容可複製!');
-				caption_effect();
-			}
-			$("#input").setCursorPosition(input_loc);
 		});
 
 		$("#cut").zclip({
 			path: './js/ZeroClipboard.swf',
-			copy: function(){ return remove_tags($("#input").html()); }
-		}).click(function(){
-			var text = $("#input").html();
-			text = remove_tags(text);
-			if (text != ""){
-				$("#prompt").val('已剪下到剪貼簿!');
-				$("#prompt_flat").val('已剪下到剪貼簿!');
-				input_word = "";
-				pinyin_record = [];
-				mode = 0;
-				input_loc = 0;
-				search_key = "";
-				$("#input").html("");
-				$("#show").html("");
-				$("#show_flat").html("");
-				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
-				caption_effect();   
+			copy: function(){
+				var text = remove_tags($("#input").html()); 
+				if (text != ""){
+					$("#prompt").val('已剪下到剪貼簿!');
+					$("#prompt_flat").val('已剪下到剪貼簿!');
+					input_word = "";
+					pinyin_record = [];
+					mode = 0;
+					input_loc = 0;
+					search_key = "";
+					$("#input").html("");
+					$("#show").html("");
+					$("#show_flat").html("");
+					var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+					$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+					caption_effect();
+					$("#input").focus();
+					return text;
+				}
+				else{
+					$("#prompt").val('沒有內容可複製!');
+					$("#prompt_flat").val('沒有內容可複製!');
+					caption_effect();
+					$("#input").focus();
+					return;
+				}
 			}
-			else{
-				$("#prompt").val('沒有內容可剪下!');
-				$("#prompt_flat").val('沒有內容可剪下!');
-				caption_effect();       
-			}
-			$("#input").focus();
 		});
 						
 		$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件  
@@ -3111,7 +3117,7 @@
 				var vowel_arr = data[i].vowel;
 				var vowel_arr_len = vowel_arr.length;
 				var exp = "<tr>";
-				exp += '<td style="color: #FD529A; font-weight: bold">' + consonant + '<i class="arrow right icon" style="float: right"></i></td>';
+				exp += '<td style="color: #FD529A; font-weight: bold">' + consonant + '<i class="arrow right icon hidden-xs" style="float: right; margin-top: 2px"></i><i class="arrow down icon visible-xs" style="float: right"></i></td>';
 				for(var j = 0; j < vowel_arr_len; j++){
 					var the_vowel = vowel_arr[j].sound;
 					var word_arr = vowel_arr[j].word;
@@ -3241,5 +3247,9 @@
 		$('#change_theme_btn1, #change_theme_btn2, #change_theme_btn3, #change_theme_btn4').click(function(e){
 			e.preventDefault();
 			$.fn.fullpage.moveTo(2, 1);
+		});
+
+		$('#index_title').click(function(){
+			$('#index_title').transition('flash');
 		});
 	}

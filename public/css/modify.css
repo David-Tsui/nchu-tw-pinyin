@@ -27,10 +27,7 @@ html, body{
 #search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }
 
 #public_intro {
-	border-style: ridge;
-	border-width: 15px;
-	border-radius: 5px;
-	border-color: #FFF;
+	background-color: rgba(254, 255, 232, 0.8);
 }
 
 .trigger {
@@ -63,6 +60,159 @@ html, body{
     border-bottom: ridge #FFF;
     border-right: ridge #FFF; 
     border-width: 8px;
+}
+
+.thumbnail_img { width: 60%; }
+
+#google_btn {
+	width: 72px;
+	height: 26px;
+	margin: auto;
+	margin-top: 12px;
+	/*margin-left: -28px;*/
+}
+
+#google_btn_flat {
+	width: 68px;
+	height: 24px;
+	margin: auto;
+	margin-top: 7px;
+}
+
+#input {
+	border: ridge rgba(157, 157, 157, 0.5); 
+	border-width: 1px;
+	/*common*/
+	background-color: #FFF;
+	width: 100%;
+	min-height: 32px;
+	text-align: left;
+	font-size: 18px; 
+	padding-left: 5px;
+	padding-top: 4px;
+	-webkit-ime-mode: disabled;
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
+}
+
+#input[placeholder]:empty:focus:before {
+	content: "";
+}
+
+#input[placeholder]:empty:before {
+	content: attr(placeholder);
+	color: #555; 
+}
+
+.in_pinyin_window {
+	margin-left: 1.1px; 
+	margin-right: 1.1px; 
+	text-decoration: underline;
+}
+
+.cannotMod {
+	margin-left: 0px; 
+	margin-right: 0px; 
+	text-decoration: none;
+}
+
+#message_board {
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 15px;
+	padding: 10px;
+	width: 100%;
+}
+
+#mes_comment {
+	min-height: 120px; 
+	min-width: 100%; 
+	max-height: 120px;
+	max-width: 100%;
+	border-radius: 5px;
+}
+
+.myForm_body {
+	margin-left: 8%;
+	margin-right: 8%;	
+}
+
+tr, td {
+	min-width: 100px;
+}
+
+#manual {
+	font-size: 16px;
+	background-color: rgba(217, 245, 232, 0.75);
+}
+
+.keyboard {
+    background-image: url(../images/keyboard.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-left: 1px;
+}
+
+.keyboard-1 {
+    width: 48px;
+    height: 48px;
+    background-position: -5px -5px;
+}
+
+.keyboard-2 {
+    width: 48px;
+    height: 48px;
+    background-position: -63px -5px;
+}
+
+.keyboard-3 {
+    width: 48px;
+    height: 48px;
+    background-position: -121px -5px;
+}
+
+.keyboard-4 {
+    width: 48px;
+    height: 48px;
+    background-position: -179px -5px;
+}
+
+.keyboard-5 {
+    width: 48px;
+    height: 48px;
+    background-position: -237px -5px;
+}
+
+.keyboard-6 {
+    width: 48px;
+    height: 48px;
+    background-position: -295px -5px;
+}
+
+.keyboard-7 {
+    width: 48px;
+    height: 48px;
+    background-position: -353px -5px;
+}
+
+.keyboard-8 {
+    width: 48px;
+    height: 48px;
+    background-position: -411px -5px;
+}
+
+.punctuation {
+	width: 45px;
+	height: 50px;
+	margin-left: 4px;
+	padding-top: 13px;
+	background-color: rgba(255, 255, 255, 0);
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+}
+
+.punctuation:hover {
+	background-color: #A9F7B6;
+	color: #fff;
 }
 
 /*****************針對jqte editor跟wshare button**************/
