@@ -34,26 +34,22 @@
 						?>   
 					</p>
 				</div>
-				<br><br>
-				<div class="ui icon input">
-					<input class="prompt" type="text" id="search_pinyin" placeholder="請輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
+				<br>
+				<div class="ui fluid icon input" style="margin-top: 10px; border-radius: 5px; font-size: 16px">
+					<input type="text" id="search_pinyin" placeholder="請在此輸入欲查詢拼音的中文">
 					<i class="search icon"></i>
 				</div>
 				<br><br>
 			</div>
 
 			<div class="col-xs-12 col-sm-6 col-md-6">
-				<div style="width: 96%">
+				<div>
 					<br>
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="請輸入台語拼音" id="sound">
-						<input type="text" class="form-control" placeholder="請輸入中文詞義，勿含空格及標點符號" id="characters">
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" 
-							 onclick="AddWord('<?php echo $id;?>')">增加新詞彙</button>
-						</span>
+					<input type="text" class="form-control" placeholder="請輸入台語拼音" id="sound" style="font-size: 20px">
+					<input type="text" class="form-control" placeholder="請輸入中文字詞，勿含空格及標點符號" id="characters" style="margin-top: 5px; font-size: 20px">
+					<div style="text-align: center">
+						<button type="button" class="btn btn-default" onclick="AddWord('<?php echo $id;?>')" style="margin-top: 10px; font-size: 16px">增加新詞彙</button>	
 					</div>
-
 					<br>
 
 					<div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -85,7 +81,6 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-2 col-md-2"></div>
-
 		</div>
 	</div>
 @endsection

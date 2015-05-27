@@ -34,3 +34,8 @@ Route::get('user/{id}', function($id)
 	else
 		return 'Not Login!';
 });
+
+Route::get('flowchart', function()
+{
+	return view("flow_chart");
+});

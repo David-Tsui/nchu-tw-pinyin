@@ -119,27 +119,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 col-md-4" id="left" style="text-align: center">
-							<div class="hidden-xs" id="hide_panel"></div>    
-							<div id="hide_btn" style="text-align: center">
-								<div class="ui buttons" style="font-size: 14px">
-									<div class="ui button" id="open_prompt" style="color: #FFF; background-color: #FFBABA">開啟提示</div>
-									<div class="or"></div>
-									<div class="ui button" id="close_prompt" style="color: #FFF; background-color: #AAD4FF">關閉提示</div>
-								</div>
-							</div>
-							<br>
-							<div class="panel panel-default" id="tutorial_panel" style="border-radius: 5px">
-								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
-								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
-								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
-									<div class="pull-right">
-										<div class="btn btn-primary" id="GO" style="font-size: 10px">馬上出發!</div>
-										<div class="btn btn-default" id="NO" style="font-size: 10px">下次再說!</div>
-									</div>
-								</div>
-							</div>
 							<div class="login_span">
-								<br>
 								<p id="login_status">
 									您當前的身分是:
 									<?php
@@ -155,7 +135,7 @@
 											echo $string;
 											$name = preg_replace('/\s+/', '_', $name);
 											$control_btn = '<div class="ui buttons" style="font-size: 14px">';
-											$control_btn .=	'<a href="./user/' . $name . '" class="ui black basic button">管理辭庫</a>';
+											$control_btn .=	'<a href="./user/' . $name . '" class="ui black basic button" style="font-size: 16px">管理辭庫</a>';
 											$control_btn .= '</div>';
 											echo $control_btn;
 										}
@@ -165,17 +145,35 @@
 										}
 									?>   
 								</p>
-								<br>
 							</div>
-							<div class="ui icon input">
-								<input class="prompt" type="text" id="search_pinyin" placeholder="請在此輸入欲查詢拼音的中文" style="border-radius: 3px;" data-variation="large">
+							<div id="hide_btn" style="text-align: center; margin-top: 12px">
+								<div class="ui large buttons">
+									<div class="ui black basic button" id="open_prompt">開啟提示</div>
+									<div class="or"></div>
+									<div class="ui black basic button" id="close_prompt">關閉提示</div>
+								</div>
+							</div>
+							<div class="ui fluid icon input" style="margin-top: 10px; border-radius: 5px; font-size: 16px">
+								<input type="text" id="search_pinyin" data-variation="large" placeholder="請在此輸入欲查詢拼音的中文">
 								<i class="search icon"></i>
-							</div>					
+							</div>		
+							<br>
+							<div class="panel panel-default" id="tutorial_panel" style="border-radius: 5px">
+								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
+								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
+								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
+									<div class="pull-right">
+										<div class="btn btn-primary" id="GO" style="font-size: 10px">馬上出發!</div>
+										<div class="btn btn-default" id="NO" style="font-size: 10px">下次再說!</div>
+									</div>
+								</div>
+							</div>
+							<div class="hidden-xs" id="hide_panel"></div>    
 							<br><br>								                                                                                                                                            
 						</div>  
 										
 						<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
-							<div id="input" placeholder="請在此輸入半形英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
+							<div id="input" placeholder="請在此輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
 							<div class="col-xs-12 col-sm-2 col-md-2"></div>
 							<div class="col-xs-12 col-sm-8 col-md-8">
 								<!--<div class="ui input hidden-xs">
@@ -250,10 +248,13 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="manual">
-									<h2 style="text-align: center; font-family: '微軟正黑體'">輸入法操作手冊</h2>
+									<h2 style="text-align: center; font-family: '微軟正黑體'">
+										輸入法操作手冊
+										<a href="flowchart">流程圖</a>
+									</h2>
 									<div>
 										<p><i class="blue wizard icon"></i>拼音以英文小寫開頭 -> 台語拼音輸入</p>
-										<p><i class="blue wizard icon"></i>拼音以英文大寫開頭 -> 音首輸入 以及 英文輸入</p>
+										<p><i class="blue wizard icon"></i>拼音以英文大寫開頭 -> 音首輸入、英文輸入及會員輸入</p>
 										<p><i class="blue wizard icon"></i>拼音全為英文大寫   -> 縮寫輸入</p>
 										<p>
 											<i class="blue wizard icon"></i>
@@ -275,7 +276,7 @@
 											<span class="punctuation">「</span>
 											<span class="punctuation">」</span>
 										</div>
-										<p><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>							
+										<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>							
 									</div>
 								</div>
 							</div>

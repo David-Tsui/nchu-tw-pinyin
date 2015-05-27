@@ -79,7 +79,6 @@
 		Pace.on("done", function(){
 			$('#index_title').transition('flash');
 		});
-
 		var textbox = $("#input");
 		var DOM_textbox = document.getElementById("input");
 		set_default();                                                  // 設定初始狀態
@@ -93,7 +92,7 @@
 			mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);  // 記錄滑鼠一點下去時的游標位置
 			console.log("mousedown_loc: " + mousedown_loc);
 		}).mousemove(function(){
-			var textbox = $("#input");
+			/*var textbox = $("#input");
 			var DOM_textbox = document.getElementById("input");
 			mousedown_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 			show_text = $("#show").html();
@@ -106,7 +105,7 @@
 				}
 				else                                                 // 如果在拼音或選字時反白
 					tow_check = true;
-			}
+			}*/
 		}).mouseup(function(){                                           //調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
 			var DOM_textbox = document.getElementById("input");
 			mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  	// 記錄滑鼠彈起來時的游標位置
@@ -202,16 +201,19 @@
 				return false;
 			}
 
-			if (keyin == 186 || keyin == 188 || keyin == 190 || keyin == 191 || keyin == 222){
+			if (keyin == 186 || keyin == 188 || keyin == 190 || keyin == 191 || keyin == 192 || keyin == 219 || keyin == 221 || keyin == 222){
 				if (mode == 0 && show_text == "" || mode == 2 || mode == 3){
 					var punc = "";
 					if (keyin == 186) punc = "；"; 
 					else if (keyin == 188) punc = "，"; 
 					else if (keyin == 190) punc = "。"; 
 					else if (keyin == 191) punc = "？"; 
+					else if (keyin == 192) punc = "`"; 
+					else if (keyin == 219) punc = "「";
+					else if (keyin == 221) punc = "」";
 					else if (keyin == 222) punc = "、";
 					obj = new pinyin_obj("",punc,input_loc,input_loc + 1,2); 
-					
+
 					mode = 0;
 					$.ajaxSettings.async = false;
 					addRecord(obj,input_loc);
@@ -3126,7 +3128,7 @@
 					if (the_vowel == "－")
 						the_sound = consonant.toUpperCase();
 					$('<audio id="sound_' + the_sound + '"><source src="./tutorial_sound/' + the_sound + '-MingShingYu-20060622.wav" type="audio/wav"></audio>').appendTo('body');
-					exp += '<td>' + the_vowel + '<a href="javascript: play_sound(\'' + the_sound + '\');"><i class="large volume down icon" style="float: right"></i></a></td>';
+					exp += '<td><span style="color: #E78AD0">' + consonant + "</span>" + the_vowel + '<a href="javascript: play_sound(\'' + the_sound + '\');"><i class="large volume down icon" style="float: right"></i></a></td>';
 					exp += "<td>";
 					for(var k = 0; k < word_arr_len; k++){
 						if (k == (word_arr_len - 1))
@@ -3252,4 +3254,54 @@
 		$('#index_title').click(function(){
 			$('#index_title').transition('flash');
 		});
+
+		var DOM_textbox = document.getElementById("#input");
+
+		var my_defaults = {
+		  is_unordered    : true,
+		  prevent_repeat  : true  
+		};
+		var listener = new window.keypress.Listener(DOM_textbox,my_defaults);
+		listener.simple_combo("ctrl c", function(){
+		  var text = remove_tags($("#input").html()); 
+			if (text != ""){
+				$("#prompt").val('已複製到右方編輯器!');
+				$("#prompt_flat").val('已複製到右方編輯器!');
+				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+				caption_effect();
+				$("#input").setCursorPosition(input_loc);
+			}
+			else{
+				$("#prompt").val('沒有內容可複製!');
+				$("#prompt_flat").val('沒有內容可複製!');
+				caption_effect();
+				$("#input").focus();
+			}				
+		});
+		listener.simple_combo("ctrl x", function(){
+			var text = remove_tags($("#input").html()); 
+			if (text != ""){
+				$("#prompt").val('已剪下到右方編輯器!');
+				$("#prompt_flat").val('已剪下到右方編輯器!');
+				input_word = "";
+				pinyin_record = [];
+				mode = 0;
+				input_loc = 0;
+				search_key = "";
+				$("#input").html("");
+				$("#show").html("");
+				$("#show_flat").html("");
+				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
+				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+				caption_effect();
+				$("#input").focus();
+			}
+			else{
+				$("#prompt").val('沒有內容可剪下!');
+				$("#prompt_flat").val('沒有內容可剪下!');
+				caption_effect();
+				$("#input").focus();
+			}
+		})
 	}
