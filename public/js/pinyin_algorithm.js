@@ -138,7 +138,7 @@
 			var prompt_txtbox = $("#prompt");
 			var prompt_flat_txtbox = $("#prompt_flat");
 			keyin = e.keyCode;
-			console.log("keyin: " + keyin);
+			//console.log("keyin: " + keyin);
 			//if (e.ctrlKey) return false;                                // 暫時先擋住ctrl
 
 			if (keyin == 229){                                          // 擋住中文輸入法
@@ -2870,6 +2870,7 @@
 			else
 				document.getElementById("CSS" + i).disabled = true;
 		}	
+		now_theme = theme;
 	}
 
 	function nav_assign_color(theme){
@@ -3153,7 +3154,7 @@
 	function google(){
 		var str = remove_tags($('#input').html());
 		if (str == ""){
-			$("#prompt, #prompt_flat").val("搜尋字串不能為空白!");
+			$("#prompt").val("搜尋字串不能為空白!");
 			caption_effect();
 		}
 		else{
@@ -3169,7 +3170,6 @@
 			}
 			str = "https://www.google.com.tw/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=" + str;
 			var replaced_url = str.replace(" ","+");
-			//window.location.replace(replaced);
 			window.open(replaced_url);
 		}
 	}
@@ -3184,7 +3184,6 @@
 			}  
 		});
 
-		$("#input").focus();
 		$("#hide_btn").hide();
 		$("#hide_panel").hide();
 		$('<audio id="chatAudio"><source src="error.mp3" type="audio/mpeg"></audio>').appendTo('body');  
@@ -3209,7 +3208,8 @@
 		$('.ui.checkbox').checkbox();
 		$("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
 			source: 'search_pinyin.php'
-		});                         
+		});        
+		$('.menu .item').tab();                 
 
 		/*********************************設定主題背景相關********************************/
 		var valid_css_num = 0;
@@ -3255,13 +3255,17 @@
 			$('#index_title').transition('flash');
 		});
 
-		var DOM_textbox = document.getElementById("#input");
+		var DOM_textbox = document.getElementById("input");
+		var input_page = document.getElementById("input_page");
+		var DOM_back_search = document.getElementById("search_pinyin");
 
 		var my_defaults = {
 		  is_unordered    : true,
 		  prevent_repeat  : true  
 		};
 		var listener = new window.keypress.Listener(DOM_textbox,my_defaults);
+		var listener2 = new window.keypress.Listener(input_page,my_defaults);
+		var listener3 = new window.keypress.Listener(DOM_back_search,my_defaults);
 		listener.simple_combo("ctrl c", function(){
 		  var text = remove_tags($("#input").html()); 
 			if (text != ""){
@@ -3279,7 +3283,7 @@
 				$("#input").focus();
 			}				
 		});
-		listener.simple_combo("ctrl x", function(){
+		listener.simple_combo("ctrl x",function(){
 			var text = remove_tags($("#input").html()); 
 			if (text != ""){
 				$("#prompt").val('已剪下到右方編輯器!');
@@ -3303,5 +3307,25 @@
 				caption_effect();
 				$("#input").focus();
 			}
-		})
+		});
+
+		listener2.simple_combo("alt b",function(){
+			$("#search_pinyin").focus();
+		});
+		listener2.simple_combo("alt n",function(){
+			if ($("#input").html() != "")
+				$("#input").focus().setCursorPosition(input_loc);
+			else
+				$("#input").focus();
+		});
+		listener2.simple_combo("alt m",function(){
+			$(".jqte_" + now_theme + "_editor").focus();
+		});
+
+		listener3.simple_combo("tab",function(){
+			if ($("#input").html() != "")
+				$("#input").focus().setCursorPosition(input_loc);
+			else
+				$("#input").focus();
+		});
 	}

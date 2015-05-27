@@ -38,7 +38,7 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">登入</button>
+								<button type="submit" class="btn btn-primary"><i class="big white paw icon" style="padding-right: 8px;"></i>登入</button>
 								<a class="btn btn-link" href="{{ url('/password/email') }}">忘記密碼</a>
 							</div>
 						</div>
@@ -46,14 +46,14 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">尚未擁有帳號嗎？</label>
 							<div class="col-md-6">
-								<a class="btn btn-primary" href="{{ url('/auth/register') }}">立即註冊</a>
+								<a class="btn btn-primary" href="{{ url('/auth/register') }}"><i class="big white add user icon"></i>立即註冊</a>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">您也可以</label>
 							<div class="col-md-6">
-								<a class="btn btn-primary" href="{{ url('/auth/facebook') }}">透過Facebook登入</a>
+								<a class="btn btn-primary" href="{{ url('/auth/facebook') }}"><i class="big white facebook square icon" style="padding-right: 8px;"></i>以Facebook登入</a>
 							</div>
 						</div>
 					</form>

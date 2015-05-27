@@ -107,6 +107,7 @@
 						    <span style="font-size: 68px; font-weight: bold">台語</span>
 						    <br>
 								<span style="font-size: 30px; font-weight: bold">輸入法</span>
+								<div class="push"></div>
 							</div>
 							<div class="trigger"></div>
 						</div>
@@ -116,9 +117,12 @@
 			</div>
 			
 			<div class="section" id="section1">
-				<div class="container">
+				<div class="container" id="input_page">
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 col-md-4" id="left" style="text-align: center">
+							<div class="visible-xs">
+								<div class="push"></div>
+							</div>
 							<div class="login_span">
 								<p id="login_status">
 									您當前的身分是:
@@ -160,7 +164,7 @@
 							<br>
 							<div class="panel panel-default" id="tutorial_panel" style="border-radius: 5px">
 								<div class="panel-heading" style="background-color: #FAEFC4; font-size: 16px">初來乍到?</div>
-								<div class="panel-body" style="background-color: #FFF; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
+								<div class="panel-body" style="background-color: #fff; font-size: 12px">如果第一次使用，建議您點選按鈕進入簡易說明及教學</div>
 								<div class="panel-footer clearfix" style="background-color: #FAEFC4">
 									<div class="pull-right">
 										<div class="btn btn-primary" id="GO" style="font-size: 10px">馬上出發!</div>
@@ -217,11 +221,15 @@
 							<br>
 						</div>
 						<div class="col-xs-12 col-sm-4 col-md-4" id="right"> 
-							<div class="fluid hidden-xs hidden-sm" id="jqte_place">
+							<div class="fluid hidden-xs" id="jqte_place">
 								<textarea id="jqte"></textarea>
 							</div>
-							<div class="fluid visible-xs visible-sm" id="jqte_place_flat">
+							<div class="fluid visible-xs" id="jqte_place_flat">
 								<textarea id="jqte_flat"></textarea>
+							</div>
+							<div class="visible-xs">
+								<div class="push"></div>
+								<div class="push"></div>
 							</div>
 						</div>
 					</div>
@@ -233,29 +241,47 @@
 					<div class="container">
 						<div class="row">
 							<div class="push"></div>
+							<br>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="public_intro">
-									<h2 style="text-align: center; font-family: '微軟正黑體'">輸入法特色</h2>
-									<div style="font-size: 16px; margin-left: 15%">
+									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 24px; font-weight: bold">輸入法特色</p>
+									<div style="font-size: 18px; margin-left: 10%">
 										<p><i class="green check circle icon"></i>無需考慮聲調</p>
-										<p><i class="green check circle icon"></i>兼容縮寫、音首以及英文多功能輸入</p>
+										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
 										<p><i class="green check circle icon"></i>支援改字</p>
-										<p><i class="green check circle icon"></i>多種配色主題</p>
-										<p>&emsp;&nbsp;&nbsp;（點選左右箭頭即可瀏覽主題）</p>
-										<p><i class="green check circle icon"></i>可創造屬於自己的詞彙</p>
+										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
+										<p><i class="green check circle icon"></i>多種配色主題（點選左右箭頭即可瀏覽主題）</p>
+										<p><i class="green check circle icon"></i>可創造屬於自方式己的專用詞彙</p>
 									</div>						
 								</div>				
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="manual">
-									<h2 style="text-align: center; font-family: '微軟正黑體'">
+									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 24px; font-weight: bold">
 										輸入法操作手冊
-										<a href="flowchart">流程圖</a>
-									</h2>
-									<div>
-										<p><i class="blue wizard icon"></i>拼音以英文小寫開頭 -> 台語拼音輸入</p>
-										<p><i class="blue wizard icon"></i>拼音以英文大寫開頭 -> 音首輸入、英文輸入及會員輸入</p>
-										<p><i class="blue wizard icon"></i>拼音全為英文大寫   -> 縮寫輸入</p>
+									</p>
+									<div class="ui top attached tabular menu" style="background-color: rgba(255, 255, 255, 0)">
+										<a class="active item" data-tab="first">輸入方法</a>
+										<a class="item" data-tab="second">快捷鍵-1</a>
+										<a class="item" data-tab="third">快捷鍵-2</a>
+										<a class="item" data-tab="fourth">流程圖</a>
+									</div>
+									<div class="ui bottom attached active tab segment" data-tab="first">
+										<div>
+											<p style="font-weight: bold"><i class="blue wizard icon"></i>拼音以英文小寫開頭：</p>
+											<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;拼音輸入&emsp;<i class="idea icon"></i>範例： diong hing dai hak => 中興大學</p>
+											<p style="font-weight: bold"><i class="blue wizard icon"></i>拼音以英文大寫開頭：</p>
+											<p style="margin-left: -2px">&emsp;&nbsp;&nbsp;音首輸入&emsp;<i class="idea icon"></i>範例： Dhdh => 中興大學</p>
+											<p style="margin-left: -2px">&emsp;&nbsp;&nbsp;英文輸入&emsp;<i class="idea icon"></i>範例： Umbrella => 雨傘</p>
+											<p style="margin-left: -2px">&emsp;&nbsp;&nbsp;會員輸入&emsp;<i class="idea icon"></i>範例： Li hou => 你好</p>
+											<p style="font-weight: bold"><i class="blue wizard icon"></i>拼音全為英文大寫：</p>
+											<p style="margin-left: -2px">&emsp;&nbsp;&nbsp;縮寫輸入&emsp;<i class="idea icon"></i>範例： NCHU => 中興大學</p>
+										</div>
+									</div>
+									<div class="ui bottom attached tab segment" data-tab="second">
+										<p><i class="blue wizard icon"></i>在輸入框中按下ctrl + c直接複製到右方編輯區</p>
+										<p><i class="blue wizard icon"></i>在輸入框中按下ctrl + x直接剪下到右方編輯區</p>
+										<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>
 										<p>
 											<i class="blue wizard icon"></i>
 											<span class="keyboard keyboard-4" style="margin-left: -2px"></span>
@@ -265,7 +291,9 @@
 											<span class="keyboard keyboard-6"></span>
 											<span class="keyboard keyboard-1"></span>
 											<span class="keyboard keyboard-2"></span>
-											<span>對應</span>
+											<div style="text-align: center">
+												<span>對應</span>
+											</div>
 										</p>
 										<div style="margin-top: -10px">					
 											<span class="punctuation" style="margin-left: 28px">，</span>
@@ -276,10 +304,21 @@
 											<span class="punctuation">「</span>
 											<span class="punctuation">」</span>
 										</div>
-										<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>							
+									</div>
+									<div class="ui bottom attached tab segment" data-tab="third">
+										<p><i class="blue wizard icon"></i>輸入頁面中，當已點選任何輸入框時，</p>
+										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + b，跳至反查拼音欄</p>
+										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + n，跳至中央拼音欄</p>
+										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + m，跳至文字編輯器</p>
+									</div>
+									<div class="ui bottom attached tab segment" data-tab="fourth">
+										<a href="flowchart">流程圖</a>
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="visible-xs">
+							<div class="push"></div>
 						</div>
 					</div>
 				</div>
@@ -395,8 +434,8 @@
 				<div class="container">
 					<div class="row" style="margin-bottom: -12px">
 						<div class="push"></div>
-						<div class="col-xs-12 col-sm-3 col-md-3"></div>
-						<div class="col-xs-12 col-sm-6 col-md-6">
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><br></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<div id="message_board">
 								<br>
 								<form method="post">
@@ -442,7 +481,7 @@
 								</form>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-3 col-md-3"></div>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
 					</div>
 					<div class="row">
 						<div class="push"></div>
@@ -457,8 +496,8 @@
 						<span class='st_twitter_hcount' displayText='Tweet'></span>
 						<span class='st_googleplus_hcount' displayText='Google +'></span>
 					</p>
-					<p class="credit" style="color: #FFF; font-size: 14px; font-weight: bold; margin-bottom: -10px">
-						中興大學資訊工程學系©2014
+					<p class="credit" style="color: #fff; font-size: 14px; font-weight: bold; margin-bottom: -10px">
+						中興大學資訊工程學系<i class="copyright icon"></i>2014
 					</p>
 				</div>	
 			</div>
