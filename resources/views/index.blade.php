@@ -251,7 +251,7 @@
 										<p><i class="green check circle icon"></i>支援改字</p>
 										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
 										<p><i class="green check circle icon"></i>多種配色主題（點選左右箭頭即可瀏覽主題）</p>
-										<p><i class="green check circle icon"></i>可創造屬於自方式己的專用詞彙</p>
+										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
 									</div>						
 								</div>				
 							</div>

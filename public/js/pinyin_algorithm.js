@@ -954,8 +954,8 @@
 					return text;
 				}
 				else{
-					$("#prompt").val('沒有內容可複製!');
-					$("#prompt_flat").val('沒有內容可複製!');
+					$("#prompt").val('沒有內容可剪下!');
+					$("#prompt_flat").val('沒有內容可剪下!');
 					caption_effect();
 					$("#input").focus();
 					return;
