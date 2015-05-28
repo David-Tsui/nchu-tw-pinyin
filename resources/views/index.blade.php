@@ -244,27 +244,26 @@
 							<br>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="public_intro">
-									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 24px; font-weight: bold">輸入法特色</p>
-									<div style="font-size: 18px; margin-left: 10%">
+									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 26px; font-weight: bold">輸入法特色</p>
+									<div style="font-size: 20px; margin-left: 10%">
 										<p><i class="green check circle icon"></i>無需考慮聲調</p>
 										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
 										<p><i class="green check circle icon"></i>支援改字</p>
 										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
-										<p><i class="green check circle icon"></i>多種配色主題（點選左右箭頭即可瀏覽主題）</p>
 										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
+										<p><i class="green check circle icon"></i>多種配色主題</p>
 									</div>						
 								</div>				
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="manual">
-									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 24px; font-weight: bold">
+									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 26px; font-weight: bold">
 										輸入法操作手冊
 									</p>
 									<div class="ui top attached tabular menu" style="background-color: rgba(255, 255, 255, 0)">
 										<a class="active item" data-tab="first">輸入方法</a>
 										<a class="item" data-tab="second">快捷鍵-1</a>
 										<a class="item" data-tab="third">快捷鍵-2</a>
-										<a class="item" data-tab="fourth">流程圖</a>
 									</div>
 									<div class="ui bottom attached active tab segment" data-tab="first">
 										<div>
@@ -310,9 +309,6 @@
 										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + b，跳至反查拼音欄</p>
 										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + n，跳至中央拼音欄</p>
 										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + m，跳至文字編輯器</p>
-									</div>
-									<div class="ui bottom attached tab segment" data-tab="fourth">
-										<a href="flowchart">流程圖</a>
 									</div>
 								</div>
 							</div>
@@ -384,11 +380,8 @@
 				<div class="container">
 					<div class="row" id="test_block">
 						<div class="push"></div>
-						<div class="col-xs-12">
-							<h3 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h3>
-							<h3 style="font-family: '微軟正黑體'">子音(照順序): b, bb, c, d, g, gg, h, j, k, l, m, n, ng, p, q, r, s, t, x, z</h3>
-							<br>
-						</div>
+						<h2 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h2>
+						<h2 style="font-family: '微軟正黑體'">下方表格列舉子音跟母音的部分搭配：</h2>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -3310,15 +3310,21 @@
 		});
 
 		listener2.simple_combo("alt b",function(){
+			$("#prompt").val('焦點移至反查拼音區');
+			caption_effect();
 			$("#search_pinyin").focus();
 		});
 		listener2.simple_combo("alt n",function(){
+			$("#prompt").val('焦點移至中央拼音區');
+			caption_effect();
 			if ($("#input").html() != "")
 				$("#input").focus().setCursorPosition(input_loc);
 			else
 				$("#input").focus();
 		});
 		listener2.simple_combo("alt m",function(){
+			$("#prompt").val('焦點移至文字編輯區');
+			caption_effect();
 			$(".jqte_" + now_theme + "_editor").focus();
 		});
 
