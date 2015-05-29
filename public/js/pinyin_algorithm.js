@@ -208,7 +208,7 @@
 					else if (keyin == 188) punc = "，"; 
 					else if (keyin == 190) punc = "。"; 
 					else if (keyin == 191) punc = "？"; 
-					else if (keyin == 192) punc = "`"; 
+					else if (keyin == 192) punc = "~"; 
 					else if (keyin == 219) punc = "「";
 					else if (keyin == 221) punc = "」";
 					else if (keyin == 222) punc = "、";
@@ -904,6 +904,7 @@
 			mode = 0;
 			input_word = "";
 			input_loc = 0;   
+			associated_search_flag = false;
 			$("#prompt").val('輸入框已清空!');
 			$("#prompt_flat").val('輸入框已清空!');
 			caption_effect();
@@ -947,6 +948,7 @@
 					$("#input").html("");
 					$("#show").html("");
 					$("#show_flat").html("");
+					associated_search_flag = false;
 					var jqte_text = $(".jqte_" + now_theme + "_editor").html();
 					$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
 					caption_effect();
