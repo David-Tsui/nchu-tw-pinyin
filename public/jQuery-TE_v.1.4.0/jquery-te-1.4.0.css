@@ -169,7 +169,7 @@
 	background:#EEE;
 	cursor:pointer
 }
-.jqte_linktypeselect:Active {
+.jqte_linktypeselect:active {
 	background:#FFF
 }
 .jqte_linktypeview {

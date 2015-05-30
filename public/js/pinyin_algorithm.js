@@ -4,7 +4,7 @@
 	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
 	var customJqte = "";                                                                    // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                                               // 記錄當前jqte_flat的樣式
-  var now_theme = "origin";
+  var now_theme = "black";
 	var click_count = 0;
 
 	var mode = 0;                     // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
@@ -2802,17 +2802,17 @@
 
 	function change_theme(theme){
 		var css_num = 0;
-		if (theme == "origin"){
-			nav_assign_color("origin");
+		if (theme == "black"){
+			nav_assign_color("black");
 			css_num = 1;
 			customJqte.remove();
 			customJqte_flat.remove();
 			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
 			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
-			$("#jqte").jqte({css:"jqte_origin"});
-			customJqte = $(".jqte_origin");
-			$("#jqte_flat").jqte({css:"jqte_origin_flat"});
-			customJqte_flat = $(".jqte_origin_flat");                  
+			$("#jqte").jqte({css:"jqte_black"});
+			customJqte = $(".jqte_black");
+			$("#jqte_flat").jqte({css:"jqte_black_flat"});
+			customJqte_flat = $(".jqte_black_flat");                  
 		}
 		else if (theme == "pink"){
 			nav_assign_color("pink");
@@ -2850,6 +2850,18 @@
 			$("#jqte_flat").jqte({css:"jqte_xmas_flat"});
 			customJqte_flat = $(".jqte_xmas_flat");
 		}
+		else if (theme == "green"){
+			nav_assign_color("green");
+			css_num = 5;
+			customJqte.remove();
+			customJqte_flat.remove();
+			$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
+			$("#jqte").jqte({css:"jqte_green"});
+			customJqte = $(".jqte_green");
+			$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
+			$("#jqte_flat").jqte({css:"jqte_green_flat"});
+			customJqte_flat = $(".jqte_green_flat");
+		}
 		if (typeof(Storage) != "undefined"){                   
 			localStorage.setItem("theme", theme); 
 			var text = localStorage.getItem("text", text);						// 先把在localStorage中的text抓出來
@@ -2866,7 +2878,7 @@
 			localStorage.setItem("text", jqte_text); 
 		});
 
-		for(var i = 1; i <= 4; i++){
+		for(var i = 1; i <= 5; i++){
 			if (i == css_num)
 				document.getElementById("CSS" + i).disabled = false;
 			else
@@ -2877,21 +2889,20 @@
 
 	function nav_assign_color(theme){
 		var nav_color = ["rgb(240, 160, 28)","#F87284","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
-		if (theme == "origin"){
-			var arr_len = nav_arr.length;
-			static_color = "white";
-			for(var i = 0; i < arr_len; i++){
+		var nav_arr_len = nav_arr.length;
+		if (theme == "black"){
+			static_color = "#fff";
+			for(var i = 0; i < nav_arr_len; i++){
 				$(nav_arr[i]).css('color',nav_color[i]);
 				$(nav_arr[i]).on('mouseenter',function(){$(this).css('color',static_color);});
 				(function(i){
 			    $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
 			  })(i);
 			}
-			//nav_to_white();
 		}
 		else if (theme == "pink"){
-			static_color = "white";
-			for(var i = 0; i < nav_arr.length; i++){
+			static_color = "#fff";
+			for(var i = 0; i < nav_arr_len; i++){
 				$(nav_arr[i]).css('color',static_color);
 				(function(i){
 			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
@@ -2900,8 +2911,8 @@
 			}
 		}
 		else if (theme == "blue"){
-			static_color = "#FFF";
-			for(var i = 0; i < nav_arr.length; i++){
+			static_color = "#fff";
+			for(var i = 0; i < nav_arr_len; i++){
 				$(nav_arr[i]).css('color',static_color);
 				(function(i){
 			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
@@ -2910,8 +2921,8 @@
 			}
 		}
 		else if (theme == "xmas"){
-			static_color = "#FFF";
-			for(var i = 0; i < nav_arr.length; i++){
+			static_color = "#fff";
+			for(var i = 0; i < nav_arr_len; i++){
 				$(nav_arr[i]).css('color',static_color);
 				(function(i){
 			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
@@ -2919,6 +2930,16 @@
 			  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
 			}
 		} 
+		else if (theme == "green"){
+			static_color = "rgb(95, 37, 11)";
+			for(var i = 0; i < nav_arr_len; i++){
+				$(nav_arr[i]).css('color',static_color);
+				(function(i){
+			    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+			  })(i);
+			  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
+			}
+		}
 	}
 
 	/***********************************************************************提示按鈕相關***********************************************************************/
@@ -3215,13 +3236,13 @@
 
 		/*********************************設定主題背景相關********************************/
 		var valid_css_num = 0;
-		var style = ["origin","pink","blue","xmas"];
+		var style = ["black","pink","blue","xmas","green"];
 		var text = "";
 		if (typeof(Storage) != "undefined") {                           // 先從localStorage取theme資料
 			var data = localStorage.getItem("theme");
 			text = localStorage.getItem("text");
 			if (data != null){                                            // 如果storage中有資料
-				now_theme = data;                                           // 則更改主題，若無則為預設的origin
+				now_theme = data;                                           // 則更改主題，若無則為預設的black
 				for(var i = 0; i < style.length; i++){
 					if (now_theme == style[i]){
 						valid_css_num = i;
@@ -3248,7 +3269,7 @@
 			$.fn.fullpage.moveSectionDown();
 		});
 
-		$('#change_theme_btn1, #change_theme_btn2, #change_theme_btn3, #change_theme_btn4').click(function(e){
+		$('.change_theme_btn').click(function(e){
 			e.preventDefault();
 			$.fn.fullpage.moveTo(2, 1);
 		});

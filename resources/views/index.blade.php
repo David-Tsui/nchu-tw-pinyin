@@ -15,10 +15,11 @@
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
-		<link href="./css/theme-origin.css" rel="stylesheet" id="CSS1" disabled="disabled">
-		<link href="./css/theme-pink.css" rel="stylesheet" id="CSS2" disabled="disabled">
-		<link href="./css/theme-blue.css" rel="stylesheet" id="CSS3" disabled="disabled">
-		<link href="./css/theme-xmas.css" rel="stylesheet" id="CSS4" disabled="disabled">
+		<link href="./css/theme_black.css" rel="stylesheet" id="CSS1" disabled="disabled">
+		<link href="./css/theme_pink.css" rel="stylesheet" id="CSS2" disabled="disabled">
+		<link href="./css/theme_blue.css" rel="stylesheet" id="CSS3" disabled="disabled">
+		<link href="./css/theme_xmas.css" rel="stylesheet" id="CSS4" disabled="disabled">
+		<link href="./css/theme_green.css" rel="stylesheet" id="CSS5" disabled="disabled">
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -28,12 +29,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-			.jqte_origin_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_source{
+			.jqte_black_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_green_editor, .jqte_source{
 				min-height: 365px;
 				max-height: 365px;
 			}
 
-			.jqte_origin_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_source{
+			.jqte_black_flat_editor, .jqte_blue_flat_editor, .jqte_pink_flat_editor, .jqte_xmas_flat_editor, .jqte_green_flat_editor, .jqte_source{
 				min-height: 180px;
 				max-height: 180px;
 			}
@@ -321,12 +322,12 @@
 				<div class="slide" data-anchor="slide2">
 					<div class="container">
 						<div class="row">
-							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(1/4)</p>
+							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(1/5)</p>
 							<div class="thumbnail">
-								<img class="thumbnail_img" src="./images/theme/origin.jpg" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/black.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
-									<p><button class="btn btn-primary" id="change_theme_btn1" role="button" onclick="change_theme('origin')">套用</button></p>
+									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('black')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -335,12 +336,12 @@
 				<div class="slide" data-anchor="slide3">
 					<div class="container">
 						<div class="row">
-							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(2/4)</p>
+							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(2/5)</p>
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
-									<p><button class="btn btn-primary" id="change_theme_btn2" role="button" onclick="change_theme('pink')">套用</button></p>
+									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('pink')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -349,12 +350,12 @@
 				<div class="slide" data-anchor="slide4">
 					<div class="container">
 						<div class="row">
-							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(3/4)</p>
+							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(3/5)</p>
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
-									<p><button class="btn btn-primary" id="change_theme_btn3" role="button" onclick="change_theme('blue')">套用</button></p>
+									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('blue')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -363,12 +364,26 @@
 				<div class="slide" data-anchor="slide5">
 					<div class="container">
 						<div class="row">
-							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(4/4)</p>
+							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(4/5)</p>
 							<div class="thumbnail">
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
-									<p><button class="btn btn-primary" id="change_theme_btn4" role="button" onclick="change_theme('xmas')">套用</button></p>
+									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('xmas')">套用</button></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide" data-anchor="slide6">
+					<div class="container">
+						<div class="row">
+							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(5/5)</p>
+							<div class="thumbnail">
+								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
+								<div class="caption">
+									<h3 style="font-family: '微軟正黑體'">萊姆青綠</h3>
+									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('green')">套用</button></p>
 								</div>
 							</div>
 						</div>
