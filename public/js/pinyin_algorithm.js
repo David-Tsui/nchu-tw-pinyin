@@ -3235,7 +3235,6 @@
 		$('.menu .item').tab();                 
 
 		/*********************************設定主題背景相關********************************/
-		var valid_css_num = 0;
 		var style = ["black","pink","blue","xmas","green"];
 		var text = "";
 		if (typeof(Storage) != "undefined") {                           // 先從localStorage取theme資料
@@ -3244,10 +3243,7 @@
 			if (data != null){                                            // 如果storage中有資料
 				now_theme = data;                                           // 則更改主題，若無則為預設的black
 				for(var i = 0; i < style.length; i++){
-					if (now_theme == style[i]){
-						valid_css_num = i;
-						break;
-					}
+					if (now_theme == style[i]) break;
 				}
 			}
 		}

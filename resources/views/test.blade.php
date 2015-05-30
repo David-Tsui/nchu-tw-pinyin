@@ -10,13 +10,14 @@
     <link href="{{ asset('/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('/semantic/semantic.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/modify.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/theme-origin.css') }}" rel="stylesheet" id="CSS1" disabled="disabled">
-    <link href="{{ asset('/css/theme-pink.css') }}" rel="stylesheet" id="CSS2" disabled="disabled">
-    <link href="{{ asset('/css/theme-blue.css') }}" rel="stylesheet" id="CSS3" disabled="disabled">
-    <link href="{{ asset('/css/theme-xmas.css') }}" rel="stylesheet" id="CSS4" disabled="disabled">
+    <link href="{{ asset('/css/theme_black.css') }}" rel="stylesheet" id="CSS1" disabled="disabled">
+    <link href="{{ asset('/css/theme_pink.css') }}" rel="stylesheet" id="CSS2" disabled="disabled">
+    <link href="{{ asset('/css/theme_blue.css') }}" rel="stylesheet" id="CSS3" disabled="disabled">
+    <link href="{{ asset('/css/theme_xmas.css') }}" rel="stylesheet" id="CSS4" disabled="disabled">
+    <link href="{{ asset('/css/theme_green.css') }}" rel="stylesheet" id="CSS5" disabled="disabled">
     <script src="{{ asset('/js/jquery-1.11.1.js') }}"></script>
     <script>
-    	var style = ["origin","pink","blue","xmas"];
+    	var style = ["black","pink","blue","xmas","green"];
     	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];    // navbar的元素
     	$(document).ready(function(){
 				var theme = get_theme();
@@ -28,62 +29,77 @@
     	});      
       
       function get_theme(){
-        var theme = "origin";
-        var valid_css_num = 0;
-
+        var theme = "black";
 	      if (typeof(Storage) != "undefined") {           				// 先從localStorage取theme資料
 					var data = localStorage.getItem("theme");
-					if (data != null){											// 如果storage中有資料
-						theme = data;											// 則更改主題，若無則為預設的origin
-						for(var i = 0; i < style.length; i++){
-							if (theme == style[i]){
-								valid_css_num = i;
-								return valid_css_num;
-							}
-						}
-					}
+					if (data != null)											// 如果storage中有資料
+						theme = data;											  // 則更改主題，若無則為預設的black
 				}
+        return theme;
       }
 
-    	function change_theme(css_num){
-    		for(var i = 1; i <= style.length; i++){
-          if (i == (css_num + 1))
-            document.getElementById("CSS" + i).disabled = false;
+    	function change_theme(theme){
+    		for(var i = 0; i < style.length; i++){
+          if (theme == style[i])
+            document.getElementById("CSS" + (i + 1)).disabled = false;
           else
-            document.getElementById("CSS" + i).disabled = true;
+            document.getElementById("CSS" + (i + 1)).disabled = true;
         }
     	}
 
       function nav_assign_color(theme){
-        if (theme == 0){
-          nav_color = ["rgb(240, 160, 28)","#F87284","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
-          var arr_len = nav_arr.length;
-          for(var i = 0; i < arr_len; i++){
-              $(nav_arr[i]).css('color',nav_color[i]);
-              $(nav_arr[i]).on('mouseenter',function(){$(this).css('color',"white");});
-              (function(i){
-                  $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
-              })(i);
+        var nav_color = ["rgb(240, 160, 28)","#F87284","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
+        var nav_arr_len = nav_arr.length;
+        if (theme == "black"){
+          static_color = "#fff";
+          for(var i = 0; i < nav_arr_len; i++){
+            $(nav_arr[i]).css('color',nav_color[i]);
+            $(nav_arr[i]).on('mouseenter',function(){$(this).css('color',static_color);});
+            (function(i){
+              $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});    
+            })(i);
           }
         }
-        else if (theme == 1){
-          nav_color = "#FFF";
-          for(var i = 0; i < nav_arr.length; i++){
-              $(nav_arr[i]).css('color',nav_color);
+        else if (theme == "pink"){
+          static_color = "#fff";
+          for(var i = 0; i < nav_arr_len; i++){
+            $(nav_arr[i]).css('color',static_color);
+            (function(i){
+              $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+            })(i);
+            $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});  
           }
         }
-        else if (theme == 2){
-          nav_color = "#FFF";
-          for(var i = 0; i < nav_arr.length; i++){
-              $(nav_arr[i]).css('color',nav_color);
+        else if (theme == "blue"){
+          static_color = "#fff";
+          for(var i = 0; i < nav_arr_len; i++){
+            $(nav_arr[i]).css('color',static_color);
+            (function(i){
+              $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+            })(i);
+            $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
           }
         }
-        else if (theme == 3){
-          nav_color = "#FFF";
-          for(var i = 0; i < nav_arr.length; i++){
-              $(nav_arr[i]).css('color',nav_color);
+        else if (theme == "xmas"){
+          static_color = "#fff";
+          for(var i = 0; i < nav_arr_len; i++){
+            $(nav_arr[i]).css('color',static_color);
+            (function(i){
+              $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+            })(i);
+            $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
           }
         } 
+        else if (theme == "green"){
+          static_color = "rgb(95, 37, 11)";
+          for(var i = 0; i < nav_arr_len; i++){
+            $(nav_arr[i]).css('color',static_color);
+            (function(i){
+              $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});    
+            })(i);
+            $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
+          }
+        }
       }
     </script>
 	</head>
