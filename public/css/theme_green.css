@@ -3,8 +3,8 @@ body {
 	background: url(green_back.jpg) no-repeat center center fixed;
 	/*common*/
 	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
  	background-size: cover;
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, 
 				 sans-serif;
@@ -34,11 +34,11 @@ body {
 	-moz-box-shadow: inset 0px -8px 25px 8px rgba(147, 244, 136, 0.9);
 	/*common*/
 	position: absolute;
-  	padding-top: 10px;
-  	bottom: 40px;
-  	width: 100%;
-  	height: 70px;
-  	display: block;
+	padding-top: 10px;
+	bottom: 40px;
+	width: 100%;
+	height: 70px;
+	display: block;
 }
 
 #footer_flat {
