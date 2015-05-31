@@ -15,11 +15,11 @@
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
-		<link href="./css/theme_black.css" rel="stylesheet" id="CSS1" disabled="disabled">
-		<link href="./css/theme_pink.css" rel="stylesheet" id="CSS2" disabled="disabled">
-		<link href="./css/theme_blue.css" rel="stylesheet" id="CSS3" disabled="disabled">
-		<link href="./css/theme_xmas.css" rel="stylesheet" id="CSS4" disabled="disabled">
-		<link href="./css/theme_green.css" rel="stylesheet" id="CSS5" disabled="disabled">
+		<link href="./css/theme_black.css" rel="stylesheet" id="theme_black" disabled="disabled">
+		<link href="./css/theme_pink.css" rel="stylesheet" id="theme_pink" disabled="disabled">
+		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue" disabled="disabled">
+		<link href="./css/theme_xmas.css" rel="stylesheet" id="theme_xmas" disabled="disabled">
+		<link href="./css/theme_green.css" rel="stylesheet" id="theme_green" disabled="disabled">
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -327,7 +327,7 @@
 								<img class="thumbnail_img" src="./images/theme/black.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('black')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('black')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -341,7 +341,7 @@
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('pink')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -355,7 +355,7 @@
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('blue')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -369,7 +369,7 @@
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('xmas')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas')">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -380,10 +380,10 @@
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(5/5)</p>
 							<div class="thumbnail">
-								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
+								<img class="thumbnail_img" src="./images/theme/green.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">萊姆青綠</h3>
-									<p><button class="btn btn-primary" class="change_theme_btn" role="button" onclick="change_theme('green')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('green')">套用</button></p>
 								</div>
 							</div>
 						</div>
