@@ -10,8 +10,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="./pace/pace.js"></script>
   	<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
-		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
-		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="./jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
+		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue" disabled="disabled">
 		<link href="./css/theme_xmas.css" rel="stylesheet" id="theme_xmas" disabled="disabled">
 		<link href="./css/theme_green.css" rel="stylesheet" id="theme_green" disabled="disabled">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
+		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.min.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -511,18 +511,18 @@
 			</div>
 		</div>
 
-		<script src="./js/jquery-1.11.1.js"></script>
+		<script src="./js/jquery-1.11.1.min.js"></script>
 		<script src="./js/pinyin_algorithm.js"></script>
-		<script src="./jquery-ui-1.11.2/jquery-ui.js"></script>
-		<script src="./bootstrap/js/bootstrap.js"></script>
-		<script src="./semantic/semantic.js"></script>
+		<script src="./jquery-ui-1.11.2/jquery-ui.min.js"></script>
+		<script src="./bootstrap/js/bootstrap.min.js"></script>
+		<script src="./semantic/semantic.min.js"></script>
 		<script src="./fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 		<script src="./fullPage.js/jquery.fullPage.js"></script>
-		<script src="./js/bootstrap-modal.js"></script>
-		<script src="./js/bootstrap-modalmanager.js"></script>
-		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.js"></script>
+		<!--<script src="./js/bootstrap-modal.js"></script>
+		<script src="./js/bootstrap-modalmanager.js"></script>-->
+		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
 		<script src="./js/jquery.zclip.js"></script>
-		<script src="./js/buttons.js"></script>
+		<script src="./js/buttons.min.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
 		<!--<script src="./bootstrap-table/src/bootstrap-table.js"></script>
