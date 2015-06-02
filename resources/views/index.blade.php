@@ -319,7 +319,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide2">
+				<div class="slide" data-anchor="black-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(1/5)</p>
@@ -327,13 +327,13 @@
 								<img class="thumbnail_img" src="./images/theme/black.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('black')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('black',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide3">
+				<div class="slide" data-anchor="pink-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(2/5)</p>
@@ -341,13 +341,13 @@
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide4">
+				<div class="slide" data-anchor="blue-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(3/5)</p>
@@ -355,13 +355,13 @@
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide5">
+				<div class="slide" data-anchor="xmas-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(4/5)</p>
@@ -369,13 +369,13 @@
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide6">
+				<div class="slide" data-anchor="green-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(5/5)</p>
@@ -383,7 +383,7 @@
 								<img class="thumbnail_img" src="./images/theme/green.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">萊姆青綠</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('green')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('green',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
