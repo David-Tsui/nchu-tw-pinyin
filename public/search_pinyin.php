@@ -28,7 +28,7 @@
 
   	if (count($arr) == 0)
   	{
-  		$time_start = microtime(true);
+  		//$time_start = microtime(true);
 
 		$length = mb_strlen($key);
 		$cut_key = array_fill(1, $length, "-1");
