@@ -2,7 +2,7 @@
 	include ("class_word.php");
 	include("mysql_connect.inc.php");
 	//$key = trim($_GET['term']);
-	$key = "中興大學才不在台中呢";
+	$key = "苦幹實幹，撤職查辦！";
 	$arr = array();
 
 
@@ -38,9 +38,9 @@
 
 		$ans = "";
 
-		/*echo "cut_key:<br>";
+		echo "cut_key:<br>";
 		var_dump($cut_key);
-		echo "<br><br>";*/
+		echo "<br><br>";
 
 		$edit_start = 1;
 		$edit_end = 0;
@@ -74,14 +74,14 @@
 				$ans_tp = Find_Greatest_Word($edit_start, $edit_end, $cut_key, $db);
 				$ans .= $ans_tp;
 
-				/*echo "ans_tp=" . $ans_tp . "<br>";
-				echo "ans_now=" . $ans . "<br>";*/
+				echo "ans_tp=" . $ans_tp . "<br>";
+				echo "ans_now=" . $ans . "<br>";
 
 				$edit_start = $edit_end + 1;
 
-				//echo "next_start=" . $edit_start . "<br>";
+				echo "next_start=" . $edit_start . "<br>";
 			}
-			//echo "-----------------------------<br><br>";
+			echo "-----------------------------<br><br>";
 		}
 
 		echo 'key = "' . $key . '"<br>';
@@ -99,7 +99,7 @@
 	function Find_Greatest_Word ($edit_start, $edit_end, $cut_key, $db)
 	{
 		$edit_length = $edit_end - $edit_start + 1;
-		//echo "edit_start=" . $edit_start . " , edit_end=" . $edit_end . " , edit_length=" . $edit_length . "<br></br>";
+		echo "edit_start=" . $edit_start . " , edit_end=" . $edit_end . " , edit_length=" . $edit_length . "<br></br>";
 		//edit_start=新字頭, edit_end=新字尾, edit_len=end-start+1;
 		
 		$map_arr = array_fill(0, $edit_length+1, array_fill(0, $edit_length+1, null));
@@ -107,7 +107,7 @@
 		for ($i=1; $i<$edit_length+1; $i++)
 		{
 			$term = $cut_key[$i+$edit_start-1];
-			//echo "term = " . $term . "<br>";
+			echo "term = " . $term . "<br>";
 			for ($j=$i; $j<=$edit_length+1; $j++)
 			{
 				if ($j != $i)
@@ -125,7 +125,7 @@
 			}
 		}
 
-		/*echo "<br>map_arr:</br>";
+		echo "<br>map_arr:</br>";
 		//map_arr start at 1 to length
 		for ($i=0; $i<$edit_length; $i++)
 		{
@@ -136,10 +136,10 @@
 					echo $map_arr[$i][$j]->pinyin . "&nbsp;&nbsp;&nbsp;&nbsp;,";
 			}
 			echo "<br>";
-		}*/
+		}
 
 		//table start
-		/*echo '<br><table border="1" style="width:100%">';
+		echo '<br><table border="1" style="width:100%">';
 		echo "<tr>";
 		for ($i=0; $i<$edit_length+1; $i++)
 			if ($i == 0)
@@ -201,9 +201,9 @@
 			$count++;
 		}
 
-		/*echo "<br><br>";
+		echo "<br><br>";
 		var_dump($ans_arr);
-		echo "<br><br>";*/
+		echo "<br><br>";
 
 		$ans_tp = "";
 		for ($i = $count - 1; $i > 0; $i--)
@@ -216,7 +216,7 @@
 
 	function CheckCht($str)
 	{
-		$reg = "/^([\x7f-\xff]+)$/"; 
+		$reg = "/[\x{4e00}-\x{9fa5}]/u";
 		if (preg_match($reg, $str, $result))
 			return true;
 		else

@@ -216,7 +216,7 @@
 
 	function CheckCht($str)
 	{
-		$reg = "/^([\x7f-\xff]+)$/"; 
+		$reg = "/[\x{4e00}-\x{9fa5}]/u";
 		if (preg_match($reg, $str, $result))
 			return true;
 		else
