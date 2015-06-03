@@ -49,8 +49,8 @@
 			for($j = $i; $j < $syllable + 1; $j++){
 				$search_key = getkey($key,$i,$j);
 				$sql = "SELECT `characters`,`score` FROM `pinyin_formal` 
-						WHERE `sound` = :search_key 
-						ORDER BY CHAR_LENGTH(`characters`) ASC, `score` DESC";
+								WHERE `sound` = :search_key 
+								ORDER BY CHAR_LENGTH(`characters`) ASC, `score` DESC";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam('search_key',$search_key);
 				$stmt->execute();
@@ -106,7 +106,7 @@
 		for($i = $count - 1; $i > 0; $i--) {
 			if ($j > 3) {
 				$over_three = 1;
-				$back[0] = $over_three;	// 若超過三詞，則回傳1
+				$back[0] = $over_three;		// 若超過三詞，則回傳1
 			}
 			$back[$j]['character'] = $ans_arr[$i]['character'];
 			$back[$j]['pinyin'] = $ans_arr[$i]['pinyin'];

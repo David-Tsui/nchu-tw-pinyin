@@ -10,8 +10,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="./pace/pace.js"></script>
   	<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
-		<link href="./jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet">
-		<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="./jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
+		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue" disabled="disabled">
 		<link href="./css/theme_xmas.css" rel="stylesheet" id="theme_xmas" disabled="disabled">
 		<link href="./css/theme_green.css" rel="stylesheet" id="theme_green" disabled="disabled">
-		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.css" rel="stylesheet">
+		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.min.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -319,7 +319,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide2">
+				<div class="slide" data-anchor="black-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(1/5)</p>
@@ -327,13 +327,13 @@
 								<img class="thumbnail_img" src="./images/theme/black.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">簡約黑白</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('black')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('black',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide3">
+				<div class="slide" data-anchor="pink-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(2/5)</p>
@@ -341,13 +341,13 @@
 								<img class="thumbnail_img" src="./images/theme/pink.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">甜蜜粉紅</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('pink',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide4">
+				<div class="slide" data-anchor="blue-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(3/5)</p>
@@ -355,13 +355,13 @@
 								<img class="thumbnail_img" src="./images/theme/blue.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">飄逸水藍</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('blue',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide5">
+				<div class="slide" data-anchor="xmas-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(4/5)</p>
@@ -369,13 +369,13 @@
 								<img class="thumbnail_img" src="./images/theme/xmas.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">耶誕佳節</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('xmas',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="slide" data-anchor="slide6">
+				<div class="slide" data-anchor="green-theme">
 					<div class="container">
 						<div class="row">
 							<p style="font-size: 20px; font-weight: bold; text-align: center">主題背景一覽(5/5)</p>
@@ -383,7 +383,7 @@
 								<img class="thumbnail_img" src="./images/theme/green.jpg" alt="img not found!">
 								<div class="caption">
 									<h3 style="font-family: '微軟正黑體'">萊姆青綠</h3>
-									<p><button class="btn btn-primary" role="button" onclick="change_theme('green')">套用</button></p>
+									<p><button class="btn btn-primary" role="button" onclick="change_theme('green',false)">套用</button></p>
 								</div>
 							</div>
 						</div>
@@ -511,18 +511,18 @@
 			</div>
 		</div>
 
-		<script src="./js/jquery-1.11.1.js"></script>
+		<script src="./js/jquery-1.11.1.min.js"></script>
 		<script src="./js/pinyin_algorithm.js"></script>
-		<script src="./jquery-ui-1.11.2/jquery-ui.js"></script>
-		<script src="./bootstrap/js/bootstrap.js"></script>
-		<script src="./semantic/semantic.js"></script>
+		<script src="./jquery-ui-1.11.2/jquery-ui.min.js"></script>
+		<script src="./bootstrap/js/bootstrap.min.js"></script>
+		<script src="./semantic/semantic.min.js"></script>
 		<script src="./fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 		<script src="./fullPage.js/jquery.fullPage.js"></script>
-		<script src="./js/bootstrap-modal.js"></script>
-		<script src="./js/bootstrap-modalmanager.js"></script>
-		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.js"></script>
+		<!--<script src="./js/bootstrap-modal.js"></script>
+		<script src="./js/bootstrap-modalmanager.js"></script>-->
+		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
 		<script src="./js/jquery.zclip.js"></script>
-		<script src="./js/buttons.js"></script>
+		<script src="./js/buttons.min.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
 		<!--<script src="./bootstrap-table/src/bootstrap-table.js"></script>
