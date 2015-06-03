@@ -1,100 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<body>
+	
+	</body>
+</html>
+
 <?php
-	include ("class_word.php");
-	include("mysql_connect.inc.php");
-	//$key = trim($_GET['term']);
-	$key = "苦幹實幹，撤職查辦！";
-	$arr = array();
+	echo '測試字串: <br><br>
+		1. 先帝創業未半而中道崩殂 <br><br>
+		<form action = "" method="post">
+			輸入框: <input type="text" name="str" id="name" >
+			<input type="submit" name="Go!" value="Submit"> 
+			<br/>
+		</form>
+		<br>';
+	if (!empty($_POST)) {
+		$str = $_POST["str"];
+		
+		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
+		echo "<style>
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th,td {
+				padding: 15px;
+			}
+		  </style>";
+		include ("class_word.php");
+		include("mysql_connect.inc.php");
+		$key = $str;
+		$arr = array();
 
 
-	$sql = "SELECT DISTINCT `sound` FROM `pinyin_formal` 
-			WHERE `characters` = :key 
-			ORDER BY `score` DESC, CHAR_LENGTH(`sound`) ASC";
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam(':key',$key);
-	$stmt->execute();
-	$stmt->setFetchMode(PDO::FETCH_NUM);
+		$sql = "SELECT DISTINCT `sound` FROM `pinyin_formal` 
+				WHERE `characters` = :key 
+				ORDER BY `score` DESC, CHAR_LENGTH(`sound`) ASC";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':key',$key);
+		$stmt->execute();
+		$stmt->setFetchMode(PDO::FETCH_NUM);
 
-	$i = 0;
-	$row = $stmt->fetch();
-  	do{
-    	if ($row[0] != "")
-		{						
-			$arr[$i] = $row[0];
-		}
-		else
-			break;
-		$i++;
-  	}while ($row = $stmt->fetch());
-
-  	if (count($arr) == 0)
-  	{
-  		$time_start = microtime(true);
-
-		$length = mb_strlen($key);
-		$cut_key = array_fill(1, $length, "-1");
-
-		for ($i=0; $i<$length+1; $i++)
-			$cut_key[$i+1] = mb_substr($key, $i, 1, "utf-8");
-
-		$ans = "";
-
-		echo "cut_key:<br>";
-		var_dump($cut_key);
-		echo "<br><br>";
-
-		$edit_start = 1;
-		$edit_end = 0;
-
-		for ($s=0; ; $s++)
-		{
-			if ($edit_start > $length)
-				break;
-			else if (CheckCht($cut_key[$edit_start]) == false)
-			{
-				$ans .= $cut_key[$edit_start];
-				$edit_start++;
-				continue;
+		$i = 0;
+		$row = $stmt->fetch();
+	  	do{
+	    	if ($row[0] != "")
+			{						
+				$arr[$i] = $row[0];
 			}
 			else
+				break;
+			$i++;
+	  	}while ($row = $stmt->fetch());
+
+	  	if (count($arr) == 0)
+	  	{
+	  		$time_start = microtime(true);
+
+			$length = mb_strlen($key);
+			$cut_key = array_fill(1, $length, "-1");
+
+			for ($i=0; $i<$length+1; $i++)
+				$cut_key[$i+1] = mb_substr($key, $i, 1, "utf-8");
+
+			$ans = "";
+
+			echo "cut_key:<br>";
+			var_dump($cut_key);
+			echo "<br><br>";
+
+			$edit_start = 1;
+			$edit_end = 0;
+
+			for ($s=0; ; $s++)
 			{
-				for ($t=$edit_start+1; $t<=$length; $t++)
+				if ($edit_start > $length)
+					break;
+				else if (CheckCht($cut_key[$edit_start]) == false)
 				{
-					if (CheckCht($cut_key[$t]) == false)
-					{
-						$edit_end = $t - 1;
-						break;
-					}
-					else if ($t == $length)
-					{
-						$edit_end = $t;
-						break;
-					}
+					$ans .= $cut_key[$edit_start];
+					$edit_start++;
+					continue;
 				}
+				else
+				{
+					for ($t=$edit_start+1; $t<=$length; $t++)
+					{
+						if (CheckCht($cut_key[$t]) == false)
+						{
+							$edit_end = $t - 1;
+							break;
+						}
+						else if ($t == $length)
+						{
+							$edit_end = $t;
+							break;
+						}
+					}
 
-				$ans_tp = Find_Greatest_Word($edit_start, $edit_end, $cut_key, $db);
-				$ans .= $ans_tp;
+					$ans_tp = Find_Greatest_Word($edit_start, $edit_end, $cut_key, $db);
+					$ans .= $ans_tp;
 
-				echo "ans_tp=" . $ans_tp . "<br>";
-				echo "ans_now=" . $ans . "<br>";
+					echo "ans_tp=" . $ans_tp . "<br>";
+					echo "ans_now=" . $ans . "<br>";
 
-				$edit_start = $edit_end + 1;
+					$edit_start = $edit_end + 1;
 
-				echo "next_start=" . $edit_start . "<br>";
+					echo "next_start=" . $edit_start . "<br>";
+				}
+				echo "-----------------------------<br><br>";
 			}
-			echo "-----------------------------<br><br>";
+
+			echo 'key = "' . $key . '"<br>';
+			echo '<br>fianl ans= "' . $ans . '"<br>';
+			array_push($arr, $ans);
 		}
 
-		echo 'key = "' . $key . '"<br>';
-		echo '<br>fianl ans= "' . $ans . '"<br>';
-		array_push($arr, $ans);
+		$time_end = microtime(true);
+		$time = $time_end - $time_start;
+		echo "<br><br>總執行時間: " . $time . " sec.<br><br>";
+
+		//echo json_encode($arr);
+		$db = null;
 	}
-
-	$time_end = microtime(true);
-	$time = $time_end - $time_start;
-	echo "<br><br>總執行時間: " . $time . " sec.<br><br>";
-
-	//echo json_encode($arr);
-	$db = null;
 
 	function Find_Greatest_Word ($edit_start, $edit_end, $cut_key, $db)
 	{
