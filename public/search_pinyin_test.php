@@ -1,6 +1,7 @@
 <?php
 	include ("class_word.php");
 	include("mysql_connect.inc.php");
+	//$key = trim($_GET['term']);
 	$key = "中興大學才不在台中呢";
 	$arr = array();
 
