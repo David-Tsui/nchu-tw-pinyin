@@ -245,7 +245,7 @@
 							<br>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="public_intro">
-									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 26px; font-weight: bold">輸入法特色</p>
+									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法特色</p>
 									<div style="font-size: 20px; margin-left: 10%">
 										<p><i class="green check circle icon"></i>無需考慮聲調</p>
 										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
@@ -258,7 +258,7 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="manual">
-									<p style="text-align: center; font-family: '微軟正黑體'; font-size: 26px; font-weight: bold">
+									<p style="text-align: center; font-size: 26px; font-weight: bold">
 										輸入法操作手冊
 									</p>
 									<div class="ui top attached tabular menu" style="background-color: rgba(255, 255, 255, 0)">

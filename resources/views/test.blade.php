@@ -91,7 +91,8 @@
           }
         } 
         else if (theme == "green"){
-          static_color = "rgb(71, 125, 210)";
+          //static_color = "rgb(71, 125, 210)";
+          static_color = "#fff";
           for(var i = 0; i < nav_arr_len; i++){
             $(nav_arr[i]).css('color',static_color);
             (function(i){
