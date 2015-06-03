@@ -1,8 +1,7 @@
 <?php
 	include ("class_word.php");
 	include("mysql_connect.inc.php");
-	$key = trim($_GET['term']);
-	//$key = "中興大學才不在台中呢";
+	$key = "中興大學才不在台中呢";
 	$arr = array();
 
 
@@ -84,16 +83,16 @@
 			//echo "-----------------------------<br><br>";
 		}
 
-		/*echo 'key = "' . $key . '"<br>';
-		echo '<br>fianl ans= "' . $ans . '"<br>';*/
+		echo 'key = "' . $key . '"<br>';
+		echo '<br>fianl ans= "' . $ans . '"<br>';
 		array_push($arr, $ans);
 	}
 
-	/*$time_end = microtime(true);
+	$time_end = microtime(true);
 	$time = $time_end - $time_start;
-	echo "<br><br>總執行時間: " . $time . " sec.<br><br>";*/
+	echo "<br><br>總執行時間: " . $time . " sec.<br><br>";
 
-	echo json_encode($arr);
+	//echo json_encode($arr);
 	$db = null;
 
 	function Find_Greatest_Word ($edit_start, $edit_end, $cut_key, $db)
