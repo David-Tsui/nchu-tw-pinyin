@@ -4,8 +4,7 @@
 	$key = trim($_GET['term']);
 	//$key = "中興大學才不在台中呢";
 	$arr = array();
-
-
+	
 	$sql = "SELECT DISTINCT `sound` FROM `pinyin_formal` 
 			WHERE `characters` = :key 
 			ORDER BY `score` DESC, CHAR_LENGTH(`sound`) ASC";

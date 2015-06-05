@@ -68,14 +68,14 @@ html, body{
 	height: 26px;
 	margin: auto;
 	margin-top: 12px;
-	/*margin-left: -28px;*/
+	margin-left: -28px;
 }
 
 #google_btn_flat {
 	width: 68px;
 	height: 24px;
-	margin: auto;
-	margin-top: 7px;
+	margin-top: 15px;
+  	margin-left: -26px;
 }
 
 #input {
@@ -132,6 +132,11 @@ html, body{
 	max-height: 120px;
 	max-width: 100%;
 	border-radius: 5px;
+}
+
+.tutorial_prompt {
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .myForm_body {

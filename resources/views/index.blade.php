@@ -179,23 +179,50 @@
 										
 						<div class="col-xs-12 col-sm-4 col-md-4" id="Input_place">
 							<div id="input" placeholder="請在此輸入英文拼音..." contenteditable="true" data-variation="large" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="margin-top: 15px"></div>							
-							<div class="col-xs-12 col-sm-2 col-md-2"></div>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<!--<div class="ui input hidden-xs">
+							<div class="col-xs-12 col-sm-2 col-md-2 hidden-xs">
+								<div class="circular ui icon basic button" id="control_play" onclick="controlPlay()" style="margin-top: 4px">
+									<i class="large unmute icon"></i>
+								</div>
+								<!--<div class="circular ui icon basic button visible-xs" id="control_play_flat" onclick="controlPlay()" style="float: left">
+									<i class="massive unmute icon"></i>
+								</div>-->
+							</div>
+							<div class="col-xs-12 col-sm-8 col-md-8 hidden-xs">
+								<div class="ui input">
 									<div style="margin-top: 5px">
-										<span style="font-size: 14px; color: #000">自選模式&nbsp;&nbsp;</span>
+										<span style="font-size: 14px; color: #000">自選&nbsp;&nbsp;</span>
 										<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
-										    <input type="checkbox">
+										    <input type="checkbox" id="box_mode">
 										    <label></label>
 										</div>
-										<span style="font-size: 14px; color: #000">智能模式</span>
+										<span style="font-size: 14px; color: #000">智能</span>
 									</div>												
-								</div>-->
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn" data-variation="large"></a>
-								<a href="javascript: google();"><img src="./images/google_logo.png" class="visible-xs" id="google_btn_flat" data-variation="small"></a>
+								</div>
 							</div>		
-							<div class="col-xs-12 col-sm-2 col-md-2">		
-								<!--<a href="javascript: google();"><img src="./images/google_logo.png" class="hidden-xs" id="google_btn"></a>-->
+							<div class="col-xs-12 col-sm-2 col-md-2 hidden-xs">		
+								<a href="javascript: google();"><img src="./images/google_logo.png" id="google_btn" data-variation="large"></a>
+							</div>
+							<div class="col-xs-12 visible-xs">
+								<div class="col-xs-2">
+									<div class="circular ui icon basic button" id="control_play" onclick="controlPlay()" style="margin-top: 4px">
+										<i class="large unmute icon"></i>
+									</div>
+								</div>
+								<div class="col-xs-8">
+									<div class="ui input">
+										<div style="margin-top: 5px">
+											<span style="font-size: 14px; color: #000">自選&nbsp;&nbsp;</span>
+											<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
+											    <input type="checkbox" id="box_mode">
+											    <label></label>
+											</div>
+											<span style="font-size: 14px; color: #000">智能</span>
+										</div>												
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<a href="javascript: google();"><img src="./images/google_logo.png" id="google_btn_flat" data-variation="small"></a>
+								</div>
 							</div>
 							<br>
 							<div class="ui input">
@@ -244,27 +271,13 @@
 							<div class="push"></div>
 							<br>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<div class="jumbotron" id="public_intro">
-									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法特色</p>
-									<div style="font-size: 20px; margin-left: 10%">
-										<p><i class="green check circle icon"></i>無需考慮聲調</p>
-										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
-										<p><i class="green check circle icon"></i>支援改字</p>
-										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
-										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
-										<p><i class="green check circle icon"></i>多種配色主題</p>
-									</div>						
-								</div>				
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<div class="jumbotron" id="manual">
+								<div class="jumbotron" id="manual" style="padding-left: 45px; padding-right: 45px">
 									<p style="text-align: center; font-size: 26px; font-weight: bold">
 										輸入法操作手冊
 									</p>
-									<div class="ui top attached tabular menu" style="background-color: rgba(255, 255, 255, 0)">
-										<a class="active item" data-tab="first">輸入方法</a>
-										<a class="item" data-tab="second">快捷鍵-1</a>
-										<a class="item" data-tab="third">快捷鍵-2</a>
+									<div class="ui top attached labeled icon tabular menu" style="background-color: rgba(255, 255, 255, 0);">
+										<a class="active item" data-tab="first"><i class="font icon"></i>輸入方法</a>
+										<a class="item" data-tab="second"><i class="keyboard icon"></i>快捷鍵</a>
 									</div>
 									<div class="ui bottom attached active tab segment" data-tab="first">
 										<div>
@@ -278,40 +291,95 @@
 											<p style="margin-left: -2px">&emsp;&nbsp;&nbsp;縮寫輸入&emsp;<i class="idea icon"></i>範例： NCHU => 中興大學</p>
 										</div>
 									</div>
-									<div class="ui bottom attached tab segment" data-tab="second">
-										<p><i class="blue wizard icon"></i>在輸入框中按下ctrl + c直接複製到右方編輯區</p>
-										<p><i class="blue wizard icon"></i>在輸入框中按下ctrl + x直接剪下到右方編輯區</p>
-										<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>
-										<p>
-											<i class="blue wizard icon"></i>
-											<span class="keyboard keyboard-4" style="margin-left: -2px"></span>
-											<span class="keyboard keyboard-5"></span>
-											<span class="keyboard keyboard-8"></span>
-											<span class="keyboard keyboard-7"></span>
-											<span class="keyboard keyboard-6"></span>
-											<span class="keyboard keyboard-1"></span>
-											<span class="keyboard keyboard-2"></span>
-											<div style="text-align: center">
-												<span>對應</span>
+									<div class="ui bottom attached tab segment" data-tab="second" id="shortcut" style="width: 100%; height: 280px; overflow: auto">
+										<div>
+											<p><i class="blue wizard icon"></i>在輸入框中內按下</p>
+											<table class="ui celled table" style="width: 88%; margin: auto">
+											  <thead>
+											  </thead>
+											  <tbody>
+											    <tr>
+											      <td>ctrl + c</td>
+											      <td>直接複製到右方編輯區</td>
+											    </tr>
+											    <tr>
+											      <td>ctrl + x</td>
+											      <td>直接剪下到右方編輯區</td>
+											    </tr>
+											    <tr>
+											      <td>ctrl + delete</td>
+											      <td>初始化輸入框</td>
+											    </tr>
+											    <tr>
+											      <td>ctrl + alt</td>
+											      <td>切換輸入模式</td>
+											    </tr>
+											    <tr>
+														<td>alt + v</td>
+														<td>開啟 / 關閉發音功能</td>
+											    </tr>
+											  </tbody>
+											</table>
+											<br>
+											<p><i class="blue wizard icon"></i>輸入頁面中，當已點選任何輸入框時，</p>
+											<table class="ui celled table" style="width: 88%; margin: auto">
+											  <thead>
+											  </thead>
+											  <tbody>
+											    <tr>
+											      <td>alt + b</td>
+											      <td>輸入游標移至反查拼音欄</td>
+											    </tr>
+											    <tr>
+											      <td>alt + n</td>
+											      <td>輸入游標移至中央拼音欄</td>
+											    </tr>
+											    <tr>
+											      <td>alt + m</td>
+											      <td>輸入游標移至文字編輯器</td>
+											    </tr>
+											  </tbody>
+											</table>
+											<br>
+											<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>
+											<p>
+												<i class="blue wizard icon"></i>
+												<span class="keyboard keyboard-4" style="margin-left: -2px"></span>
+												<span class="keyboard keyboard-5"></span>
+												<span class="keyboard keyboard-8"></span>
+												<span class="keyboard keyboard-7"></span>
+												<span class="keyboard keyboard-6"></span>
+												<span class="keyboard keyboard-1"></span>
+												<span class="keyboard keyboard-2"></span>
+												<div style="text-align: center">
+													<span>對應</span>
+												</div>
+											</p>
+											<div style="margin-top: -10px">					
+												<span class="punctuation" style="margin-left: 28px">，</span>
+												<span class="punctuation">。</span>
+												<span class="punctuation">、</span>
+												<span class="punctuation">；</span>
+												<span class="punctuation">？</span>
+												<span class="punctuation">「</span>
+												<span class="punctuation">」</span>
 											</div>
-										</p>
-										<div style="margin-top: -10px">					
-											<span class="punctuation" style="margin-left: 28px">，</span>
-											<span class="punctuation">。</span>
-											<span class="punctuation">、</span>
-											<span class="punctuation">；</span>
-											<span class="punctuation">？</span>
-											<span class="punctuation">「</span>
-											<span class="punctuation">」</span>
 										</div>
 									</div>
-									<div class="ui bottom attached tab segment" data-tab="third">
-										<p><i class="blue wizard icon"></i>輸入頁面中，當已點選任何輸入框時，</p>
-										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + b，跳至反查拼音欄</p>
-										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + n，跳至中央拼音欄</p>
-										<p style="margin-left: -2px;">&emsp;&nbsp;&nbsp;按下alt + m，跳至文字編輯器</p>
-									</div>
 								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="jumbotron" id="public_intro">
+									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法特色</p>
+									<div style="font-size: 20px; margin-left: 10%">
+										<p><i class="green check circle icon"></i>無需考慮聲調</p>
+										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
+										<p><i class="green check circle icon"></i>支援改字</p>
+										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
+										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
+										<p><i class="green check circle icon"></i>多種配色主題</p>
+									</div>						
+								</div>				
 							</div>
 						</div>
 						<div class="visible-xs">
@@ -394,9 +462,12 @@
 			<div class="section" id="section3">
 				<div class="container">
 					<div class="row" id="test_block">
-						<div class="push"></div>
-						<h2 style="font-family: '微軟正黑體'">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</h2>
-						<h2 style="font-family: '微軟正黑體'">下方表格列舉子音跟母音的部分搭配：</h2>
+						<div class="push hidden-xs"></div>
+						<div class="visible-xs"><br></div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<p class="tutorial_prompt">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</p>
+							<p class="tutorial_prompt">下方表格列舉子音跟母音的部分搭配：</p>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -78,7 +78,7 @@ body {
 }
 
 .ui.slider.checkbox .box:before, .ui.slider.checkbox label:before {
-	background-color: rgba(55, 87, 253, 0.75);
+	background-color: rgba(73, 203, 28, 0.85);
 }
 
 .ui.slider.checkbox input[type="checkbox"]:checked ~ .box:before, 
