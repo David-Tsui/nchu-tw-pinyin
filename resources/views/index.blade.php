@@ -15,11 +15,11 @@
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
 		<link href="./css/modify.css" rel="stylesheet">
-		<link href="./css/theme_black.css" rel="stylesheet" id="theme_black" disabled="disabled">
-		<link href="./css/theme_pink.css" rel="stylesheet" id="theme_pink" disabled="disabled">
-		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue" disabled="disabled">
-		<link href="./css/theme_xmas.css" rel="stylesheet" id="theme_xmas" disabled="disabled">
-		<link href="./css/theme_green.css" rel="stylesheet" id="theme_green" disabled="disabled">
+		<link href="./css/theme_black.css" rel="stylesheet" id="theme_black">
+		<link href="./css/theme_pink.css" rel="stylesheet" id="theme_pink">
+		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue">
+		<link href="./css/theme_xmas.css" rel="stylesheet" id="theme_xmas">
+		<link href="./css/theme_green.css" rel="stylesheet" id="theme_green">
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.min.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -90,7 +90,7 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-3 col-md-3">
 							<div class="hidden-xs lab_qrcode" id="change_qr" style="text-align: left; margin-left: 28%">
-								<img src="./images/pinyinQR.png" id="my_qrcode" onclick="change_pic()" width="160px" height="160px" style="margin-top: -13px"/>
+								<img src="./images/pinyinQR.png" alt="img not found!" id="my_qrcode" onclick="change_pic()" style="margin-top: -13px; width: 160px; height: 160px"/>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6" style="text-align: center">
@@ -183,9 +183,6 @@
 								<div class="circular ui icon basic button" id="control_play" onclick="controlPlay()" style="margin-top: 4px">
 									<i class="large unmute icon"></i>
 								</div>
-								<!--<div class="circular ui icon basic button visible-xs" id="control_play_flat" onclick="controlPlay()" style="float: left">
-									<i class="massive unmute icon"></i>
-								</div>-->
 							</div>
 							<div class="col-xs-12 col-sm-8 col-md-8 hidden-xs">
 								<div class="ui input">
@@ -200,11 +197,11 @@
 								</div>
 							</div>		
 							<div class="col-xs-12 col-sm-2 col-md-2 hidden-xs">		
-								<a href="javascript: google();"><img src="./images/google_logo.png" id="google_btn" data-variation="large"></a>
+								<a href="javascript: google();"><img src="./images/google_logo.png" alt="" id="google_btn" data-variation="large"></a>
 							</div>
 							<div class="col-xs-12 visible-xs">
 								<div class="col-xs-2">
-									<div class="circular ui icon basic button" id="control_play" onclick="controlPlay()" style="margin-top: 4px">
+									<div class="circular ui icon basic button" id="control_play_flat" onclick="controlPlay()" style="margin-top: 4px">
 										<i class="large unmute icon"></i>
 									</div>
 								</div>
@@ -212,8 +209,8 @@
 									<div class="ui input">
 										<div style="margin-top: 5px">
 											<span style="font-size: 14px; color: #000">自選&nbsp;&nbsp;</span>
-											<div class="ui slider checkbox" tabindex="0" id="select_mode" data-variation="large" style="margin-top: 13px">
-											    <input type="checkbox" id="box_mode">
+											<div class="ui slider checkbox" tabindex="0" id="select_mode_flat" data-variation="small" style="margin-top: 13px">
+											    <input type="checkbox">
 											    <label></label>
 											</div>
 											<span style="font-size: 14px; color: #000">智能</span>
@@ -221,7 +218,7 @@
 									</div>
 								</div>
 								<div class="col-xs-2">
-									<a href="javascript: google();"><img src="./images/google_logo.png" id="google_btn_flat" data-variation="small"></a>
+									<a href="javascript: google();"><img src="./images/google_logo.png" alt="" id="google_btn_flat" data-variation="small"></a>
 								</div>
 							</div>
 							<br>
@@ -271,10 +268,21 @@
 							<div class="push"></div>
 							<br>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="jumbotron" id="public_intro">
+									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法特色</p>
+									<div style="font-size: 20px; margin-left: 10%">
+										<p><i class="green check circle icon"></i>無需考慮聲調</p>
+										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
+										<p><i class="green check circle icon"></i>支援改字</p>
+										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
+										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
+										<p><i class="green check circle icon"></i>多種配色主題</p>
+									</div>						
+								</div>				
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="jumbotron" id="manual" style="padding-left: 45px; padding-right: 45px">
-									<p style="text-align: center; font-size: 26px; font-weight: bold">
-										輸入法操作手冊
-									</p>
+									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法操作手冊</p>
 									<div class="ui top attached labeled icon tabular menu" style="background-color: rgba(255, 255, 255, 0);">
 										<a class="active item" data-tab="first"><i class="font icon"></i>輸入方法</a>
 										<a class="item" data-tab="second"><i class="keyboard icon"></i>快捷鍵</a>
@@ -342,7 +350,7 @@
 											</table>
 											<br>
 											<p style="margin-top: 10px"><i class="blue wizard icon"></i><span class="keyboard keyboard-3"></span> 鍵啟用標點符號表</p>
-											<p>
+											<div>
 												<i class="blue wizard icon"></i>
 												<span class="keyboard keyboard-4" style="margin-left: -2px"></span>
 												<span class="keyboard keyboard-5"></span>
@@ -354,7 +362,7 @@
 												<div style="text-align: center">
 													<span>對應</span>
 												</div>
-											</p>
+											</div>
 											<div style="margin-top: -10px">					
 												<span class="punctuation" style="margin-left: 28px">，</span>
 												<span class="punctuation">。</span>
@@ -367,19 +375,6 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<div class="jumbotron" id="public_intro">
-									<p style="text-align: center; font-size: 26px; font-weight: bold">輸入法特色</p>
-									<div style="font-size: 20px; margin-left: 10%">
-										<p><i class="green check circle icon"></i>無需考慮聲調</p>
-										<p><i class="green check circle icon"></i>具有縮寫、音首以及英文輸入</p>
-										<p><i class="green check circle icon"></i>支援改字</p>
-										<p><i class="green check circle icon"></i>支援標點符號輸入</p>
-										<p><i class="green check circle icon"></i>可創造屬於自己的專用詞彙</p>
-										<p><i class="green check circle icon"></i>多種配色主題</p>
-									</div>						
-								</div>				
 							</div>
 						</div>
 						<div class="visible-xs">
@@ -461,17 +456,17 @@
 
 			<div class="section" id="section3">
 				<div class="container">
-					<div class="row" id="test_block">
-						<div class="push hidden-xs"></div>
-						<div class="visible-xs"><br></div>
+					<div class="push hidden-xs"></div>
+					<div class="visible-xs"><br></div>
+					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<p class="tutorial_prompt">本輸入法所使用的台語子音共有20個，母音則有73 + 2個(m, ng同為子母)</p>
 							<p class="tutorial_prompt">下方表格列舉子音跟母音的部分搭配：</p>
 						</div>
 					</div>
 					<div class="row">
+						<br>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<br>
 							<div class="panel panel-default hidden-xs" style="margin: auto">
 								<table class="table table-bordered" id="tutor_table" data-toggle="table" data-show-columns="true" data-height="680">
 									<thead>
@@ -491,7 +486,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="panel panel-default visible-xs" style="width: 100%; height: 700px; overflow: scroll">
+							<div class="panel panel-default visible-xs" style="width: 100%; height: 380px; overflow: scroll">
 								<table class="ui celled striped table" id="tutor_table_flat">
 									<thead>
 										<tr>
@@ -505,14 +500,15 @@
 						</div>
 					</div>
 					<div class="push"></div>
-					<div class="push"></div>
+					<div class="push hidden-xs"></div>
+					<div class="visible-xs"><br></div>
 				</div>
 			</div>
-
 			<div class="section" id="section4">
 				<div class="container">
 					<div class="row" style="margin-bottom: -12px">
-						<div class="push"></div>
+						<div class="push hidden-xs"></div>
+						<div class="visible-xs"><br></div>
 						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><br></div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<div id="message_board">
@@ -566,14 +562,13 @@
 						<div class="push"></div>
 						<div class="push"></div>
 						<br>
-						<!--<div class="push"></div>-->
 					</div>
 				</div>	
 				<div id="footer" style="text-align: center">
 					<p>
-						<span class='st_facebook_hcount' displayText='Facebook'></span>
-						<span class='st_twitter_hcount' displayText='Tweet'></span>
-						<span class='st_googleplus_hcount' displayText='Google +'></span>
+						<span class='st_facebook_hcount'></span>
+						<span class='st_twitter_hcount'></span>
+						<span class='st_googleplus_hcount'></span>
 					</p>
 					<p class="credit" style="color: #fff; font-size: 14px; font-weight: bold; margin-bottom: -10px">
 						中興大學資訊工程學系<i class="copyright icon"></i>2014
@@ -589,17 +584,11 @@
 		<script src="./semantic/semantic.min.js"></script>
 		<script src="./fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 		<script src="./fullPage.js/jquery.fullPage.js"></script>
-		<!--<script src="./js/bootstrap-modal.js"></script>
-		<script src="./js/bootstrap-modalmanager.js"></script>-->
 		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
 		<script src="./js/jquery.zclip.js"></script>
 		<script src="./js/buttons.min.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
-		<!--<script src="./bootstrap-table/src/bootstrap-table.js"></script>
-		<script src="./bootstrap-table/src/locale/bootstrap-table-zh-TW.js"></script>-->
-		<!--<script src="./js/jsnow.js"></script>-->
-		<!--<script src="./js/jquery-migrate-1.2.1.js"></script>-->
 		<script>
 			var switchTo5x=true;
 			stLight.options({publisher: "a95bbd74-613c-4b46-a5b3-b1afcdde1318", doNotHash: false, doNotCopy: false, hashAddressBar: false});

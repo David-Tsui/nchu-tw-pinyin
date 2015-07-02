@@ -2,7 +2,7 @@
 	/*********************************************Mainly coded by David Tsui********************************************/
 	/*******************************************************************************************************************/
 	var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
-  var now_theme = "black";
+	var now_theme = "black";
 	var customJqte = "";                                                // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                           // 記錄當前jqte_flat的樣式
 	
@@ -1307,29 +1307,27 @@
 						mode = 1;                                           // 進入選字模式
 				}
 
-				if ($("#pro_sound_" + search_key).html() == undefined){
+				pronunce_key = search_key.substring(search_key.lastIndexOf(" ") + 1,search_key.length)
+				if ($("#pro_sound_" + pronunce_key).html() == undefined){	// 如果還沒有該音檔，GET它
 					if (play_sound_flag){
-						$.getJSON('check_sound.php',{SOUND : search_key},function(data){
+						$.getJSON('check_sound.php',{SOUND : pronunce_key},function(data){
 						  if (data[0] == 1){
-						  	if (search_key.charAt(search_key.length - 1) == "p" || search_key.charAt(search_key.length - 1) == "t" ||
-						  		search_key.charAt(search_key.length - 1) == "k" || search_key.charAt(search_key.length - 1) == "h"){
-						  		$('<audio id="pro_sound_' + search_key + '"><source src="./pronunce/' + search_key.toUpperCase() + '5.wav" type="audio/wav"></audio>').appendTo('body');
-						  		$('#pro_sound_' + search_key)[0].play();
+						  	if (pronunce_key.charAt(pronunce_key.length - 1) == "p" || pronunce_key.charAt(pronunce_key.length - 1) == "t" ||
+						  		pronunce_key.charAt(pronunce_key.length - 1) == "k" || pronunce_key.charAt(pronunce_key.length - 1) == "h"){
+						  		$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '5.wav" type="audio/wav"></audio>').appendTo('body');
+						  		$('#pro_sound_' + pronunce_key)[0].play();
 						  	}
 						  	else{
-						  		$('<audio id="pro_sound_' + search_key + '"><source src="./pronunce/' + search_key.toUpperCase() + '1.wav" type="audio/wav"></audio>').appendTo('body');
-						  		$('#pro_sound_' + search_key)[0].play();
+						  		$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '1.wav" type="audio/wav"></audio>').appendTo('body');
+						  		$('#pro_sound_' + pronunce_key)[0].play();
 						  	}
-						  }
-						  else{
-
 						  }
 						});
 					}
 				}
-				else{
+				else{																										// 如果音檔已載入
 					if (play_sound_flag)
-						$('#pro_sound_' + search_key)[0].play();
+						$('#pro_sound_' + pronunce_key)[0].play();
 				}
 				associated_search_flag = false;
 			}
@@ -3530,7 +3528,7 @@
 		$("#hide_panel").hide();
 		$('<audio id="chatAudio"><source src="error.mp3" type="audio/mpeg"></audio>').appendTo('body');  
 
-		var normal_elements = ["#shortcut","#tutor_table_flat"];
+		var normal_elements = ["#shortcut","control_play_flat","#tutor_table_flat"];
 		var normal_ele = "";
 		for(var i = 0; i < normal_elements.length; i++){
 			if (i < normal_elements.length - 1)
@@ -3549,8 +3547,7 @@
 			slidesNavigation: true,
 			scrollOverflow: true,
 			css3: true,
-			normalScrollElements: normal_ele,
-			normalScrollElementTouchThreshold: 3
+			normalScrollElements: normal_ele
 			//continuousVertical: true
 		});
 
