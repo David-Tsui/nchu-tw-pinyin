@@ -9,7 +9,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="./pace/pace.js"></script>
-  	<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
+		<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
 		<link href="./jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./semantic/semantic.css" rel="stylesheet">
@@ -23,11 +23,11 @@
 		<link href="./jQuery-TE_v.1.4.0/jquery-te-custom.1.4.0.min.css" rel="stylesheet">
 		<link href="./ico/briefcase.ico" rel="shortcut icon">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
     <style>
 			.jqte_black_editor, .jqte_blue_editor, .jqte_pink_editor, .jqte_xmas_editor, .jqte_green_editor, .jqte_source{
 				min-height: 365px;
