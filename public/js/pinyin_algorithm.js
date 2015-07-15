@@ -5,7 +5,7 @@
 	var now_theme = "black";
 	var customJqte = "";                                                // 記錄當前jqte的樣式
 	var customJqte_flat = "";                                           // 記錄當前jqte_flat的樣式
-	
+	123
 	var sel_mode = 0;                                                   // 記錄當前的選字模式
 	var mode = 0;   // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
 									// 智能模式 0: 拼音模式; 1: 可空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式 4: 關聯詞模式
