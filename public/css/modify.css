@@ -12,15 +12,15 @@ html, body{
 .navbar { min-height: 50px; }
 
 .nav > li > a {
-  	padding-left: 24px;
-  	font-size: 15px;
-  	font-weight: bold;
+	padding-left: 24px;
+	font-size: 15px;
+	font-weight: bold;
 }
 
 .navbar-inverse .navbar-brand {
-  	color: #FFFFFF;
-  	font-size: 20px;
-  	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #search_pinyin { font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; }
@@ -56,9 +56,9 @@ html, body{
 }
 
 .trigger:hover::before {
-    border-bottom: ridge #FFF;
-    border-right: ridge #FFF; 
-    border-width: 8px;
+	border-bottom: ridge #FFF;
+	border-right: ridge #FFF; 
+	border-width: 8px;
 }
 
 .thumbnail_img { width: 60%; }
@@ -75,7 +75,7 @@ html, body{
 	width: 68px;
 	height: 24px;
 	margin-top: 15px;
-  	margin-left: -26px;
+	margin-left: -26px;
 }
 
 #input {
@@ -91,11 +91,11 @@ html, body{
 	padding-top: 4px;
 	-webkit-ime-mode: disabled;
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif;
-    white-space: pre-wrap;       /* css-3 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 #input[placeholder]:empty:focus:before {
@@ -154,58 +154,58 @@ tr, td {
 }
 
 .keyboard {
-    background-image: url(../images/keyboard.png);
-    background-repeat: no-repeat;
-    display: inline-block;
-    margin-left: 1px;
+	background-image: url(../images/keyboard.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+	margin-left: 1px;
 }
 
-.keyboard-1 {
-    width: 48px;
-    height: 48px;
-    background-position: -5px -5px;
+.keyboard.keyboard-1 {
+	width: 48px;
+	height: 48px;
+	background-position: -5px -5px;
 }
 
-.keyboard-2 {
-    width: 48px;
-    height: 48px;
-    background-position: -63px -5px;
+.keyboard.keyboard-2 {
+	width: 48px;
+	height: 48px;
+	background-position: -63px -5px;
 }
 
-.keyboard-3 {
-    width: 48px;
-    height: 48px;
-    background-position: -121px -5px;
+.keyboard.keyboard-3 {
+	width: 48px;
+	height: 48px;
+	background-position: -121px -5px;
 }
 
-.keyboard-4 {
-    width: 48px;
-    height: 48px;
-    background-position: -179px -5px;
+.keyboard.keyboard-4 {
+	width: 48px;
+	height: 48px;
+	background-position: -179px -5px;
 }
 
-.keyboard-5 {
-    width: 48px;
-    height: 48px;
-    background-position: -237px -5px;
+.keyboard.keyboard-5 {
+	width: 48px;
+	height: 48px;
+	background-position: -237px -5px;
 }
 
-.keyboard-6 {
-    width: 48px;
-    height: 48px;
-    background-position: -295px -5px;
+.keyboard.keyboard-6 {
+	width: 48px;
+	height: 48px;
+	background-position: -295px -5px;
 }
 
-.keyboard-7 {
-    width: 48px;
-    height: 48px;
-    background-position: -353px -5px;
+.keyboard.keyboard-7 {
+	width: 48px;
+	height: 48px;
+	background-position: -353px -5px;
 }
 
-.keyboard-8 {
-    width: 48px;
-    height: 48px;
-    background-position: -411px -5px;
+.keyboard.keyboard-8 {
+	width: 48px;
+	height: 48px;
+	background-position: -411px -5px;
 }
 
 .punctuation {
@@ -283,11 +283,11 @@ tr, td {
 /**********************************************************/
 
 /*.ui.action.input{
-	box-sizing: content-box;
+box-sizing: content-box;
 }*/
 
 /*.ui.tag.label{
-	box-sizing: content-box;
+box-sizing: content-box;
 }*/
 
 
