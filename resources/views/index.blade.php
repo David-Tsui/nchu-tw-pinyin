@@ -578,17 +578,18 @@
 		</div>
 
 		<script src="./js/jquery-1.11.1.min.js"></script>
-		<script src="./js/pinyin_algorithm.js"></script>
 		<script src="./jquery-ui-1.11.2/jquery-ui.min.js"></script>
 		<script src="./bootstrap/js/bootstrap.min.js"></script>
 		<script src="./semantic/semantic.min.js"></script>
 		<script src="./fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 		<script src="./fullPage.js/jquery.fullPage.js"></script>
 		<script src="./jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
+		<script src="./js/jquery-migrate-1.2.1.js"></script>
 		<script src="./js/jquery.zclip.js"></script>
 		<script src="./js/buttons.min.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
+		<script src="./js/pinyin_algorithm.js"></script>
 		<script>
 			var switchTo5x=true;
 			stLight.options({publisher: "a95bbd74-613c-4b46-a5b3-b1afcdde1318", doNotHash: false, doNotCopy: false, hashAddressBar: false});
