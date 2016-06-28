@@ -3,24 +3,24 @@
 /*******************************************************************************************************************/
 var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
 var now_theme = "black";
-var customJqte = "";                                                // 記錄當前jqte的樣式
-var customJqte_flat = "";                                           // 記錄當前jqte_flat的樣式
+var customJqte = "";          // 記錄當前jqte的樣式
+var customJqte_flat = "";     // 記錄當前jqte_flat的樣式
 
-var sel_mode = 0;                                                   // 記錄當前的選字模式
-var mode = 0;   // 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
-								// 智能模式 0: 拼音模式; 1: 可空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式 4: 關聯詞模式
-var search_key = "";                                                // 查詢中文字的英文拼音Key(自選及智能皆使用此)
+var sel_mode = 0;             // 記錄當前的選字模式
+var mode = 0;   							// 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
+															// 智能模式 0: 拼音模式; 1: 可空白選字的拼音模式; 2: 自動選詞模式 3: 修正模式 4: 關聯詞模式
+var search_key = "";         	// 查詢中文字的英文拼音Key(自選及智能皆使用此)
 var part_key = "";
-var search_key_loc = 0;                                             // 記錄輸入key值時的輸入位置
-var prefix_key = "";                                                // 查詢關聯詞的中文key
+var search_key_loc = 0;       // 記錄輸入key值時的輸入位置
+var prefix_key = "";          // 查詢關聯詞的中文key
 
-var auto_search_key = "";                                           // 自動選詞的搜尋key
-var auto_start = 0;                                               	// 記錄自動選字的起始位置
-var auto_letter = [];                                               // 陣列-記錄回傳的自動選詞之字詞
-var auto_pinyin = [];																								// 陣列-記錄回傳的自動選詞之拼音
-var auto_pointer = [];																							// 記錄目前自動選詞的數量
-var pinyin_record = [];                                             // 記錄輸入框中所有字詞，以物件陣列記錄
-var record_last_index = 0;																					// 記錄最後一個插入pinyin_record陣列的位置
+var auto_search_key = "";     // 自動選詞的搜尋key
+var auto_start = 0;          	// 記錄自動選字的起始位置
+var auto_letter = [];         // 陣列-記錄回傳的自動選詞之字詞
+var auto_pinyin = [];					// 陣列-記錄回傳的自動選詞之拼音
+var auto_pointer = [];				// 記錄目前自動選詞的數量
+var pinyin_record = [];       // 記錄輸入框中所有字詞，以物件陣列記錄
+var record_last_index = 0;		// 記錄最後一個插入pinyin_record陣列的位置
 /*
 pinyin_record = [
 	{
