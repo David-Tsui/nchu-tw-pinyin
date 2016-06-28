@@ -9,12 +9,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="./pace/pace.js"></script>
-		<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
+		<link href="./pace/themes/black/pace-theme-center-circle.css" rel="stylesheet"/>
 		<link href="./jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
 		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./semantic/semantic.css" rel="stylesheet">
 		<link href="./fullPage.js/jquery.fullPage.css" rel="stylesheet">
-		<link href="./css/modify.css" rel="stylesheet">
+		<link href="./css/style.css" rel="stylesheet">
 		<link href="./css/theme_black.css" rel="stylesheet" id="theme_black">
 		<link href="./css/theme_pink.css" rel="stylesheet" id="theme_pink">
 		<link href="./css/theme_blue.css" rel="stylesheet" id="theme_blue">
@@ -589,7 +589,7 @@
 		<script src="./js/buttons.min.js"></script>
 		<script src="./js/checkmessage.js"></script>
 		<script src="./js/keypress.js"></script>
-		<script src="./js/pinyin_algorithm.js"></script>
+		<script src="./js/pinyin_algorithm.min.js"></script>
 		<script>
 			var switchTo5x=true;
 			stLight.options({publisher: "a95bbd74-613c-4b46-a5b3-b1afcdde1318", doNotHash: false, doNotCopy: false, hashAddressBar: false});

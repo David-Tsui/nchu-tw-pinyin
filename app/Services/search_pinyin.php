@@ -73,24 +73,13 @@
 				$ans_tp = Find_Greatest_Word($edit_start, $edit_end, $cut_key, $db);
 				$ans .= $ans_tp;
 
-				/*echo "ans_tp=" . $ans_tp . "<br>";
-				echo "ans_now=" . $ans . "<br>";*/
-
 				$edit_start = $edit_end + 1;
 
-				//echo "next_start=" . $edit_start . "<br>";
 			}
-			//echo "-----------------------------<br><br>";
 		}
-
-		/*echo 'key = "' . $key . '"<br>';
-		echo '<br>fianl ans= "' . $ans . '"<br>';*/
 		array_push($arr, $ans);
 	}
 
-	/*$time_end = microtime(true);
-	$time = $time_end - $time_start;
-	echo "<br><br>總執行時間: " . $time . " sec.<br><br>";*/
 
 	echo json_encode($arr);
 	$db = null;
@@ -98,8 +87,6 @@
 	function Find_Greatest_Word ($edit_start, $edit_end, $cut_key, $db)
 	{
 		$edit_length = $edit_end - $edit_start + 1;
-		//echo "edit_start=" . $edit_start . " , edit_end=" . $edit_end . " , edit_length=" . $edit_length . "<br></br>";
-		//edit_start=新字頭, edit_end=新字尾, edit_len=end-start+1;
 		
 		$map_arr = array_fill(0, $edit_length+1, array_fill(0, $edit_length+1, null));
 
@@ -123,45 +110,6 @@
 					$map_arr[$i][$j] = new Word($i, $j, $term, $row[0], log($row[1]));
 			}
 		}
-
-		/*echo "<br>map_arr:</br>";
-		//map_arr start at 1 to length
-		for ($i=0; $i<$edit_length; $i++)
-		{
-			for ($j=0; $j<$edit_length; $j++){
-				if (is_null($map_arr[$i][$j]))
-					echo "X&nbsp;&nbsp;&nbsp;&nbsp;,";
-				else
-					echo $map_arr[$i][$j]->pinyin . "&nbsp;&nbsp;&nbsp;&nbsp;,";
-			}
-			echo "<br>";
-		}*/
-
-		//table start
-		/*echo '<br><table border="1" style="width:100%">';
-		echo "<tr>";
-		for ($i=0; $i<$edit_length+1; $i++)
-			if ($i == 0)
-				echo "<td></td>";
-			else
-				echo "<td>" . $cut_key[$i+$edit_start-1] . "</td>";
-		echo "</tr>";
-		for ($i=0; $i<$edit_length; $i++)
-		{
-			echo "<tr>";
-			for ($j=0; $j<$edit_length; $j++)
-			{
-				if($j == 0)
-					echo "<td>" . $cut_key[$i+$edit_start] . "</td>";
-				if (isset($map_arr[$i+1][$j+1]))
-					echo "<td>" . $map_arr[$i+1][$j+1]->pinyin . "</td>";
-				else
-					echo "<td> </td>";
-			}
-			echo "</tr>";
-		}
-		echo "</table>";
-		//table end*/
 
 		$count = 1;
 		$queue = new SplQueue();

@@ -1,10 +1,11 @@
 /***********************************************興大台語拼音輸入法演算法**********************************************/
-/*********************************************Mainly coded by David Tsui********************************************/
+/*********************************************A dirty-coding by David Tsui********************************************/
 /*******************************************************************************************************************/
-var nav_arr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
-var now_theme = "black";
+var servicePath = "../app/Services/";
+var navArr = ["#nav_home","#nav_log","#nav_input","#nav_about","#nav_tutorial","#nav_contact"];  // navbar的元素
+var applyTheme = "black";
 var customJqte = "";          // 記錄當前jqte的樣式
-var customJqte_flat = "";     // 記錄當前jqte_flat的樣式
+var customJqteFlat = "";     // 記錄當前jqte_flat的樣式
 
 var sel_mode = 0;             // 記錄當前的選字模式
 var mode = 0;   							// 自選模式 0: 拼音模式; 1: 選字模式; 2: 關聯詞模式  3: 修正模式
@@ -46,7 +47,7 @@ pinyin_record = [
 	}
 ];
 */
-var candidate_letter = [];                                          // 陣列-記錄回傳的文字
+var candidate_letter = [];                                          // 陣列-記錄回傳的候選字
 var mod_pinyin_record = [];																					// 陣列-修正模式下，記錄詞對應拼音
 var number_letters = 0;                                             // 記錄該拼音回傳之結果總共有幾個字
 var keyin = 0;                                                      // 記錄按下鍵盤的keycode
@@ -79,7 +80,7 @@ $(document).ready(function(){
 	var DOM_textbox = document.getElementById("input");
 	var prompt_txtbox = $("#prompt");
 	var prompt_flat_txtbox = $("#prompt_flat");
-	set_default();                                                  // 設定初始狀態
+	setDefault();                                                  // 設定初始狀態
 
 	/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 	/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
@@ -101,21 +102,20 @@ $(document).ready(function(){
 			else                                                 // 如果在拼音或選字時反白
 				tow_check = true;
 		}*/
-	}).mouseup(function(){                                           //調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
-		mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox);  	// 記錄滑鼠彈起來時的游標位置
-		if (sel_mode == 0 && mode == 0 && search_key == "")
+	}).mouseup(function(){                                      // 調整在拼音時，被反白拖曳導致游標移動到奇怪的地方
+		mouseup_loc = getCaretCharacterOffsetWithin(DOM_textbox); // 記錄滑鼠彈起來時的游標位置
+		if (sel_mode == 0 && mode == 0 && search_key == "") {
 			input_loc = mouseup_loc;
+		}
 
 		show_text = $("#show").html();
-		if (tow_check == true && show_text != ""){                  // 如果不能選字或是拼音還存在，則反白會失效，游標自動跑到當前的input_loc
+		if (tow_check == true && show_text != ""){                // 如果不能選字或是拼音還存在，則反白會失效，游標自動跑到當前的input_loc
 			textbox.setCursorPosition(input_loc);           				// 一律固定到該次輸入的位置
-		}
-		else if (tow_check == false && (mode == 2 || mode == 3) && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
+		}	else if (tow_check == false && (mode == 2 || mode == 3) && (getCaretCharacterOffsetWithin(DOM_textbox) != input_loc)){ // 如果在關聯詞模式，將游標點至非該次輸入的地方，則視為放棄選詞
 			mode = 0;                                               // 而後視為選字成功之後續歸零
 			$("#show, #show_flat").html("");
 			input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
-		}
-		else if (tow_check == false && show_text != ""){            // 如果沒有拖拉反白，而是單純的點選
+		}	else if (tow_check == false && show_text != ""){        // 如果沒有拖拉反白，而是單純的點選
 			console.log("search_key_loc: " + search_key_loc);
 			if ((getCaretCharacterOffsetWithin(DOM_textbox) > (input_loc + search_key.length)) || (getCaretCharacterOffsetWithin(DOM_textbox) < input_loc)){ // 點選在拼音區間外
 				textbox.setCursorPosition(mousedown_loc);
@@ -164,24 +164,25 @@ $(document).ready(function(){
 					var number = 1;
 					for(var i = 0; i < 10; i++){
 						temp_text += number + ". " + candidate_letter[i] + "\n";
-						if (i == 3)
+						if (i == 3) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
+						} else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
 							next_flag = true;
-						}
-						else if ((i == 7) && (candidate_letter[i + 1].length > 1))
+						} else if ((i == 7) && (candidate_letter[i + 1].length > 1)) {
 							temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-						else
+						}	else {
 							temp_text_flat += number + ". " + candidate_letter[i] + " ";
+						}
 						number++;
 						if (number == 10)
 							number = 0;
 					}
 					temp_text += "+:下一頁";
 					temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
-					if (next_flag == true)
+					if (next_flag == true) {
 						temp_text_flat += " +:下頁";
+					}
 					$("#show, #show_flat").html(temp_text);
 					mode = 1;
 					punctuation_search_flag = true;
@@ -209,10 +210,11 @@ $(document).ready(function(){
 				$.ajaxSettings.async = true;
 				var text = "";
 				for(var i = 0; i < pinyin_record.length; i++){
-					if (pinyin_record[i].modifiable == 2)
+					if (pinyin_record[i].modifiable == 2) {
 						text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-					else
+					}	else {
 						text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+					}
 				}
 				textbox.html(text);
 				input_word = remove_tags(textbox.html());
@@ -227,9 +229,9 @@ $(document).ready(function(){
 				prefix_key = "";
 				$("#show, #show_flat").html("");
 				return false;
-			}
-			else
+			}	else {
 				return false;
+			}
 		}
 
 		if (show_text == "" || show_text == "無此拼音，請按backspace或delete調整拼音"){   // 如果拼音模式下失敗，禁止+/-號
@@ -237,16 +239,15 @@ $(document).ready(function(){
 			if ((keyin == 109 || keyin == 189)) return false;
 		}
 
-		if (keyin == 8){
-			if (sel_mode == 0){
+		if (keyin == 8) {
+			if (sel_mode == 0) {
 				if (((mode == 0 && search_key != "") || mode == 1) && reachLeft() == true){
 					var text = "目前無法刪字!";
 					prompt_txtbox.val(text);
 					prompt_flat_txtbox.val(text);
 					caption_effect();
 					return false;
-				}
-				else if (mode == 2 || mode == 3){
+				}	else if (mode == 2 || mode == 3) {
 					mode = 0;
 					$("#show, #show_flat").html("");
 					prefix_key = "";
@@ -254,17 +255,18 @@ $(document).ready(function(){
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 				}
 			}
-			if (sel_mode == 1 && mode == 2 && reachLeft() == true)
+			if (sel_mode == 1 && mode == 2 && reachLeft() == true) {
 				return false;
+			}
 		}
 
-		if (keyin == 13){
+		if (keyin == 13) {	// 按下enter
 			if ((mode == 0 && associated_search_flag == false) || mode == 2 || mode == 4){
 				var textbox = $("#input");
 				var html = textbox.html();
-				var check = html.search('<span class="in_pinyin_window">');
+				var check = html.search('<span class="in_pinyin_window">');	// 如果還有組字窗
 				if (check >= 0){
-					var text = remove_tags(html);
+					var text = remove_tags(html);															// 移除所有底線、清除樣式
 					input_word = text;
 					var word_length = input_word.length;
 					pinyin_record = [];
@@ -283,15 +285,13 @@ $(document).ready(function(){
 					auto_start = input_loc;
 					auto_pointer = [];
 					$("#show, #show_flat").html("");
-				}
-				else{
+				}	else {
 					var text = "此區無法換行!";
 					prompt_txtbox.val(text);
 					prompt_flat_txtbox.val(text);
 					caption_effect();
 				}
-			}
-			else{
+			}	else {
 				var text = "現在不能按Enter!";
 				prompt_txtbox.val(text);
 				prompt_flat_txtbox.val(text);
@@ -309,10 +309,11 @@ $(document).ready(function(){
 					$.ajaxSettings.async = true;
 					var text = "";
 					for(var i = 0; i < pinyin_record.length; i++){
-						if (pinyin_record[i].modifiable == 2)
+						if (pinyin_record[i].modifiable == 2) {
 							text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-						else
+						}	else {
 							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+						}
 					}
 					textbox.html(text);
 					input_word = remove_tags(textbox.html());
@@ -327,8 +328,7 @@ $(document).ready(function(){
 					}
 					return false;
 				}
-			}
-			else if (sel_mode == 1 && mode == 1){
+			}	else if (sel_mode == 1 && mode == 1){
 				var auto_end = 0;
 				if (auto_pointer.length > 0)
 					auto_end = pinyin_record[auto_pointer[auto_pointer.length - 1]].end_loc;
@@ -336,8 +336,7 @@ $(document).ready(function(){
 					if (input_loc == auto_start){
 						console.log("auto_search_key: " + auto_search_key);
 						auto_search_key = search_key + " " + auto_search_key;
-					}
-					else if (input_loc >= auto_start){
+					}	else if (input_loc >= auto_start){
 						var j = 0;
 						var split_loc = input_loc - auto_start;
 						var need_split_flag = true;
@@ -365,22 +364,20 @@ $(document).ready(function(){
 									var offset = word_length - syllable;
 									split_loc = input_loc - auto_start - offset;
 									ws_flag = 0;
-								}
-								else if (word_length < syllable){
+								}	else if (word_length < syllable){
 									var offset = syllable - word_length;
 									split_loc = input_loc - auto_start + offset;
 									sw_flag = 0;
 								}
 							}
 						}
-						if (which_word >= 1 && word_length_front != syllable_front){
+						if (which_word >= 1 && word_length_front != syllable_front) {
 							if (auto_pointer.indexOf(which_word - 1) != -1){
 								if (word_length_front > syllable_front){
 									var offset = word_length_front - syllable_front;
 									split_loc = input_loc - auto_start - offset;
 									ws_flag = 1;
-								}
-								else if (word_length_front < syllable_front){
+								}	else if (word_length_front < syllable_front){
 									var offset = syllable_front - word_length_front;
 									split_loc = input_loc - auto_start + offset;
 									sw_flag = 1;
@@ -401,7 +398,7 @@ $(document).ready(function(){
 								}
 							}
 						}*/
-					  console.log("ws_flag: " + ws_flag);
+						console.log("ws_flag: " + ws_flag);
 						console.log("sw_flag: " + sw_flag);
 						if (ws_flag == 1 && sw_flag == 0 || ws_flag == 0 && sw_flag == 1)
 							split_loc = input_loc - auto_start;
@@ -423,14 +420,12 @@ $(document).ready(function(){
 								}
 							}
 						}
-					}
-					else if (input_loc < auto_start){
+					}	else if (input_loc < auto_start){
 						auto_pointer = [];
 						auto_start = input_loc;
 						auto_search_key = search_key + " ";
 					}
-				}
-				else{
+				}	else{
 					auto_search_key += search_key + " ";
 				}
 				console.log("auto_search_key: " + auto_search_key + "\n");
@@ -454,8 +449,7 @@ $(document).ready(function(){
 					textbox.setCursorPosition(input_loc + search_key.length);
 					return false;
 				}
-			}
-			else if (mode == 1 || show_text == "無此拼音，請按backspace或delete調整拼音"){         // 選字模式下，若按下End鍵直接將輸入位置移動到拼音尾
+			}	else if (mode == 1 || show_text == "無此拼音，請按backspace或delete調整拼音"){         // 選字模式下，若按下End鍵直接將輸入位置移動到拼音尾
 				textbox.setCursorPosition(input_loc + search_key.length);
 				return false;
 			}
@@ -474,8 +468,7 @@ $(document).ready(function(){
 					textbox.setCursorPosition(input_loc);
 					return false;
 				}
-			}
-			else if (mode == 1 || show_text == "無此拼音，請按backspace或delete調整拼音"){         // 選字模式下，若按下Home鍵直接將輸入位置移動到拼音首
+			}	else if (mode == 1 || show_text == "無此拼音，請按backspace或delete調整拼音"){         // 選字模式下，若按下Home鍵直接將輸入位置移動到拼音首
 				textbox.setCursorPosition(input_loc);
 				return false;
 			}
@@ -583,16 +576,14 @@ $(document).ready(function(){
 					prompt_flat_txtbox.val(text);
 					caption_effect();
 					return false;
-				}
-				else if (mode == 2 || mode == 3){
+				}	else if (mode == 2 || mode == 3){
 					mode = 0;
 					$("#show, #show_flat").html("");
 					prefix_key = "";
 					search_key = "";
 					input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
 				}
-			}
-			else if (sel_mode == 1 && mode == 2 && reachLeft() == true)
+			}	else if (sel_mode == 1 && mode == 2 && reachLeft() == true)
 				return false;
 		}
 
@@ -615,8 +606,9 @@ $(document).ready(function(){
 
 		if ((mode != 0 || associated_search_flag == true) && reachTail() == true){          // 選字模式下，若翻頁已達末頁，則+號無效，若所選數字不存在文字，亦禁止該數字的鍵入
 			if ((keyin == 107 || keyin == 187)){
-				if (totalPage == 1){/*do nothing*/}
-				else{
+				if (totalPage == 1) {
+					/*do nothing*/
+				}	else {
 					var text = "已達最末頁!";
 					prompt_txtbox.val(text);
 					prompt_flat_txtbox.val(text);
@@ -632,8 +624,7 @@ $(document).ready(function(){
 					caption_effect();
 					return false;
 				}
-			}
-			else if (isNumber(keyin) && keyin >= 48 && keyin < 96){ // 如果按下的數字鍵並不存在對應文字
+			}	else if (isNumber(keyin) && keyin >= 48 && keyin < 96){ // 如果按下的數字鍵並不存在對應文字
 				if ((keyin - 48 + (currentPage - 1) * 10) > number_letters || (keyin == 48) && ((currentPage * 10) > number_letters)){
 					var text = "該號碼無法選擇!";
 					prompt_txtbox.val(text);
@@ -645,8 +636,9 @@ $(document).ready(function(){
 		}
 		if ((mode != 0 || associated_search_flag == true) && reachHead() == true){         // 選字模式下，若翻頁已達首頁，則-號無效
 			if (keyin == 109 || keyin == 189){
-				if (totalPage == 1){/*do nothing*/}
-				else{
+				if (totalPage == 1) {
+					/*do nothing*/
+				}	else {
 					var text = "已達首頁!";
 					prompt_txtbox.val(text);
 					prompt_flat_txtbox.val(text);
@@ -665,75 +657,82 @@ $(document).ready(function(){
 			var number = 1;
 			var next_flag = false;
 			while (i < number_letters && counter < 10){
-				if (associated_search_flag == false)
+				if (associated_search_flag == false) {
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-				else
+				}	else {
 					temp_text += "● " + candidate_letter[i] + "\n";
+				}
 				if (((i % 10) == 3 || (i % 10) == 7) && (currentPage < totalPage)){        // 為了讓小螢幕裝置顯示正常，字不會出界
 					if ((i % 10) == 3){
-						if (associated_search_flag == false)
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 					}
 					if (((i % 10) == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
-						if (associated_search_flag == false)
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						} else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 						next_flag = true;
-					}
-					else if (((i % 10) == 7)){
-						if (associated_search_flag == false)
+					}	else if (((i % 10) == 7)) {
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + " +:下頁\n"
+						}
 					}
-				}
-				else if (((i % 10) == 3 || (i % 10) == 7) && (currentPage == totalPage)){
-					if ((i % 10) == 3){
-						if (associated_search_flag == false)
+				}	else if (((i % 10) == 3 || (i % 10) == 7) && (currentPage == totalPage)) {
+					if ((i % 10) == 3) {
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 					}
-					if ((i % 10) == 7){
-						if (associated_search_flag == false)
+					if ((i % 10) == 7) {
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 					}
-				}
-				else{
-					if (associated_search_flag == false)
+				}	else {
+					if (associated_search_flag == false) {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
-					else
+					}	else {
 						temp_text_flat += "● " + candidate_letter[i] + " ";
+					}
 				}
 				i++;
 				counter++;
 				number++;
-				if (number == 10)
+				if (number == 10) {
 					number = 0;
+				}
 			}
 			if (currentPage < totalPage){
 				temp_text += "+:下一頁 -:上一頁";
-				if (next_flag == true)
+				if (next_flag == true) {
 					temp_text_flat += " +:下頁";
+				}
 				temp_text_flat += " -:上頁";
-			}
-			else{
+			}	else {
 				temp_text += "-:上一頁";
 				temp_text_flat += "-:上頁";
 			}
+
 			if (mode == 0){
 				temp_text = "拼音提示" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 			}
 			if (mode == 1 || mode == 3){
 				temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 			}
-			if (mode == 2)
+			if (mode == 2) {
 				temp_text = "關聯詞" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
+			}
 			$("#show").html(temp_text);
 			$("#show_flat").html(temp_text_flat);
 			return false;
@@ -747,63 +746,67 @@ $(document).ready(function(){
 			var number = 1;
 			var next_flag = false;
 			while (i < number_letters && counter < 10){
-				if (associated_search_flag == false)
+				if (associated_search_flag == false) {
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-				else
+				}	else {
 					temp_text += "● " + candidate_letter[i] + "\n";
-				if (((i % 10) == 3 || (i % 10) == 7) && (currentPage < totalPage)){        // 為了讓小螢幕裝置顯示正常，字不會出界
-					if ((i % 10) == 3){
+				}
+				if (((i % 10) == 3 || (i % 10) == 7) && (currentPage < totalPage)) {        // 為了讓小螢幕裝置顯示正常，字不會出界
+					if ((i % 10) == 3) {
 						if (associated_search_flag == false)
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
 						else
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
 					}
 					if (((i % 10) == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
-						if (associated_search_flag == false)
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 						next_flag = true;
-					}
-					else if (((i % 10) == 7)){
-						if (associated_search_flag == false)
+					}	else if (((i % 10) == 7)) {
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + " +:下頁\n"
+						}
 					}
-				}
-				else if (((i % 10) == 3 || (i % 10) == 7) && (currentPage == totalPage)){
+				} else if (((i % 10) == 3 || (i % 10) == 7) && (currentPage == totalPage)){
 					if ((i % 10) == 3){
-						if (associated_search_flag == false)
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 					}
 					if ((i % 10) == 7){
-						if (associated_search_flag == false)
+						if (associated_search_flag == false) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += "● " + candidate_letter[i] + "\n";
+						}
 					}
-				}
-				else{
-					if (associated_search_flag == false)
+				}	else {
+					if (associated_search_flag == false) {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
-					else
+					}	else {
 						temp_text_flat += "● " + candidate_letter[i] + " ";
 					}
+				}
 				i++;
 				counter++;
 				number++;
 				if (number == 10) number = 0;
 			}
+
 			if (currentPage < totalPage && currentPage > 1){
 				temp_text += "+:下一頁 -:上一頁";
-				if (next_flag == true)
+				if (next_flag == true) {
 					temp_text_flat += " +:下頁";
+				}
 				temp_text_flat += " -:上頁";
-			}
-			else{
+			}	else{
 				temp_text += "+:下一頁";
 				temp_text_flat += " +:下頁";
 			}
@@ -813,8 +816,9 @@ $(document).ready(function(){
 			if (mode == 1 || mode == 3){
 				temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 			}
-			if (mode == 2)
+			if (mode == 2) {
 				temp_text = "關聯詞" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
+			}
 			$("#show").html(temp_text);
 			$("#show_flat").html(temp_text_flat);
 			return false;
@@ -823,27 +827,25 @@ $(document).ready(function(){
 		keyin = e.keyCode;
 		if ((keyin == 37 || keyin == 39) && mode != 1 && !(mode == 0 && search_key != "")){               // 非拼音時，左右鍵將會調整輸入位置
 			input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
-			if (sel_mode == 1 && auto_pointer.length == 0)
+			if (sel_mode == 1 && auto_pointer.length == 0) {
 				auto_start = input_loc;
-		}
-		if ((keyin == 35 || keyin == 36) && mode == 0 && associated_search_flag == false)
-				input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
-	}).on('input',function(e){                                  // 同時發生的事件，只控制輸入進textbox的按鍵
-		if (sel_mode == 0){					/*****自選模式*****/
-			if ((keyin >= 65 && keyin <= 90) || keyin == 32 || keyin == 8 || keyin == 46 || keyin == 37 || keyin == 39){
-			// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
-				getKey(keyin);
 			}
 		}
-		else if (sel_mode == 1){		/*****智能模式*****/
+		if ((keyin == 35 || keyin == 36) && mode == 0 && associated_search_flag == false) {
+			input_loc = getCaretCharacterOffsetWithin(DOM_textbox);
+		}
+	}).on('input',function(e){                                  // 同時發生的事件，只控制輸入進textbox的按鍵
+		if (sel_mode == 0){					/* 自選模式 */
+			if ((keyin >= 65 && keyin <= 90) || keyin == 32 || keyin == 8 || keyin == 46 || keyin == 37 || keyin == 39){
+				getKey(keyin);  				// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
+			}
+		}	else if (sel_mode == 1){	/* 智能模式 */
 			if ((keyin >= 65 && keyin <= 90) || keyin == 8 || keyin == 46){
-			// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
-				getKey(keyin);
+				getKey(keyin);					// 輸入英文產生搜索資料庫的key值，並考慮刪除情形
 			}
 		}
 		if (keyin == 8 || keyin == 46 || keyin == 32 || (keyin >= 65 && keyin <= 90)){
-			// backspace鍵或是delete鍵的刪除，及反白取代字的情形
-			deleteWord(keyin);
+			deleteWord(keyin);				// backspace鍵或是delete鍵的刪除，及反白取代字的情形
 		}
 
 		if (mode != 0){
@@ -862,8 +864,7 @@ $(document).ready(function(){
 				if (prefix_key != "")
 					search_associated();
 				return;
-			}
-			else if (totalPage > 1 && (keyin != 107) && (keyin != 187) && (keyin != 109) && (keyin != 189)){
+			}	else if (totalPage > 1 && (keyin != 107) && (keyin != 187) && (keyin != 109) && (keyin != 189)){
 				currentPage = 1;                        // 歸零
 				totalPage = 1;                          // 歸零
 			}
@@ -907,13 +908,12 @@ $(document).ready(function(){
 			var text = remove_tags($("#input").html());
 			if (text != ""){
 				$("#prompt, #prompt_flat").val('已複製到剪貼簿!');
-				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+				var jqte_text = $(".jqte_" + applyTheme + "_editor").html();
+				$(".jqte_" + applyTheme + "_editor").html(jqte_text + text);
 				caption_effect();
 				$("#input").setCursorPosition(input_loc);
 				return text;
-			}
-			else{
+			}	else {
 				$("#prompt, #prompt_flat").val('沒有內容可複製!');
 				caption_effect();
 				$("#input").focus();
@@ -939,13 +939,12 @@ $(document).ready(function(){
 				$("#input").html("");
 				$("#show, #show_flat").html("");
 				associated_search_flag = false;
-				var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-				$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+				var jqte_text = $(".jqte_" + applyTheme + "_editor").html();
+				$(".jqte_" + applyTheme + "_editor").html(jqte_text + text);
 				caption_effect();
 				$("#input").setCursorPosition(0);
 				return text;
-			}
-			else{
+			}	else {
 				$("#prompt, #prompt_flat").val('沒有內容可剪下!');
 				caption_effect();
 				$("#input").focus();
@@ -956,146 +955,163 @@ $(document).ready(function(){
 
 	$("#GO").click(function(){                                  // 教學啟用按鈕"馬上出發"的按下事件
 		var height = $("#tutorial_panel").height();
-		$("#hide_panel").height(height + 22);
-		$("#tutorial_panel").fadeOut('2000',function(){
-			$("#hide_panel").show();
+		$("body").queue("AnimateTutorial", function(next){
+			$("#tutorial_panel").fadeOut('2000',function(){ 
+				next(); 
+			});
+		}).queue("AnimateTutorial", function(next) {
+			$("#hide_panel").height(height + 22).show(function() {
+				next();
+			});
 		});
 
 		if ($("#prompt_flat").is(":hidden")){
-			var pause1 = setInterval(function(){
-				$("#input").popup({
-					content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
-					position: 'left center'
-				}).popup('show');
-				clearInterval(pause1);
-				var pause2 = setInterval(function(){
+			$("body").queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#input").popup({
+						content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
+						position: 'left center'
+					}).popup('show');
+					next();
+				}, 500);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
 					$("#input").popup('hide');
 					$("#google_btn").popup({
 						content: '這是用來將所打字詞進行Google搜尋的按鈕',
 						position: 'left center'
 					}).popup('show');
-					clearInterval(pause2);
-					var pause3 = setInterval(function(){
-						$("#google_btn").popup('hide');
-						$("#prompt").popup({
-							content: '這是簡易提示欄，成功或失敗操作時會有提示',
-							position: 'left center'
-						}).popup('show');
-						clearInterval(pause3);
-						var pause4 = setInterval(function(){
-							$("#prompt").popup('hide');
-							$("#copy").popup({
-								content: '這是複製按鈕，將輸入的文字複製到剪貼簿',
-								position: 'left center'
-							}).popup('show');
-							clearInterval(pause4);
-							var pause5 = setInterval(function(){
-								$("#copy").popup('hide');
-								$("#clear").popup({
-									content: '這是清除按鈕，按下後將把輸入框清空',
-									position: 'bottom center'
-								}).popup('show');
-								clearInterval(pause5);
-								var pause6 = setInterval(function(){
-									$("#clear").popup('hide');
-									$("#cut").popup({
-										content: '這是剪下按鈕，將輸入的文字剪下到剪貼簿',
-										position: 'right center'
-									}).popup('show');
-									clearInterval(pause6);
-									var pause7 = setInterval(function(){
-										$("#cut").popup('hide');
-										$("#show").popup({
-											content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
-											position: 'right center'
-										}).popup('show');
-										clearInterval(pause7);
-										var pause8 = setInterval(function(){
-											$("#show").popup('hide');
-											customJqte.attr('data-variation','large');
-											customJqte.attr('data-offset',35);
-											customJqte.popup({
-												content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
-												position: 'left center'
-											}).popup('show');
-											clearInterval(pause8);
-											var pause9 = setInterval(function(){
-												customJqte.popup('hide');
-												$("#search_pinyin").popup({
-													content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
-													position: 'bottom center'
-												}).popup('show');
-												clearInterval(pause9);
-												var pause10 = setInterval(function(){
-													$("#search_pinyin").popup('hide');
-													generate_prompt_btn();
-													$("#input").focus();
-													clearInterval(pause10);
-												},3000);
-											},3000);
-										},3000);
-									},3000);
-								},3000);
-							},3000);
-						},3000);
-					},3000);
-				},3000);
-			},1000);
-		}
-		else{
-			var pause1 = setInterval(function(){
-				$("#input").popup({
-					content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
-					position: 'top center'
-				}).popup('show');
-				clearInterval(pause1);
-				var pause2 = setInterval(function(){
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#google_btn").popup('hide');
+					$("#prompt").popup({
+						content: '這是簡易提示欄，成功或失敗操作時會有提示',
+						position: 'left center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#prompt").popup('hide');
+					$("#copy").popup({
+						content: '這是複製按鈕，將輸入的文字複製到剪貼簿',
+						position: 'left center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#copy").popup('hide');
+					$("#clear").popup({
+						content: '這是清除按鈕，按下後將把輸入框清空',
+						position: 'bottom center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#clear").popup('hide');
+					$("#cut").popup({
+						content: '這是剪下按鈕，將輸入的文字剪下到剪貼簿',
+						position: 'right center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#cut").popup('hide');
+					$("#show").popup({
+						content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
+						position: 'right center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#show").popup('hide');
+					customJqte.attr('data-variation','large');
+					customJqte.attr('data-offset',35);
+					customJqte.popup({
+						content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
+						position: 'left center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					customJqte.popup('hide');
+					$("#search_pinyin").popup({
+						content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+						position: 'bottom center'
+					}).popup('show');
+					next();
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setTimeout(function(){
+					$("#search_pinyin").popup('hide');
+					generate_prompt_btn();
+					$("#input").focus();
+					next();
+				}, 3000);
+			});
+		} else {
+			$("body").queue("AnimateTutorial", function(next){
+				setInterval(function(){
+					$("#input").popup({
+						content: '這是輸入欄，請在此輸入台語的羅馬拼音並選字，例如:a, bbe, diong, ggu, uan...等等',
+						position: 'top center'
+					}).popup('show');
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setInterval(function(){
 					$("#input").popup('hide');
 					$("#google_btn").popup({
 						content: '這是用來將所打字詞進行Google搜尋的按鈕',
 						position: 'left center'
 					}).popup('show');
-					clearInterval(pause2);
-					var pause3 = setInterval(function(){
-						$("#prompt_flat").popup({
-							content: '這是簡易提示欄，成功或失敗操作時會有提示',
-							position: 'right center'
-						}).popup('show');
-						clearInterval(pause3);
-						var pause4 = setInterval(function(){
-							$("#prompt_flat").popup('hide');
-							$("#show_flat").popup({
-								content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
-								position: 'top center'
-							}).popup('show');
-							clearInterval(pause4);
-							var pause5 = setInterval(function(){
-								$("#show_flat").popup('hide');
-								customJqte_flat.popup({
-									content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
-									position: 'top center',
-								}).popup('show');
-								clearInterval(pause5);
-								var pause6 = setInterval(function(){
-									customJqte_flat.popup('hide');
-									$("#search_pinyin").popup({
-										content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
-										position: 'bottom center'
-									}).popup('show');
-									clearInterval(pause6);
-									var pause7 = setInterval(function(){
-										$("#search_pinyin").popup('hide');
-										generate_prompt_btn();
-										$("#input").focus();
-										clearInterval(pause7);
-									},3000);
-								},3000);
-							},3000);
-						},3000);
-					},3000);
-				},3000);
-			},1000);
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){			
+				setInterval(function(){
+					$("#prompt_flat").popup({
+						content: '這是簡易提示欄，成功或失敗操作時會有提示',
+						position: 'right center'
+					}).popup('show');
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setInterval(function(){
+					$("#prompt_flat").popup('hide');
+					$("#show_flat").popup({
+						content: '這是文字顯示區，符合拼音的字詞將顯示在裡面',
+						position: 'top center'
+					}).popup('show');
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setInterval(function(){
+					$("#show_flat").popup('hide');
+					customJqteFlat.popup({
+						content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
+						position: 'top center',
+					}).popup('show');
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setInterval(function(){
+					customJqteFlat.popup('hide');
+					$("#search_pinyin").popup({
+						content: '這是反向查詢區，不會拼音的中文字可在這查拼音',
+						position: 'bottom center'
+					}).popup('show');
+				}, 3000);
+			}).queue("AnimateTutorial", function(next){
+				setInterval(function(){
+					$("#search_pinyin").popup('hide');
+					generate_prompt_btn();
+					$("#input").focus();
+				}, 3000);
+			});
 		}
+		$("body").dequeue("AnimateTutorial");
 	});
 
 	$("#NO").click(function(){
@@ -1121,53 +1137,53 @@ $(document).ready(function(){
 /*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓與輸入法相關↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 /*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 function search_char(search_mode){                              // 以英文拼音當key，找尋key對應的字
-	$.post('search_word.php',{search_KEY:search_key,MODE:search_mode},function(data){   // 查詢文字及分數
+	$.post(servicePath + 'search_word.php',{search_KEY:search_key,MODE:search_mode},function(data){   // 查詢文字及分數
 		if (data == ""){
 			$("#show, #show_flat").html("無此拼音，請按backspace或delete調整拼音");
 			$('#chatAudio')[0].play();
 			associated_search_flag = false;
 			mode = 0;
-		}
-		else if (data[0] == "associated pinyin"){
+		} else if (data[0] == "associated pinyin"){
 			number_letters = Object.keys(data).length - 1;      // 取得總字數，第一項被當作判斷是否有接續拼音的flag，故 -1
 			currentPage = 1;
 			getPage();                                          // 取得該key值所對應文字的總頁數
 			candidate_letter = [];
-			for(var i = 0; i < number_letters; i++)             // 將回傳的json複製到陣列
+			for(var i = 0; i < number_letters; i++) {            // 將回傳的json複製到陣列
 				candidate_letter[i] = data[i + 1];
+			}
 
 			if (totalPage == 1){
 				var temp_text = "";
 				var temp_text_flat = "";
 				for(var i = 0; i < number_letters; i++){
 					temp_text += "● " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += "● " + candidate_letter[i] + "\n";
-					else if (i == 7)
+					}	else if (i == 7) {
 						temp_text_flat += "● " + candidate_letter[i] + "\n";
-					else
+					}	else {
 						temp_text_flat += "● " + candidate_letter[i] + " ";
+					}
 				}
 				temp_text = "拼音提示" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 				$("#show").html(temp_text);
 				$("#show_flat").html(temp_text_flat);
-			}
-			else{
+			}	else {
 				var temp_text = "";
 				var temp_text_flat = "";
 				var next_flag = false;
 				for(var i = 0; i < 10; i++){
 					temp_text += "● " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += "● " + candidate_letter[i] + "\n";
-					else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
+					}	else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
 						temp_text_flat += "● " + candidate_letter[i] + "\n";
 						next_flag = true;
-					}
-					else if ((i == 7) && (candidate_letter[i + 1].length > 1))
+					}	else if ((i == 7) && (candidate_letter[i + 1].length > 1)) {
 						temp_text_flat += "● " + candidate_letter[i] + " +:下頁\n";
-					else
+					}	else {
 						temp_text_flat += "● " + candidate_letter[i] + " ";
+					}
 				}
 				temp_text += "+:下一頁";
 				temp_text = "拼音提示" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
@@ -1178,8 +1194,7 @@ function search_char(search_mode){                              // 以英文拼�
 			}
 			associated_search_flag = true;
 			mode = 0;
-		}
-		else if (data[0] == "modify letter"){
+		} else if (data[0] == "modify letter"){
 			number_letters = Object.keys(data[1]).length;      		// 取得字詞數
 			var number_pinyins = Object.keys(data[2]).length;		// 取得拼音數
 			currentPage = 1;
@@ -1189,10 +1204,11 @@ function search_char(search_mode){                              // 以英文拼�
 			for(var i = 0; i < number_letters; i++)
 				candidate_letter[i] = data[1][i];
 			for(var i = 0; i < number_pinyins; i++){
-				if (i == 0)
+				if (i == 0) {
 					var obj = new modify_record_obj(data[2][i],0,data[3][i]);
-				else
+				}	else {
 					var obj = new modify_record_obj(data[2][i],data[3][i - 1],data[3][i]);
+				}
 				mod_pinyin_record[i] = obj;
 			}
 
@@ -1202,40 +1218,38 @@ function search_char(search_mode){                              // 以英文拼�
 				var number = 1;
 				for(var i = 0; i < number_letters; i++){
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else if (i == 7)
+					}	else if (i == 7) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else
+					}	else {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
+					}
 					number++;
-					if (number == 10)
-						number = 0;
+					if (number == 10) number = 0;
 				}
 				temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 				$("#show").html(temp_text);
 				$("#show_flat").html(temp_text_flat);
-			}
-			else{
+			}	else {
 				var temp_text = "";
 				var temp_text_flat = "";
 				var next_flag = false;
 				var number = 1;
 				for(var i = 0; i < 10; i++){
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
+					}	else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
 						next_flag = true;
-					}
-					else if ((i == 7) && (candidate_letter[i + 1].length > 1))
+					}	else if ((i == 7) && (candidate_letter[i + 1].length > 1)) {
 						temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-					else
+					}	else {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
+					}
 					number++;
-					if (number == 10)
-						number = 0;
+					if (number == 10) number = 0;
 				}
 				temp_text += "+:下一頁";
 				temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
@@ -1244,16 +1258,16 @@ function search_char(search_mode){                              // 以英文拼�
 				$("#show").html(temp_text);
 				$("#show_flat").html(temp_text_flat);
 			}
-		}
-		else{
+		} else {
 			if (search_mode == 0 || search_mode == 2){
 				number_letters = Object.keys(data).length;          // 取得總字數
 				currentPage = 1;
 				getPage();                                          // 取得該key值所對應文字的總頁數
 				candidate_letter = [];
 				mod_pinyin_record = [];
-				for(var i = 0; i < number_letters; i++)             // 將回傳的json複製到陣列
+				for(var i = 0; i < number_letters; i++) {            // 將回傳的json複製到陣列
 					candidate_letter[i] = data[i];
+				}
 
 				if (totalPage == 1){
 					var temp_text = "";
@@ -1261,45 +1275,44 @@ function search_char(search_mode){                              // 以英文拼�
 					var number = 1;
 					for(var i = 0; i < number_letters; i++){
 						temp_text += number + ". " + candidate_letter[i] + "\n";
-						if (i == 3)
+						if (i == 3) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else if (i == 7)
+						}	else if (i == 7) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else
+						}	else {
 							temp_text_flat += number + ". " + candidate_letter[i] + " ";
+						}
 						number++;
-						if (number == 10)
-							number = 0;
+						if (number == 10) number = 0;
 					}
 					temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 					$("#show").html(temp_text);
 					$("#show_flat").html(temp_text_flat);
-				}
-				else{
+				}	else {
 					var temp_text = "";
 					var temp_text_flat = "";
 					var next_flag = false;
 					var number = 1;
 					for(var i = 0; i < 10; i++){
 						temp_text += number + ". " + candidate_letter[i] + "\n";
-						if (i == 3)
+						if (i == 3) {
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-						else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
+						}	else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
 							temp_text_flat += number + ". " + candidate_letter[i] + "\n";
 							next_flag = true;
-						}
-						else if ((i == 7) && (candidate_letter[i + 1].length > 1))
+						}	else if ((i == 7) && (candidate_letter[i + 1].length > 1)) {
 							temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-						else
+						}	else {
 							temp_text_flat += number + ". " + candidate_letter[i] + " ";
+						}
 						number++;
-						if (number == 10)
-							number = 0;
+						if (number == 10)	number = 0;
 					}
 					temp_text += "+:下一頁";
 					temp_text = "候選字" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
-					if (next_flag == true)
+					if (next_flag == true) {
 						temp_text_flat += " +:下頁";
+					}
 					$("#show").html(temp_text);
 					$("#show_flat").html(temp_text_flat);
 				}
@@ -1308,26 +1321,25 @@ function search_char(search_mode){                              // 以英文拼�
 			}
 
 			pronunce_key = search_key.substring(search_key.lastIndexOf(" ") + 1,search_key.length)
-			if ($("#pro_sound_" + pronunce_key).html() == undefined){	// 如果還沒有該音檔，GET它
+			if ($("#pro_sound_" + pronunce_key).html() === undefined){	// 如果還沒有該音檔，GET它
 				if (play_sound_flag){
-					$.getJSON('check_sound.php',{SOUND : pronunce_key},function(data){
-					  if (data[0] == 1){
-					  	if (pronunce_key.charAt(pronunce_key.length - 1) == "p" || pronunce_key.charAt(pronunce_key.length - 1) == "t" ||
-					  		pronunce_key.charAt(pronunce_key.length - 1) == "k" || pronunce_key.charAt(pronunce_key.length - 1) == "h"){
-					  		$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '5.wav" type="audio/wav"></audio>').appendTo('body');
-					  		$('#pro_sound_' + pronunce_key)[0].play();
-					  	}
-					  	else{
-					  		$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '1.wav" type="audio/wav"></audio>').appendTo('body');
-					  		$('#pro_sound_' + pronunce_key)[0].play();
-					  	}
-					  }
+					$.getJSON(servicePath + 'check_sound.php',{SOUND : pronunce_key},function(data){
+						if (data[0] == 1){
+							if (pronunce_key.charAt(pronunce_key.length - 1) == "p" || pronunce_key.charAt(pronunce_key.length - 1) == "t" ||
+								pronunce_key.charAt(pronunce_key.length - 1) == "k" || pronunce_key.charAt(pronunce_key.length - 1) == "h"){
+								$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '5.wav" type="audio/wav"></audio>').appendTo('body');
+								$('#pro_sound_' + pronunce_key)[0].play();
+							}	else {
+								$('<audio id="pro_sound_' + pronunce_key + '"><source src="./pronunce/' + pronunce_key.toUpperCase() + '1.wav" type="audio/wav"></audio>').appendTo('body');
+								$('#pro_sound_' + pronunce_key)[0].play();
+							}
+						}
 					});
 				}
-			}
-			else{																										// 如果音檔已載入
-				if (play_sound_flag)
+			}	else {																										// 如果音檔已載入
+				if (play_sound_flag) {
 					$('#pro_sound_' + pronunce_key)[0].play();
+				}
 			}
 			associated_search_flag = false;
 		}
@@ -1336,13 +1348,12 @@ function search_char(search_mode){                              // 以英文拼�
 
 function search_associated(){                                     // 以中文當key，找尋關聯詞
 	var key_len = prefix_key.length;
-	$.post('search_associated.php',{prefix_KEY:prefix_key},function(data){
+	$.post(servicePath + 'search_associated.php',{prefix_KEY:prefix_key},function(data){
 		if (data == ""){
 			$("#show, #show_flat").html("");
 			mode = 0;
 			return;
-		}
-		else{
+		}	else {
 			candidate_letter = [];
 			number_letters = Object.keys(data).length;                  // 取得總字數
 			getPage();                                                  // 取得總頁數
@@ -1358,36 +1369,36 @@ function search_associated(){                                     // 以中文�
 				var number = 1;
 				for(var i = 0; i < number_letters; i++){
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else if (i == 7)
+					}	else if (i == 7) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else
+					}	else {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
+					}
 					number++;
 					if (number == 10) number = 0;
 				}
 				temp_text = "關聯詞" + interval + "(" + currentPage + "/" + totalPage + ")\n" + temp_text;
 				$("#show").html(temp_text);
 				$("#show_flat").html(temp_text_flat);
-			}
-			else{
+			}	else {
 				var temp_text = "";
 				var temp_text_flat = "";
 				var number = 1;
 				var next_flag = false;
 				for(var i = 0; i < 10; i++){
 					temp_text += number + ". " + candidate_letter[i] + "\n";
-					if (i == 3)
+					if (i == 3) {
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
-					else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
+					}	else if ((i == 7) && (candidate_letter[i + 1].length <= 4) && (candidate_letter[i + 2].length <= 4)){
 						temp_text_flat += number + ". " + candidate_letter[i] + "\n";
 						next_flag = true;
-					}
-					else if ((i == 7) && (candidate_letter[i + 1].length > 1))
+					}	else if ((i == 7) && (candidate_letter[i + 1].length > 1)) {
 						temp_text_flat += number + ". " + candidate_letter[i] + " +:下頁\n";
-					else
+					}	else {
 						temp_text_flat += number + ". " + candidate_letter[i] + " ";
+					}
 					number++;
 					if (number == 10) number = 0;
 				}
@@ -1409,13 +1420,12 @@ function search_auto(){                                                 // 進SQ
 	var prompt_txtbox = $("#prompt");
 	var prompt_flat_txtbox = $("#prompt_flat");
 	auto_change_flag = true;
-	$.post('search_word_auto.php',{auto_KEY:auto_search_key},function(data){
+	$.post(servicePath + 'search_word_auto.php',{auto_KEY:auto_search_key},function(data){
 		if (data == ""){
 			$("#show, #show_flat").html("");
 			mode = 0;
 			return;
-		}
-		else{
+		}	else {
 			auto_letter = [];
 			auto_pinyin = [];
 			var len = Object.keys(data).length - 1;
@@ -1425,15 +1435,15 @@ function search_auto(){                                                 // 進SQ
 				auto_pinyin[i - 1] = data[i]['pinyin'];
 			}
 			var del_tail_flag = false;
-			if (input_loc == auto_start)
+			if (input_loc == auto_start) {
 				del_tail_flag = true;
+			}
 			if (check_over_three){											// 如果是，則調整auto_search_key
 				if (del_tail_flag){												// 如果輸入位置為第一詞的正前方
 					var cut_index = auto_search_key.search(auto_pinyin[3]);
 					auto_search_key = auto_search_key.substring(0,cut_index);
 					auto_start = pinyin_record[auto_pointer[0]].start_loc;    // 調整auto_start為當前第一詞的起始位置
-				}
-				else{
+				}	else {
 					var cut_index = auto_search_key.search(auto_pinyin[0]); 	// 第一個要固定詞的起始位置
 					var first_pinyin_len = auto_pinyin[0].length;
 					auto_search_key = auto_search_key.substring(cut_index + first_pinyin_len + 1,auto_search_key.length);
@@ -1457,10 +1467,11 @@ function search_auto(){                                                 // 進SQ
 				$.ajaxSettings.async = false;
 				search_correspond(auto_pinyin[i],auto_letter[i]); // 檢查拼音是否與字依序相符
 				$.ajaxSettings.async = true;
-				if (correspond_flag)
+				if (correspond_flag) {
 					obj = new pinyin_obj(auto_pinyin[i], auto_letter[i], start_loc, end_loc, 0);
-				else
+				}	else {
 					obj = new pinyin_obj(auto_pinyin[i], auto_letter[i], start_loc, end_loc, 1);
+				}
 				pinyin_objs.push(obj);
 				start += word_length;
 			}
@@ -1492,18 +1503,15 @@ function search_auto(){                                                 // 進SQ
 						var which_word = getWhichWord(auto_start,"tail");
 						console.log("which_word: " + which_word);
 						auto_pointer[0] = which_word + 1;
-					}
-					else{
+					} else{
 						addRecord(pinyin_objs[0],input_loc);
 						auto_pointer[0] = 0;
 					}
-				}
-				else{
+				} else{
 					pinyin_record.splice(0, 0, pinyin_objs[0]);
 					auto_pointer[0] = 0;
 				}
-			}
-			else{
+			} else{
 				var auto_words_num = auto_pointer.length;									// 先得到舊的組字區物件個數
 				var which_word = getWhichWord(auto_start,"head");
 				if (check_over_three){
@@ -1511,16 +1519,16 @@ function search_auto(){                                                 // 進SQ
 						pinyin_record.splice(auto_pointer[0], auto_words_num);// 把舊的全部移除
 						auto_letter.pop();
 						auto_pinyin.pop();
-					}
-					else
+					} else {
 						pinyin_record.splice(auto_pointer[1], auto_words_num - 1);// 若超過三詞，則從第二字詞開始刪
-				}
-				else{
+					}
+				} else{
 					console.log("原先的自動選字數: " + auto_words_num);
-					if (modify_split_flag)
+					if (modify_split_flag) {
 						pinyin_record.splice(auto_pointer[0], auto_words_num + 1);	// 把舊的全部移除
-					else
+					} else {
 						pinyin_record.splice(auto_pointer[0], auto_words_num);	// 把舊的全部移除
+					}
 				}
 				auto_pointer = [];
 				for(var i = 0; i < pinyin_objs.length; i++){							// 更新組字區
@@ -1545,14 +1553,12 @@ function search_auto(){                                                 // 進SQ
 				console.log("end_loc: " + end_loc);
 				if (word_length > syllable && auto_words_num >= auto_pointer.length){		// 如果舊的自動選詞數目 >= 新的自動選詞數目，代表原本就有字
 					input_loc = end_loc;
-				}
-				else if (word_length < syllable && auto_words_num > auto_pointer.length){		// 如果舊的自動選詞數目 >= 新的自動選詞數目，代表原本就有字
+				} else if (word_length < syllable && auto_words_num > auto_pointer.length){		// 如果舊的自動選詞數目 >= 新的自動選詞數目，代表原本就有字
 					input_loc = end_loc;
-				}
-				else
+				}	else {
 					input_loc += candidate_letter[0].length;
-			}
-			else{
+				}
+			}	else {
 				input_loc += candidate_letter[0].length;
 			}
 			console.log("input_loc: " + input_loc);
@@ -1582,15 +1588,15 @@ function search_auto(){                                                 // 進SQ
 }
 
 function search_correspond(key,word){
-	$.post('search_correspond.php',{KEY:key,WORD:word},function(data){
+	$.post(servicePath + 'search_correspond.php',{KEY:key,WORD:word},function(data){
 		if (data == ""){
 			correspond_flag = false;
-		}
-		else{
-			if (data[0] == 1)
+		}	else {
+			if (data[0] == 1) {
 				correspond_flag = true;
-			else
+			}	else {
 				correspond_flag = false;
+			}
 		}
 	},'json');
 }
@@ -1614,12 +1620,10 @@ function setWord(){                                     // 把中文字打上去
 		if (keyin == 48 || keyin == 96){
 			insert_word = candidate_letter[9 + (currentPage - 1) * 10];
 			select_index = 9 + (currentPage - 1) * 10;
-		}
-		else if (keyin >= 97){
+		}	else if (keyin >= 97){
 			insert_word = candidate_letter[keyin - 97 + (currentPage - 1) * 10];
 			select_index = keyin - 97 + (currentPage - 1) * 10;
-		}
-		else if (keyin >= 49){
+		}	else if (keyin >= 49){
 			insert_word = candidate_letter[keyin - 49 + (currentPage - 1) * 10];
 			select_index = keyin - 49 + (currentPage - 1) * 10;
 		}
@@ -1637,10 +1641,11 @@ function setWord(){                                     // 把中文字打上去
 		if (sel_mode == 0 && former_word == insert_word){							// 如果更改之後的字跟原本一樣，則跳過
 			var text = "";
 			for(var i = 0; i < pinyin_record.length; i++){
-				if (pinyin_record[i].modifiable == 2)
+				if (pinyin_record[i].modifiable == 2) {
 					text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-				else
+				}	else {
 					text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+				}
 			}
 			textbox.html(text);
 			search_key = "";                                            // 清空buffer
@@ -1651,15 +1656,15 @@ function setWord(){                                     // 把中文字打上去
 			prompt_flat_txtbox.val("選字成功!");
 			input_loc += word_length;                                   // 調整下一次的輸入位置
 			return;
-		}
-		else{
+		}	else {
 			var replace_end = input_loc + word_length;
 			if (pinyin_record[which_word].modifiable == 1)
 				replace_end = input_loc + pinyin_record[which_word].word.length;
 			var split_loc = replace_end;
 			var syllables = getSyllable(search_key);
-			if (word_length > syllables)
+			if (word_length > syllables) {
 				split_loc = input_loc + syllables;
+			}
 
 			right = input_word.substring(split_loc,input_word.length);
 			input_word = left + insert_word + right;
@@ -1668,13 +1673,14 @@ function setWord(){                                     // 把中文字打上去
 				$.ajaxSettings.async = false;
 				search_correspond(search_key,insert_word);              	// 檢查拼音是否與字依序相符
 				$.ajaxSettings.async = true;
-				if (correspond_flag)
+				if (correspond_flag) {
 					obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 0);   // 是則可修改
-				else
+				}	else {
 					obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 1);   // 不是則只能在前方修改
-			}
-			else
+				}
+			}	else {
 				obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 1);     // 音節數!=字數，只能在最前方修改
+			}
 			$.ajaxSettings.async = false;
 			addRecord(obj,input_loc);
 			$.ajaxSettings.async = true;
@@ -1689,19 +1695,21 @@ function setWord(){                                     // 把中文字打上去
 			input_len = input_word.length;                              // 調整成功字數
 			search_key = "";                                            // 清空buffer
 			mode = 0;
-			if (!auto_change_flag)
+			if (!auto_change_flag) {
 				input_loc += word_length;                                 // 調整下一次的輸入位置
+			}
 			auto_change_flag = false;
 		}
 	}
 	else if (mode == 2){     // 關聯詞模式
 		var insert_word = "";
-		if (keyin == 48 || keyin == 96)
+		if (keyin == 48 || keyin == 96) {
 			insert_word = candidate_letter[9 + (currentPage - 1) * 10];
-		else if (keyin >= 97)
+		}	else if (keyin >= 97) {
 			insert_word = candidate_letter[keyin - 97 + (currentPage - 1) * 10];
-		else if (keyin >= 49)
+		}	else if (keyin >= 49) {
 			insert_word = candidate_letter[keyin - 49 + (currentPage - 1) * 10];
+		}
 		input_word = left + insert_word + right;
 		word_length = insert_word.length;
 
@@ -1709,10 +1717,11 @@ function setWord(){                                     // 把中文字打上去
 		addRecord(obj,input_loc);
 		var text = "";
 		for(var i = 0; i < pinyin_record.length; i++){
-			if (pinyin_record[i].modifiable == 2)
+			if (pinyin_record[i].modifiable == 2) {
 				text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-			else
+			}	else {
 				text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+			}
 		}
 		textbox.html(text);
 		input_len = input_word.length                               	// 調整成功字數
@@ -1720,15 +1729,15 @@ function setWord(){                                     // 把中文字打上去
 		mode = 0;
 		input_loc += word_length;                                     // 調整下一次的輸入位置
 		auto_start = input_loc;
-	}
-	else if (mode == 1){     // 自選模式
+	} else if (mode == 1){     // 自選模式
 		var insert_word = "";
-		if (keyin == 48 || keyin == 96)
+		if (keyin == 48 || keyin == 96) {
 			insert_word = candidate_letter[9 + (currentPage - 1) * 10];
-		else if (keyin >= 97)
+		} else if (keyin >= 97) {
 			insert_word = candidate_letter[keyin - 97 + (currentPage - 1) * 10];
-		else if (keyin >= 49)
+		}	else if (keyin >= 49) {
 			insert_word = candidate_letter[keyin - 49 + (currentPage - 1) * 10];
+		}
 		input_word = left + insert_word + right;
 		word_length = insert_word.length;
 		prefix_key = insert_word;
@@ -1737,36 +1746,37 @@ function setWord(){                                     // 把中文字打上去
 		if (punctuation_search_flag){
 			obj = new pinyin_obj("", insert_word, input_loc, input_loc + word_length, 2);   // 是則可修改
 			prefix_key = "";
-		}
-		else{
+		}	else{
 			if (getSyllable(search_key) == word_length){              	// 如果音節數=字數
 				$.ajaxSettings.async = false;
 				search_correspond(search_key,insert_word);              	// 檢查拼音是否與字依序相符
 				$.ajaxSettings.async = true;
-				if (correspond_flag)
+				if (correspond_flag) {
 					obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 0);   // 是則可修改
-				else
+				}	else {
 					obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 1);   // 不是則只能在前方修改
-			}
-			else
+				}
+			}	else {
 				obj = new pinyin_obj(search_key, insert_word, input_loc, input_loc + word_length, 1);     // 音節數!=字數，只能在最前方修改
+			}
 		}
 		$.ajaxSettings.async = false;
 		addRecord(obj,input_loc);
 		$.ajaxSettings.async = true;
 		var text = "";
 		for(var i = 0; i < pinyin_record.length; i++){
-			if (pinyin_record[i].modifiable == 2)
+			if (pinyin_record[i].modifiable == 2) {
 				text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-			else
+			}	else {
 				text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+			}
 		}
 		textbox.html(text);
 		input_len = input_word.length;                              // 調整成功字數
 		search_key = "";                                            // 清空buffer
-		if (!punctuation_search_flag)																// 檢查是否為標點符號輸入
+		if (!punctuation_search_flag) {															// 檢查是否為標點符號輸入
 			mode = 2;
-		else{
+		} else {
 			mode = 0;
 			if (insert_word.length > 1) input_loc--;									// 如果是成對標點符號，將輸入位置調整到中間
 		}
@@ -1782,10 +1792,11 @@ function setWord(){                                     // 把中文字打上去
 		var text = "";
 		input_word = "";
 		for(var i = 0; i < pinyin_record.length; i++){
-			if (pinyin_record[i].modifiable == 2)
+			if (pinyin_record[i].modifiable == 2) {
 				text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-			else
+			}	else {
 				text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+			}
 			input_word += pinyin_record[i].word;
 		}
 		textbox.html(text);
@@ -1818,16 +1829,14 @@ function deleteWord(keyCode){                                   // 處理選字�
 
 					if (temp_input_len == 0){                               // 原本就沒字
 						return;
-					}
-					else if (input_len == temp_input_len)                   // 刪除後字數沒變動，代表只是拼音被刪除
+					}	else if (input_len == temp_input_len) {                 // 刪除後字數沒變動，代表只是拼音被刪除
 						delete_word_flag = false;
-					else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
+					}	else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
 						console.log("all clean");
 						pinyin_record = [];
 						auto_pointer = [];
 						auto_start = 0;
-					}
-					else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
+					}	else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
 						console.log("input_loc: " + input_loc);
 						var which_word = getWhichWord(input_loc + 1,"tail");      // 先抓到是哪個字被刪
 						console.log("which_word: " + which_word);
@@ -1846,18 +1855,18 @@ function deleteWord(keyCode){                                   // 處理選字�
 							$.ajaxSettings.async = false;
 							rearrange_objs(key,word,which_word,1,0);
 							$.ajaxSettings.async = true;
-						}
-						else{
+						}	else {
 							$.ajaxSettings.async = false;
 							rearrange_objs("","",which_word,0,0);
 							$.ajaxSettings.async = true;
 						}
 						var text = "";
 						for(var i = 0; i < pinyin_record.length; i++){
-							if (pinyin_record[i].modifiable == 2)
+							if (pinyin_record[i].modifiable == 2) {
 								text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-							else
+							}	else {
 								text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+							}
 						}
 						textbox.html(text);
 						textbox.setCursorPosition(input_loc);
@@ -1865,8 +1874,7 @@ function deleteWord(keyCode){                                   // 處理選字�
 					}
 				}
 			}
-		}
-		else if (sel_mode == 1){
+		} else if (sel_mode == 1){
 			if (mode == 0 && search_key == "" && auto_search_key == ""){// 選字成功後，且沒有任何自動選詞詞彙
 				if (tow_check == false){                                  // 如果是一字一字刪除
 					var text = textbox.html();
@@ -1880,16 +1888,14 @@ function deleteWord(keyCode){                                   // 處理選字�
 
 					if (temp_input_len == 0){                               // 原本就沒字
 						return;
-					}
-					else if (input_len == temp_input_len)                   // 刪除後字數沒變動，代表只是拼音被刪除
+					}	else if (input_len == temp_input_len) {                  // 刪除後字數沒變動，代表只是拼音被刪除
 						delete_word_flag = false;
-					else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
+					}	else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
 						console.log("all clean");
 						pinyin_record = [];
 						auto_pointer = [];
 						auto_start = 0;
-					}
-					else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
+					}	else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
 						console.log("input_loc: " + input_loc);
 						var which_word = getWhichWord(input_loc + 1,"tail");      // 先抓到是哪個字被刪
 						console.log("which_word: " + which_word);
@@ -1908,18 +1914,18 @@ function deleteWord(keyCode){                                   // 處理選字�
 							$.ajaxSettings.async = false;
 							rearrange_objs(key,word,which_word,1,0);
 							$.ajaxSettings.async = true;
-						}
-						else{
+						} else {
 							$.ajaxSettings.async = false;
 							rearrange_objs("","",which_word,0,0);
 							$.ajaxSettings.async = true;
 						}
 						var text = "";
 						for(var i = 0; i < pinyin_record.length; i++){
-							if (pinyin_record[i].modifiable == 2)
+							if (pinyin_record[i].modifiable == 2) {
 								text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-							else
+							}	else {
 								text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+							}
 						}
 						textbox.html(text);
 						textbox.setCursorPosition(input_loc);
@@ -1993,9 +1999,9 @@ function deleteWord(keyCode){                                   // 處理選字�
 		}*/
 		return;
 	}
-	if (keyCode == 46){                                                 // delete
-		if (mode == 0 && search_key == ""){                             // 單純選字成功後的階段
-			if (tow_check == false){                                    // 如果是一字一字刪除
+	if (keyCode == 46){                                           // delete
+		if (mode == 0 && search_key == "") {                        // 單純選字成功後的階段
+			if (tow_check == false) {                                 // 如果是一字一字刪除
 				var text = textbox.html();
 				var temp_input_len = input_len;
 				text = remove_tags(text);
@@ -2006,17 +2012,15 @@ function deleteWord(keyCode){                                   // 處理選字�
 				// auto_start = get_auto_start();
 				var delete_word_flag = true;
 
-				if (temp_input_len == 0){                               // 原本就沒字
+				if (temp_input_len == 0) {                               // 原本就沒字
 					return;
-				}
-				else if (input_len == temp_input_len)                   // 刪除後字數沒變動，代表只是拼音被刪除
+				}	else if (input_len == temp_input_len) {               // 刪除後字數沒變動，代表只是拼音被刪除
 					delete_word_flag = false;
-				else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
+				}	else if (delete_word_flag && pinyin_record.length == 1 && pinyin_record[0].word.length == 1){   // 最後一個字
 					pinyin_record = [];
 					auto_pointer = [];
 					auto_start = 0;
-				}
-				else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
+				}	else if (delete_word_flag && pinyin_record.length > 1 || pinyin_record[0].word.length > 1){     // 不是最後一個字
 					var which_word = getWhichWord(input_loc,"head");      // 先抓到是哪個字被刪
 					var key = pinyin_record[which_word].pinyin;
 					var word = pinyin_record[which_word].word;
@@ -2033,18 +2037,18 @@ function deleteWord(keyCode){                                   // 處理選字�
 						$.ajaxSettings.async = false;
 						rearrange_objs(key,word,which_word,1,0);
 						$.ajaxSettings.async = true;
-					}
-					else{
+					}	else{
 						$.ajaxSettings.async = false;
 						rearrange_objs("","",which_word,0,0);
 						$.ajaxSettings.async = true;
 					}
 					var text = "";
 					for(var i = 0; i < pinyin_record.length; i++){
-						if (pinyin_record[i].modifiable == 2)
+						if (pinyin_record[i].modifiable == 2) {
 							text += '<span class="in_pinyin_window cannotMod">' + pinyin_record[i].word + '</span>';
-						else
+						} else {
 							text += '<span class="in_pinyin_window">' + pinyin_record[i].word + '</span>';
+						}
 					}
 					textbox.html(text);
 					textbox.setCursorPosition(input_loc);
@@ -2080,10 +2084,9 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 			var word_arr = word.split("");
 			var temp_index = index;
 			var temp_loc = 0;
-			try{
+			try {
 				temp_loc = pinyin_record[index].start_loc;
-			}
-			catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
+			} catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
 				temp_loc = pinyin_record[index - 1].end_loc;
 			}
 			var start_loc = temp_loc;
@@ -2098,19 +2101,19 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 				pinyin_objs.push(obj);                      	// 插入到物件陣列裡
 			}
 			for(var i = 0; i < pinyin_objs.length; i++){
-				if (i == 0)
+				if (i == 0) {
 					pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
-				else
+				}	else {
 					pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
+				}
 				record_last_index = temp_index;
 				temp_index++;
 			}
-		}
-		else{
-			$.post('pinyin_split.php',{THE_KEY:key},function(data){
-				if (data == ""){
-				}
-				else{
+		}	else {
+			$.post(servicePath + 'pinyin_split.php',{THE_KEY:key},function(data) {
+				if (data == "") {
+					// do nothing
+				}	else {
 					var key_num = Object.keys(data).length;
 					var key_len = getSyllable(key);
 					var word_num = word.length;
@@ -2119,8 +2122,7 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 					var temp_loc = 0;
 					try{
 						temp_loc = pinyin_record[index].start_loc;
-					}
-					catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
+					} catch(err){                                     // 如果index所指到的位置未存在obj就稍後新增，把前一個的end_loc拿來用
 						temp_loc = pinyin_record[index - 1].end_loc;
 					}
 					var temp_index = index;
@@ -2128,13 +2130,13 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 					var end_loc = 0;
 					if (key_len > word_num){
 						var word_piece = word;
-						if (index > 0)
+						if (index > 0) {
 							start_loc = pinyin_record[index - 1].end_loc;
+						}
 						end_loc = start_loc + word_num;
 						obj = new pinyin_obj("", word_piece, start_loc, end_loc, 2);
 						pinyin_objs.push(obj);                      	// 插入到物件陣列裡
-					}
-					else{
+					}	else {
 						for(var i = 0; i < key_num; i++){
 							var pinyin_piece = data[i];                 // 被切出來的拼音
 							var syllable = getSyllable(pinyin_piece);   // 計算該拼音的音節，以便將原本區域間的字分割正確
@@ -2146,10 +2148,11 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 							$.ajaxSettings.async = false;
 							search_correspond(pinyin_piece,word_piece); // 檢查拼音是否與字依序相符
 							$.ajaxSettings.async = true;
-							if (correspond_flag)
+							if (correspond_flag) {
 								obj = new pinyin_obj(pinyin_piece, word_piece, start_loc, end_loc, 0);
-							else
+							} else {
 								obj = new pinyin_obj(pinyin_piece, word_piece, start_loc, end_loc, 2);
+							}
 							j += syllable;
 							pinyin_objs.push(obj);
 						}
@@ -2162,14 +2165,15 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 						}
 					}
 					for(var i = 0; i < pinyin_objs.length; i++){
-						if (i == 0){
-							if (del_flag)
+						if (i == 0) {
+							if (del_flag) {
 								pinyin_record.splice(temp_index, 1, pinyin_objs[i]);
-							else
+							}	else {
 								pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
-						}
-						else
+							}
+						}	else {
 							pinyin_record.splice(temp_index, 0, pinyin_objs[i]);
+						}
 						record_last_index = temp_index;
 						temp_index++;
 					}
@@ -2177,25 +2181,21 @@ function rearrange_objs(key,word,index,del_flag,after_flag){    // 刪字或是�
 				}
 			},"json");
 		}
-	}
-	else if (key == "" && word == ""){              // 只剩一單字（先調整，後刪除）
+	}	else if (key == "" && word == ""){              // 只剩一單字（先調整，後刪除）
 		modify_obj_loc(index + 1, 1, 0);            // 先將會被刪除的字區後方的所有字區先調整位置
 		pinyin_record.splice(index, 1);             // 再把該字詞刪除
-	}
-	else if (key == "" && word != ""){              // 沒有拼音的詞
-		try{
+	}	else if (key == "" && word != ""){              // 沒有拼音的詞
+		try {
 			if (del_flag){                          // 刪字時，直接將傳過來的字取代原本的
 				pinyin_record[index].word = word;
 				pinyin_record[index].end_loc = pinyin_record[index].start_loc + word.length;
-			}
-			else{                                   // 補字時，將該詞插入正確位置
+			}	else {                                   // 補字時，將該詞插入正確位置
 				start_loc = pinyin_record[index - 1].end_loc;
 				end_loc = start_loc + word.length;
 				var obj = new pinyin_obj("", word, start_loc, end_loc, 2);
 				pinyin_record.splice(index, 0, obj);
 			}
-		}
-		catch(err){
+		} catch(err){
 			start_loc = pinyin_record[index - 1].end_loc;
 			end_loc = start_loc + word.length;
 			var obj = new pinyin_obj("", word, start_loc, end_loc, 2);
@@ -2230,38 +2230,35 @@ function modify_obj_loc(index,all_del,after_flag){      // 刪字，補字時會
 	if (all_del == 0){                                  	// 如果字區內還有字
 		for(var i = 0; i < pinyin_record.length; i++){
 			if (after_flag){
-				if (i < index)
+				if (i < index) {
 					continue;
-				else{
+				}	else {
 					pinyin_record[i].start_loc = pinyin_record[temp_index - 1].end_loc;
 					pinyin_record[i].end_loc = pinyin_record[i].start_loc + pinyin_record[i].word.length;
 					temp_index++;
 				}
-			}
-			else{
-				if (i <= index)                         				// 因為字區還有字，所以從該字區之後才進行修正
+			}	else {
+				if (i <= index) {                         			// 因為字區還有字，所以從該字區之後才進行修正
 					continue;
-				else{
+				}	else {
 					pinyin_record[i].start_loc = pinyin_record[temp_index].end_loc;
 					pinyin_record[i].end_loc = pinyin_record[i].start_loc + pinyin_record[i].word.length;
 					temp_index++;
 				}
 			}
 		}
-	}
-	else if (all_del == 1){                        			 	// 如果該字區已經消失（全部被刪除了）
+	} else if (all_del == 1){                        			 	// 如果該字區已經消失（全部被刪除了）
 		var substituted_flag = false;
 		for(var i = 0; i < pinyin_record.length; i++){
-			if (i < index)
+			if (i < index) {
 				continue;
-			else{
+			}	else {
 				if (substituted_flag == false && temp_index == index){          // 後方第一個字區往前替補
 					pinyin_record[i].start_loc = pinyin_record[temp_index - 1].start_loc;
 					pinyin_record[i].end_loc = pinyin_record[i].start_loc + pinyin_record[i].word.length;
 					substituted_flag = true;
 					temp_index--;
-				}
-				else{                               						// 而後修正索引讓後方字區的位置都正確
+				}	else {                               						// 而後修正索引讓後方字區的位置都正確
 					pinyin_record[i].start_loc = pinyin_record[temp_index].end_loc;
 					pinyin_record[i].end_loc = pinyin_record[i].start_loc + pinyin_record[i].word.length;
 				}
@@ -2308,8 +2305,7 @@ function modify_record_obj(pinyin,start_index,end_index){
 function addRecord(add_obj,loc){                     	// 將pinyin物件加到pinyin_record陣列中
 	if (pinyin_record.length > 0 && (loc == pinyin_record[pinyin_record.length - 1].end_loc)){  // 最末端打字，直接push
 		pinyin_record.push(add_obj);
-	}
-	else if (loc == 0){     // 最前端操作
+	} else if (loc == 0){     // 最前端操作
 		if (mode == 3){
 			var which_word = getWhichWord(loc,"head");        // 先找到loc是在第幾個字區
 			var former_word = pinyin_record[which_word].word;		// 原本字區中的字
@@ -2319,7 +2315,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 			var auto_words_num = auto_pointer.length;
 			console.log("auto_words_num: " + auto_words_num);
 			if (new_word.length == former_word.length && getSyllable(new_pinyin) == getSyllable(former_pinyin)){	// 如果整個字區都要被取代
-				pinyin_record.splice(0,1,add_obj);
+				pinyin_record.splice(0, 1, add_obj);
 				if (auto_words_num > 0){
 					auto_search_key = "";
 					if (auto_words_num > 1){
@@ -2332,21 +2328,20 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 						search_auto();
 						$.ajaxSettings.async = true;
 						console.log("input_loc: " + input_loc);
-					}
-					else{
+					}	else {
 						auto_start = pinyin_record[auto_pointer[0]].end_loc;
 						auto_search_key = "";
 						auto_pointer = [];
 					}
 				}
-			}
-			else{	// 部分字區要被修正
+			} else {	// 部分字區要被修正
 				var key_syllable = getSyllable(new_pinyin);
 				var split_loc = 0;
-				if (pinyin_record[which_word].modifiable == 1)
+				if (pinyin_record[which_word].modifiable == 1) {
 					split_loc = former_word.length;
-				else
+				}	else {
 					split_loc = key_syllable;
+				}
 
 				var pinyin_left = "";
 				var pinyin_right = "";
@@ -2374,8 +2369,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 							search_auto();
 							$.ajaxSettings.async = true;
 							console.log("input_loc: " + input_loc);
-						}
-						else{
+						} else {
 							auto_start = pinyin_record[auto_pointer[0]].end_loc;
 							auto_search_key = "";
 							auto_pointer = [];
@@ -2384,8 +2378,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 					for(var i = 0; i < auto_pointer.length; i++){
 						console.log("auto_pointer[" + i + "] = " + auto_pointer[i]);
 					}
-				}
-				else{
+				}	else {
 					for(var i = 0; i < former_pinyin.length; i++){
 						if (former_pinyin[i] == " ")
 							j++;
@@ -2404,8 +2397,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 						$.ajaxSettings.async = false;
 						rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
 						$.ajaxSettings.async = true;
-					}
-					else{
+					}	else {
 						var start = add_obj.end_loc;
 						var obj = new pinyin_obj(pinyin_right, word_right, start, start + word_right.length, 0);
 						pinyin_record.splice(which_word + 1, 0, obj);
@@ -2428,8 +2420,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 								$.ajaxSettings.async = true;
 								input_loc = start;
 								console.log("input_loc: " + input_loc);
-							}
-							else{
+							}	else {
 								auto_start = pinyin_record[auto_pointer[0]].end_loc;
 								auto_search_key = "";
 								auto_pointer = [];
@@ -2441,14 +2432,13 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 					}
 				}
 			}
-		}
-		else
+		} else {
 			pinyin_record.unshift(add_obj);
+		}
 		$.ajaxSettings.async = false;
 		modify_obj_loc(0, 0, 0);
 		$.ajaxSettings.async = true;
-	}
-	else{                   // 中間情形，得細分是在各字區首尾還是會造成字區被切割
+	} else {                   // 中間情形，得細分是在各字區首尾還是會造成字區被切割
 		var which_word = getWhichWord(loc,"head");        // 先找到loc是在第幾個字區
 		var former_word = pinyin_record[which_word].word;
 		var former_pinyin = pinyin_record[which_word].pinyin;
@@ -2457,26 +2447,24 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 		var auto_words_num = auto_pointer.length;
 
 		if (loc == pinyin_record[which_word].start_loc){    // 在某字區起始位置
-			if (mode == 3){
-				if (new_word.length == former_word.length && getSyllable(new_pinyin) == getSyllable(former_pinyin)){
+			if (mode == 3) {
+				if (new_word.length == former_word.length && getSyllable(new_pinyin) == getSyllable(former_pinyin)) {
 					pinyin_record.splice(which_word,1,add_obj);
-					if (auto_words_num > 0){
+					if (auto_words_num > 0) {
 						auto_search_key = "";
 						if (auto_words_num > 1){
-							if (which_word == auto_pointer[0]){
+							if (which_word == auto_pointer[0]) {
 								auto_start = pinyin_record[auto_pointer[1]].start_loc;
 								for(var i = 1; i < auto_words_num; i++){
 									auto_search_key += pinyin_record[auto_pointer[i]].pinyin + " ";
 								}
 								auto_pointer.shift();
-							}
-							else if (which_word == auto_pointer[1]){
+							} else if (which_word == auto_pointer[1]) {
 								auto_start = pinyin_record[auto_pointer[2]].start_loc;
 								auto_search_key = pinyin_record[auto_pointer[2]].pinyin;
 								auto_pointer.shift();
 								auto_pointer.shift();
-							}
-							else if (which_word == auto_pointer[2]){
+							} else if (which_word == auto_pointer[2]) {
 								auto_start = pinyin_record[auto_pointer[2]].end_loc;
 								auto_search_key = "";
 								auto_pointer = [];
@@ -2489,22 +2477,21 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 							for(var i = 0; i < auto_pointer.length; i++){
 								console.log("auto_pointer[" + i + "] = " + auto_pointer[i]);
 							}
-						}
-						else{
+						}	else {
 							auto_start = pinyin_record[auto_pointer[0]].end_loc;
 							auto_search_key = "";
 							auto_pointer = [];
 						}
 					}
-				}
-				else{
+				}	else{
 					var key_syllable = getSyllable(new_pinyin);
 
 					var split_loc = 0;
-					if (pinyin_record[which_word].modifiable == 1)
+					if (pinyin_record[which_word].modifiable == 1) {
 						split_loc = former_word.length;
-					else
+					}	else {
 						split_loc = key_syllable;
+					}
 
 					var pinyin_left = "";
 					var pinyin_right = "";
@@ -2529,8 +2516,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 								search_auto();
 								$.ajaxSettings.async = true;
 								console.log("input_loc: " + input_loc);
-							}
-							else{
+							}	else {
 								auto_start = pinyin_record[auto_pointer[0]].end_loc;
 								auto_search_key = "";
 								auto_pointer = [];
@@ -2539,12 +2525,12 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 						for(var i = 0; i < auto_pointer.length; i++){
 							console.log("auto_pointer[" + i + "] = " + auto_pointer[i]);
 						}
-					}
-					else{
+					}	else {
 						for(var i = 0; i < former_pinyin.length; i++){
-							if (former_pinyin[i] == " ")
+							if (former_pinyin[i] == " ") {
 								j++;
-							if (j == key_syllable){
+							}
+							if (j == key_syllable) {
 								var temp_loc = i;
 								pinyin_left = former_pinyin.substring(0,temp_loc);
 								pinyin_right = former_pinyin.substring(temp_loc + 1,former_pinyin.length);
@@ -2557,17 +2543,16 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 						console.log("pinyin_right: " + pinyin_right);
 						add_obj.pinyin = pinyin_left;
 						pinyin_record.splice(which_word,1,add_obj);
-						if (sel_mode == 0){
+						if (sel_mode == 0) {
 							$.ajaxSettings.async = false;
 							rearrange_objs(pinyin_right, word_right, which_word + 1, 0, 0);
 							$.ajaxSettings.async = true;
-						}
-						else{
+						}	else {
 							var start = add_obj.end_loc;
 							var obj = new pinyin_obj(pinyin_right, word_right, start, start + word_right.length, 0);
 							pinyin_record.splice(which_word + 1, 0, obj);
 							modify_obj_loc(which_word, 0, 0);
-							if (auto_words_num > 0){
+							if (auto_words_num > 0) {
 								auto_search_key = "";
 								if (auto_words_num > 1){
 									for(var i = 1; i < auto_words_num; i++){
@@ -2585,8 +2570,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 									$.ajaxSettings.async = true;
 									input_loc = start;
 									console.log("input_loc: " + input_loc);
-								}
-								else{
+								}	else {
 									auto_start = pinyin_record[auto_pointer[0]].end_loc;
 									auto_search_key = "";
 									auto_pointer = [];
@@ -2598,15 +2582,14 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 						}
 					}
 				}
-			}
-			else
+			}	else {
 				pinyin_record.splice(which_word,0,add_obj);
+			}
 
 			$.ajaxSettings.async = false;
 			modify_obj_loc(which_word, 0, 0);
 			$.ajaxSettings.async = true;
-		}
-		else if (loc <= pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間
+		}	else if (loc <= pinyin_record[which_word].end_loc && loc > pinyin_record[which_word].start_loc){ // 在字區中間
 			var start_loc = loc - pinyin_record[which_word].start_loc;
 			var end_loc = pinyin_record[which_word].end_loc - pinyin_record[which_word].start_loc;
 			var key_syllable = getSyllable(new_pinyin);
@@ -2615,7 +2598,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 			var pinyin_left = "";
 			var pinyin_right = "";
 
-			if (mode == 3){
+			if (mode == 3) {
 				var pre_pinyin = "";
 				var pre_word = former_word.substring(0,start_loc);
 				console.log("pre_word: " + pre_word);
@@ -2626,9 +2609,10 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 				console.log("start_loc: " + start_loc);
 				var j = 0;
 				for(var i = 0; i < former_pinyin.length; i++){
-					if (former_pinyin[i] == " ")
+					if (former_pinyin[i] == " ") {
 						j++;
-					if (j == start_loc){
+					}
+					if (j == start_loc) {
 						var temp_loc = i;
 						pre_pinyin = former_pinyin.substring(0,temp_loc);
 						former_pinyin = former_pinyin.substring(temp_loc + 1,former_pinyin.length);
@@ -2639,8 +2623,7 @@ function addRecord(add_obj,loc){                     	// 將pinyin物件加到pi
 							pinyin_left = former_pinyin;
 							pinyin_right = "";
 							break;
-						}
-						else{
+						}	else {
 							j = 0;
 							for(var k = 0; k < former_pinyin.length; k++){
 								if (former_pinyin[k] == " ")
@@ -2999,19 +2982,21 @@ $.fn.setCursorPosition = function(pos){                         // 控制游標�
 	if (pinyin_record.length != 0){
 		var which_word = getWhichWord(pos,"tail");
 		var loc = pos - pinyin_record[which_word].start_loc;
-		try{
+		try {
 			element = element.childNodes[which_word];
 			element = element.childNodes[0];
+			// console.log("element: ", element);
+			// console.log("loc: ", loc);
 			range.setStart(element, loc);
-		}
-		catch (err){                                                  // 自選模式，去除底線後的設定游標位置，此區塊直接針對各span設定其游標位置
-			console.log("err_msg: " + err);
+		} catch(err){                                               // 自選模式，去除底線後的設定游標位置，此區塊直接針對各span設定其游標位置
+			// console.log("err_msg: " + err);
 			element = document.getElementById("input");
 			element = element.childNodes[0];
+			// console.log("element: ", element);
+			// console.log("loc: ", loc);
 			range.setStart(element, loc);
 		}
-	}
-	else if (pos == 0){
+	}	else if (pos == 0){
 		range.setStart(element, pos);
 	}
 	range.collapse(true);
@@ -3025,7 +3010,7 @@ function getCaretCharacterOffsetWithin(element) {               // 得到文字�
 	var doc = element.ownerDocument || element.document;
 	var win = doc.defaultView || doc.parentWindow;
 	var sel;
-	if (typeof win.getSelection != "undefined") {
+	if (typeof win.getSelection !== undefined) {
 		sel = win.getSelection();
 		if (sel.rangeCount > 0) {
 			var range = win.getSelection().getRangeAt(0);
@@ -3034,8 +3019,7 @@ function getCaretCharacterOffsetWithin(element) {               // 得到文字�
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		}
-	}
-	else if ((sel = doc.selection) && sel.type != "Control") {
+	}	else if ((sel = doc.selection) && sel.type != "Control") {
 		var textRange = sel.createRange();
 		var preCaretTextRange = doc.body.createTextRange();
 		preCaretTextRange.moveToElementText(element);
@@ -3134,15 +3118,15 @@ function isNumber(keyCode){                                     // 判斷鍵入�
 }*/
 
 function nav_assign_white(element){                             // 把元素顏色變白色
-	$(nav_arr[element]).css('color',"white");
+	$(navArr[element]).css('color',"white");
 	return element;
 }
 
 function nav_restore_color(element){                            // 讓上方的已變色的navigator元素變回原色的函式
-	$(nav_arr[element]).css('color',nav_color[element]);
+	$(navArr[element]).css('color',nav_color[element]);
 }
 
-function caption_effect(){                                      // 字幕效果，讓提示欄的文字在1.5秒後消失
+function caption_effect(){                                      // 字幕效果，讓提示欄的文字在1.8秒後消失
 	var pause_timer = setInterval(function(){
 		$("#prompt, #prompt_flat").val("");
 		clearInterval(pause_timer);
@@ -3153,7 +3137,7 @@ function change_theme(theme,initial_flag){
 	var all_theme = ["black","pink","blue","xmas","green"];
 	nav_assign_color(theme);
 	customJqte.remove();
-	customJqte_flat.remove();
+	customJqteFlat.remove();
 	$("#jqte_place").append('<textarea id="jqte" readonly></textarea>');
 	$("#jqte_place_flat").append('<textarea id="jqte_flat" readonly></textarea>');
 	var jqte_theme = "jqte_" + theme;
@@ -3161,9 +3145,9 @@ function change_theme(theme,initial_flag){
 	$("#jqte").jqte({css:jqte_theme});
 	customJqte = $("." + jqte_theme);
 	$("#jqte_flat").jqte({css:jqte_flat_theme});
-	customJqte_flat = $("." + jqte_flat_theme);
+	customJqteFlat = $("." + jqte_flat_theme);
 
-	if (typeof(Storage) != "undefined"){
+	if (typeof(Storage) !== undefined){
 		localStorage.setItem("theme", theme);
 		var text = localStorage.getItem("text", text);						// 先把在localStorage中的text抓出來
 		$(".jqte_" + theme + "_editor").html(text);
@@ -3180,67 +3164,36 @@ function change_theme(theme,initial_flag){
 	});
 
 	for(var i = 0; i < all_theme.length; i++){
-		document.getElementById("theme_" + all_theme[i]).disabled = true;
+		$("#theme_" + all_theme[i]).attr("disabled", true);
 		if (theme == all_theme[i])
-			document.getElementById("theme_" + theme).disabled = false;
+			$("#theme_" + theme).attr("disabled", false);
 	}
-	now_theme = theme;
+	applyTheme = theme;
 	if (!initial_flag)
 		$.fn.fullpage.moveTo(2, 1);
 }
 
 function nav_assign_color(theme){
 	var nav_color = ["rgb(240, 160, 28)","#F87284","#F1EE8F","#8AE194","#5B81E9","rgb(171, 145, 249)"];
-	var nav_arr_len = nav_arr.length;
+	var navArr_len = navArr.length;
 	if (theme == "black"){
 		static_color = "#fff";
-		for(var i = 0; i < nav_arr_len; i++){
-			$(nav_arr[i]).css('color',nav_color[i]);
-			$(nav_arr[i]).on('mouseenter',function(){$(this).css('color',static_color);});
+		for(var i = 0; i < navArr_len; i++){
+			$(navArr[i]).css('color',nav_color[i]);
+			$(navArr[i]).on('mouseenter',function(){$(this).css('color',static_color);});
 			(function(i){
-		    $(nav_arr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});
-		  })(i);
+				$(navArr[i]).mouseleave(function(){$(this).css('color',nav_color[i]);});
+			})(i);
 		}
 	}
-	else if (theme == "pink"){
+	else if (theme == "pink" || theme == "blue" || theme == "xmas" || theme == "green"){
 		static_color = "#fff";
-		for(var i = 0; i < nav_arr_len; i++){
-			$(nav_arr[i]).css('color',static_color);
+		for(var i = 0; i < navArr_len; i++){
+			$(navArr[i]).css('color',static_color);
 			(function(i){
-		    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});
-		  })(i);
-		  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
-		}
-	}
-	else if (theme == "blue"){
-		static_color = "#fff";
-		for(var i = 0; i < nav_arr_len; i++){
-			$(nav_arr[i]).css('color',static_color);
-			(function(i){
-		    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});
-		  })(i);
-		  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
-		}
-	}
-	else if (theme == "xmas"){
-		static_color = "#fff";
-		for(var i = 0; i < nav_arr_len; i++){
-			$(nav_arr[i]).css('color',static_color);
-			(function(i){
-		    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});
-		  })(i);
-		  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
-		}
-	}
-	else if (theme == "green"){
-		//static_color = "rgb(71, 125, 210)";
-		static_color = "#fff";
-		for(var i = 0; i < nav_arr_len; i++){
-			$(nav_arr[i]).css('color',static_color);
-			(function(i){
-		    $(nav_arr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});
-		  })(i);
-		  $(nav_arr[i]).mouseleave(function(){$(this).css('color',static_color);});
+				$(navArr[i]).mouseenter(function(){$(this).css('color',nav_color[i]);});
+			})(i);
+			$(navArr[i]).mouseleave(function(){$(this).css('color',static_color);});
 		}
 	}
 }
@@ -3258,7 +3211,7 @@ function generate_open(){                                       // 讓"開啟提
 			var textbox = $("#input");
 			var prompt_txtbox = $("#prompt");
 			//qrcode_toleft();
-			var check_popup_hide = ispopup_hidden();
+			var check_popup_hide = isPopupHidden();
 			if (!check_popup_hide){																	  // 已經彈出popup時，則不需要再開啟
 			}
 			else{
@@ -3326,7 +3279,7 @@ function generate_open(){                                       // 讓"開啟提
 				position: 'top center'
 			}).popup('hide');
 
-			customJqte_flat.popup({
+			customJqteFlat.popup({
 				content: '這是文字編輯器，可以將輸入完的字詞在此進行編輯',
 				position: 'left center'
 			}).popup('hide');
@@ -3351,10 +3304,9 @@ function generate_close(){                                          // 讓"關�
 		$("#cut").popup('hide');
 		$("#show, #show_flat").popup('hide');
 		customJqte.popup('hide');
-		customJqte_flat.popup('hide');
+		customJqteFlat.popup('hide');
 		$("#search_pinyin").popup('hide');
 		var pause_timer = setInterval(function(){
-
 			$("#input").popup('destroy');
 			$("#select_mode").popup('destroy');
 			$("#prompt, #prompt_flat").popup('destroy');
@@ -3363,7 +3315,7 @@ function generate_close(){                                          // 讓"關�
 			$("#cut").popup('destroy');
 			$("#show, #show_flat").popup('destroy');
 			customJqte.popup('destroy');
-			customJqte_flat.popup('destroy');
+			customJqteFlat.popup('destroy');
 			$("#search_pinyin").popup('destroy');
 			$("#prompt, #prompt_flat").val("提示功能已關閉!");
 			caption_effect();
@@ -3372,25 +3324,25 @@ function generate_close(){                                          // 讓"關�
 	});
 }
 
-function ispopup_hidden(){                                         // 判斷畫面上是否還有存在的popup
-	var pop_arr = ["#input","#select_mode","#prompt","#copy","#clear","#cut","#show","#search_pinyin"];
+function isPopupHidden(){                                         // 判斷畫面上是否還有存在的popup
+	var pop_arr = ["#input", "#select_mode", "#prompt", "#copy", "#clear", "#cut", "#show", "#search_pinyin"];
 	var check = false;
 	var temp = $("#input").popup('is hidden');
 	for(var i = 0; i < pop_arr.length; i++){
 		if ($(pop_arr[i]).popup('is hidden')){
 			check = true;
-		}
-		else{
+		}	else{
 			check = false;
 			break;
 		}
 	}
-	if (!check)
+	if (!check) {
 		return check;
-	else if (check && customJqte.popup('is hidden'))
+	} else if (check && customJqte.popup('is hidden')) {
 		check = true;
-	else
+	}	else {
 		check = false;
+	}
 	return check;
 }
 
@@ -3398,16 +3350,16 @@ function ispopup_flat_hidden(){                                    // 判斷手�
 	var pop_arr = ["#input","#prompt_flat","#show_flat","#search_pinyin"];
 	var check = false;
 	for(var i = 0; i < pop_arr.length; i++){
-		if ($(pop_arr[i]).popup('is hidden'))
+		if ($(pop_arr[i]).popup('is hidden')) {
 			check = true;
-		else{
+		}	else{
 			check = false;
 			break;
 		}
 	}
-	if (!check)
+	if (!check) 
 		return check;
-	else if (check && customJqte_flat.popup('is hidden'))
+	else if (check && customJqteFlat.popup('is hidden'))
 		check = true;
 	else
 		check = false;
@@ -3420,23 +3372,26 @@ function ispopup_flat_hidden(){                                    // 判斷手�
 function change_pic(){
 	click_count++;
 	if (click_count == 5){
-		var timer = setInterval(function(){
-			$("#change_qr").html('<img src="./images/pokerface.png" width="120px" height="120px" style="margin-left: 18px; margin-top: 5px; margin-bottom: 2px"/><br><br>');
-			clearInterval(timer);
-			var timer2 = setInterval(function(){
+		$("body").queue("AnimateQrcode", function(next) {
+			setTimeout(function(){
+				$("#change_qr").html('<img src="./images/pokerface.png" width="120px" height="120px" style="margin-left: 18px; margin-top: 5px; margin-bottom: 2px"/><br><br>');
+				next();
+			}, 350)
+		}).queue("AnimateQrcode", function(next) {
+			setTimeout(function(){
 				$("#change_qr").html('<img src="./images/pinyinQR.png" id="my_qrcode" onclick="change_pic()" width="160px" height="160px" style="margin-top: -13px"/>');
 				$("#my_qrcode").click(function(){
 					$(this).transition('tada');
 				});
-				clearInterval(timer2);
-			},800);
-		},350);
+			}, 800);
+		});
+		$("body").dequeue("AnimateQrcode");
 		click_count = 0;
 	}
 }
 
 function getTutorial(){
-	$.getJSON('tutorial.json',function(data){
+	$.getJSON('tutorial.json', function(data){
 		var json_len = data.length;
 		var content = "";
 		for(var i = 0; i < json_len; i++){
@@ -3456,10 +3411,11 @@ function getTutorial(){
 				exp += '<td><span style="color: #E78AD0">' + consonant + "</span>" + the_vowel + '<a href="javascript: play_sound(\'' + the_sound + '\');"><i class="large volume down icon" style="float: right"></i></a></td>';
 				exp += "<td>";
 				for(var k = 0; k < word_arr_len; k++){
-					if (k == (word_arr_len - 1))
+					if (k == (word_arr_len - 1)) {
 						exp += word_arr[k];
-					else
+					}	else {
 						exp += word_arr[k] + ", ";
+					}
 				}
 				exp += "</td>";
 
@@ -3481,8 +3437,7 @@ function controlPlay(){
 		$("#prompt, #prompt_flat").val("已開啟發音功能!");
 		var change_icon = '<i class="large unmute icon"></i>';
 		$("#control_play").html(change_icon);
-	}
-	else{
+	} else {
 		$("#prompt, #prompt_flat").val("已關閉發音功能!");
 		var change_icon = '<i class="large mute icon"></i>';
 		$("#control_play").html(change_icon);
@@ -3496,8 +3451,7 @@ function google(){
 	if (str == ""){
 		$("#prompt, #prompt_flat").val("搜尋字串不能為空白!");
 		caption_effect();
-	}
-	else{
+	} else {
 		var false_punctutations = ["℃", "℉", "㎏", "㎎", "㎜", "㎝", "㎡", "㏄", "㏎"];
 		var true_punctutaions = ["°C","°F","kg","mg","mm","cm","m^2","cc","km"];
 		var arr_len = false_punctutations.length;
@@ -3514,7 +3468,7 @@ function google(){
 	}
 }
 
-function set_default(){
+function setDefault(){
 	//$(document).jSnow();
 	$(window).on('load', function(e){                               // 讓從FB導回來的頁面沒有'#_=_'
 		if (window.location.hash == '#_=_') {
@@ -3531,10 +3485,11 @@ function set_default(){
 	var normal_elements = ["#shortcut","control_play_flat","#tutor_table_flat"];
 	var normal_ele = "";
 	for(var i = 0; i < normal_elements.length; i++){
-		if (i < normal_elements.length - 1)
+		if (i < normal_elements.length - 1) {
 			normal_ele += normal_elements[i] + ",";
-		else
+		} else {
 			normal_ele += normal_elements[i];
+		}
 	}
 
 	$('#fullpage').fullpage({
@@ -3557,7 +3512,7 @@ function set_default(){
 	$('.ui.dropdown').dropdown();                                   // 啟用dropdown元素
 	$('.ui.checkbox').checkbox();
 	$("#search_pinyin").autocomplete({                              // 運用jquery UI的autocomplete來做到以中文反查拼音
-		source: 'search_pinyin.php'
+		source: servicePath + 'search_pinyin.php'
 	});
 	$('.menu .item').tab();
 
@@ -3568,22 +3523,23 @@ function set_default(){
 		var data = localStorage.getItem("theme");
 		text = localStorage.getItem("text");
 		if (data != null){                                            // 如果storage中有資料
-			now_theme = data;                                           // 則更改主題，若無則為預設的black
+			applyTheme = data;                                           // 則更改主題，若無則為預設的black
 			for(var i = 0; i < style.length; i++){
-				if (now_theme == style[i]) break;
+				if (applyTheme == style[i]) break;
 			}
 		}
 	}
-	var initial_style = "jqte_" + now_theme;
+	var initial_style = "jqte_" + applyTheme;
 	var flat_initial_style = initial_style + "_flat";
 	$("#jqte").jqte({css: initial_style});
 	$("#jqte_flat").jqte({css: flat_initial_style});
-	$(".jqte_" + now_theme + "_editor").html(text);
-	$(".jqte_" + now_theme + "_flat_editor").html(text);
+	$(".jqte_" + applyTheme + "_editor").html(text);
+	$(".jqte_" + applyTheme + "_flat_editor").html(text);
 
 	customJqte = $("." + initial_style);
-	customJqte_flat = $("." + flat_initial_style);
-	change_theme(now_theme,true);
+	customJqteFlat = $("." + flat_initial_style);
+	change_theme(applyTheme,true);
+
 	/*********************************設定主題背景相關********************************/
 	getTutorial();		// 產生教學頁面
 	if (!$("#prompt_flat").is(":hidden")){
@@ -3607,9 +3563,9 @@ function set_default(){
 
 	$("#select_mode").click(function(){
 		if (sel_mode == 0){
-			if ($("#select_mode").checkbox('is checked') == false){
-			}
-			else{
+			if (!$("#select_mode").checkbox('is checked')){
+				// do nothing
+			}	else {
 				var textbox = $("#input");
 				var html = textbox.html();
 				var check = html.search('<span class="in_pinyin_window">');
@@ -3638,11 +3594,10 @@ function set_default(){
 				caption_effect();
 				sel_mode = 1;
 			}
-		}
-		else if (sel_mode == 1){
-			if ($("#select_mode").checkbox('is checked') == true){
-			}
-			else{
+		} else if (sel_mode == 1){
+			if ($("#select_mode").checkbox('is checked')){
+				// do nothing
+			}	else {
 				var textbox = $("#input");
 				var html = textbox.html();
 				var check = html.search('<span class="in_pinyin_window">');
@@ -3681,22 +3636,21 @@ function set_default(){
 	var DOM_back_search = document.getElementById("search_pinyin");
 
 	var my_defaults = {
-	  is_unordered    : true,
-	  prevent_repeat  : true
+		is_unordered    : true,
+		prevent_repeat  : true
 	};
 	var listener = new window.keypress.Listener(DOM_textbox,my_defaults);
 	var listener2 = new window.keypress.Listener(input_page,my_defaults);
 	var listener3 = new window.keypress.Listener(DOM_back_search,my_defaults);
 	listener.simple_combo("ctrl c", function(){
-	  var text = remove_tags($("#input").html());
+		var text = remove_tags($("#input").html());
 		if (text != ""){
 			$("#prompt, #prompt_flat").val('已複製到右方編輯器!');
-			var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-			$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+			var jqte_text = $(".jqte_" + applyTheme + "_editor").html();
+			$(".jqte_" + applyTheme + "_editor").html(jqte_text + text);
 			caption_effect();
 			$("#input").setCursorPosition(input_loc);
-		}
-		else{
+		}	else {
 			$("#prompt, #prompt_flat").val('沒有內容可複製!');
 			caption_effect();
 			$("#input").focus();
@@ -3717,12 +3671,11 @@ function set_default(){
 			auto_search_key = "";
 			$("#input").html("");
 			$("#show, #show_flat").html("");
-			var jqte_text = $(".jqte_" + now_theme + "_editor").html();
-			$(".jqte_" + now_theme + "_editor").html(jqte_text + text);
+			var jqte_text = $(".jqte_" + applyTheme + "_editor").html();
+			$(".jqte_" + applyTheme + "_editor").html(jqte_text + text);
 			caption_effect();
 			$("#input").setCursorPosition(0);
-		}
-		else{
+		}	else {
 			$("#prompt, #prompt_flat").val('沒有內容可剪下!');
 			caption_effect();
 			$("#input").focus();
@@ -3763,8 +3716,9 @@ function set_default(){
 
 	listener.simple_combo("ctrl alt",function(){
 		if (sel_mode == 0){
-			if ($("#select_mode").checkbox('is checked') == true){}
-			else{
+			if ($("#select_mode").checkbox('is checked') == true) {
+				// do nothing
+			}	else {
 				var textbox = $("#input");
 				var html = textbox.html();
 				var check = html.search('<span class="in_pinyin_window">');
@@ -3797,8 +3751,8 @@ function set_default(){
 		}
 		else if (sel_mode == 1){
 			if ($("#select_mode").checkbox('is checked') == false){
-			}
-			else{
+				// do nothing
+			}	else {
 				var textbox = $("#input");
 				var html = textbox.html();
 				var check = html.search('<span class="in_pinyin_window">');
@@ -3837,8 +3791,7 @@ function set_default(){
 			$("#prompt, #prompt_flat").val("已開啟發音功能!");
 			var change_icon = '<i class="large unmute icon"></i>';
 			$("#control_play, #control_play_flat").html(change_icon);
-		}
-		else{
+		}	else {
 			$("#prompt, #prompt_flat").val("已關閉發音功能!");
 			var change_icon = '<i class="large mute icon"></i>';
 			$("#control_play, #control_play_flat").html(change_icon);
@@ -3856,21 +3809,24 @@ function set_default(){
 	listener2.simple_combo("alt n",function(){
 		$("#prompt").val('焦點移至中央拼音區');
 		caption_effect();
-		if ($("#input").html() != "")
+		if ($("#input").html() != "") {
 			$("#input").setCursorPosition(input_loc);
-		else
+		}	else {
 			$("#input").focus();
+		}
 	});
+
 	listener2.simple_combo("alt m",function(){
 		$("#prompt").val('焦點移至文字編輯區');
 		caption_effect();
-		$(".jqte_" + now_theme + "_editor").focus();
+		$(".jqte_" + applyTheme + "_editor").focus();
 	});
 
 	listener3.simple_combo("tab",function(){
-		if ($("#input").html() != "")
+		if ($("#input").html() != "") {
 			$("#input").setCursorPosition(input_loc);
-		else
+		}	else {
 			$("#input").focus();
+		}
 	});
 }
